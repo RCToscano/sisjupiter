@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="owner.project.facets" value="java"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v8.5">
+		<attributes>
+			<attribute name="owner.project.facets" value="jst.web"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
+	<classpathentry kind="lib" path="C:/Users/rctoscano/Documents/netbeans/lib/commons-collections4-4.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rctoscano/Documents/netbeans/lib/commons-email-1.4.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rctoscano/Documents/netbeans/lib/cos.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rctoscano/Documents/netbeans/lib/gson-2.2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rctoscano/Documents/netbeans/lib/javax.mail-1.5.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rctoscano/Documents/netbeans/lib/javaxt-core.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rctoscano/Documents/netbeans/lib/json-20140107.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rctoscano/Documents/netbeans/lib/jstl.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rctoscano/Documents/netbeans/lib/jstl-1.2.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rctoscano/Documents/netbeans/lib/mysql-connector-java-5.1.24-bin.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rctoscano/Documents/netbeans/lib/poi-3.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rctoscano/Documents/netbeans/lib/poi-ooxml-3.15.jar"/>
+	<classpathentry kind="lib" path="C:/Users/rctoscano/Documents/netbeans/lib/thumbnailator-0.4.7.jar"/>
+	<classpathentry kind="output" path="build/classes"/>
+</classpath>
