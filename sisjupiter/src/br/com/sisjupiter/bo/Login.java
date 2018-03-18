@@ -1,16 +1,18 @@
 package br.com.sisjupiter.bo;
 
-import br.com.sisjupiter.connection.ConnectionFactory;
-import br.com.sisjupiter.dao.UserDAO;
-import br.com.sisjupiter.modelo.User;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.SQLException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import br.com.sisjupiter.connection.ConnectionFactory;
+import br.com.sisjupiter.dao.UserDAO;
+import br.com.sisjupiter.modelo.User;
 
 public class Login extends HttpServlet {
 
@@ -39,7 +41,7 @@ public class Login extends HttpServlet {
             UserDAO userDAO = new UserDAO(connection);
 
             user = userDAO.login(email, senha);
-
+            
             if (req.getParameter("r") != null) {
 
                 relat = req.getParameter("r");
@@ -64,7 +66,7 @@ public class Login extends HttpServlet {
                     //vai para home page
                     req.getSession().setAttribute("user", user);
                     req.getRequestDispatcher("/jsp/home.jsp").forward(req, res);
-                }
+                }                
             } 
             else if (relat.equals("logout")) {
                

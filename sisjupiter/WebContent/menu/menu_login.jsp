@@ -11,7 +11,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Deep</a>
+            <a class="navbar-brand" href="#"style="padding: 8px;"><img src="./images/logo_deep_menu.png" alt="" style="margin: 0px;"></a>
         </div>
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">

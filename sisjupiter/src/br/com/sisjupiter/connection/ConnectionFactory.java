@@ -13,12 +13,11 @@ public class ConnectionFactory {
     private static final String usuario = "root";
     private static final String senha = "admin";
     
-    //CONEXAO REMOTA
+//    //CONEXAO REMOTA
 //    private static final String url = "jdbc:mysql://192.175.112.170:3306/diagsdee_001";
 //    private static final String driver = "com.mysql.jdbc.Driver";
 //    private static final String usuario = "diagsdee_001";
 //    private static final String senha = "87hfds&dsa123";
-    
 
     public static Connection getConnection() throws SQLException {
 
