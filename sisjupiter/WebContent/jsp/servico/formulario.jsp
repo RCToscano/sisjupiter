@@ -46,16 +46,16 @@
 									<label for="sel1">Cadastrante:</label> 
 									<select class="form-control" name="cadastrante" id="cadastrante" >
 	                                	<option value="nenhum" selected>Selecione...</option>
-	<%--                                     <c:forEach var="listaComunidades" items="${listaComunidades}"> --%>
-	<%--                                     	<c:choose> --%>
-	<%-- 	                                        <c:when test="${modelo.idComunidade == listaComunidades.idComunidade}"> --%>
-	<%-- 	                                            <option value="${listaComunidades.idComunidade}" selected="true">${listaComunidades.descComunidade}</option> --%>
-	<%-- 	                                        </c:when> --%>
-	<%-- 	                                        <c:otherwise> --%>
-	<%-- 	                                        	<option value="${listaComunidades.idComunidade}" >${listaComunidades.descComunidade}</option> --%>
-	<%-- 	                                        </c:otherwise> --%>
-	<%--                                         </c:choose> --%>
-	<%--                                     </c:forEach> --%>
+	                                    <c:forEach var="listaEquipe" items="${listaEquipe}">
+	                                    	<c:choose>
+		                                        <c:when test="${modelo.idEquipe == listaEquipe.idEquipe}">
+		                                            <option value="${listaEquipe.idEquipe}" selected="true">${listaEquipe.equipe}</option>
+		                                        </c:when>
+		                                        <c:otherwise>
+		                                        	<option value="${listaEquipe.idEquipe}" >${listaEquipe.equipe}</option>
+		                                        </c:otherwise>
+	                                        </c:choose>
+	                                    </c:forEach>
 	                                </select>
 								</div>
 							</div>
@@ -81,17 +81,17 @@
 									<label for="sel1">Comunidade:</label> 
 									<select class="form-control" name="comunidade" id="comunidade" >
 	                                    <option value="nenhum" selected>Selecione...</option>
-	<%--                                     <c:forEach var="listaComunidades" items="${listaComunidades}"> --%>
-	<%--                                     	<c:choose> --%>
-	<%-- 	                                        <c:when test="${modelo.idComunidade == listaComunidades.idComunidade}"> --%>
-	<%-- 	                                            <option value="${listaComunidades.idComunidade}" selected="true">${listaComunidades.descComunidade}</option> --%>
-	<%-- 	                                        </c:when> --%>
-	<%-- 	                                        <c:otherwise> --%>
-	<%-- 	                                        	<option value="${listaComunidades.idComunidade}" >${listaComunidades.descComunidade}</option> --%>
-	<%-- 	                                        </c:otherwise> --%>
-	<%--                                         </c:choose> --%>
-	<%--                                     </c:forEach> --%>
-	<!--                                 </select> -->
+	                                    <c:forEach var="listaComunidades" items="${listaComunidades}">
+	                                    	<c:choose>
+		                                        <c:when test="${modelo.idComunidade == listaComunidades.idComunidade}">
+		                                            <option value="${listaComunidades.idComunidade}" selected="true">${listaComunidades.nome}</option>
+		                                        </c:when>
+		                                        <c:otherwise>
+		                                        	<option value="${listaComunidades.idComunidade}" >${listaComunidades.nome}</option>
+		                                        </c:otherwise>
+	                                        </c:choose>
+	                                    </c:forEach>
+	                                </select>
 									</select>
 								</div>
 							</div>
@@ -681,21 +681,21 @@
 							<div class="col-sm-1">
 								<div class="form-group">
 									<label for="carro">Carro</label> 
-									<input type="number" class="form-control input-sm" name="qtdeCarro" id="qtdeCarro" placeholder="Digite a quantidade" maxlength="2" value="${modelo.qtdeCarro}" />
+									<input type="number" class="form-control input-sm" name="qtdeCarro" id="qtdeCarro" placeholder="Qtde" max="99" value="${modelo.qtdeCarro}" />
 								</div>
 							</div>
 							
 							<div class="col-sm-1">
 								<div class="form-group">
 									<label for="moto">Moto</label> 
-									<input type="number" class="form-control input-sm" name="qtdeMoto" id="qtdeMoto" placeholder="Digite a quantidade" maxlength="2" value="${modelo.qtdeMoto}" />
+									<input type="number" class="form-control input-sm" name="qtdeMoto" id="qtdeMoto" placeholder="Qtde" max="99" value="${modelo.qtdeMoto}" />
 								</div>
 							</div>
 							
 							<div class="col-sm-1">
 								<div class="form-group">
 									<label for="bicicleta">Bicicleta</label> 
-									<input type="number" class="form-control input-sm" name="qtdeBicicleta" id="qtdeBicicleta" placeholder="Digite a quantidade" maxlength="2" value="${modelo.qtdeBicicleta}" />
+									<input type="number" class="form-control input-sm" name="qtdeBicicleta" id="qtdeBicicleta" placeholder="Qtde" max="99" value="${modelo.qtdeBicicleta}" />
 								</div>
 							</div>
 						</div>
@@ -968,11 +968,16 @@
 							    	<input type="checkbox" name="checkRenais" id="checkRenais" >Doen&ccedil;as Renais (Rins)</input>
 							    </label>
 						    </div>
+						    <div class="col-sm-12"> 
+								<label class="checkbox-inline">
+							    	<input type="checkbox" name="checkOutro" id="checkOutro" >Outro</input>
+							    </label>
+						    </div>
 						    
-						    <div class="col-sm-12">
+						    <div class="col-sm-6">
 								<div class="form-group">
-									<label for="outroDoenca">Outro</label> 
-									<textarea class="form-control" rows="3" id="outroDoenca" style="resize:none;" >${modelo.tratOutroDesc}</textarea>
+									<label for="outroDoenca">Qual</label> 
+									<input type="text" class="form-control input-sm" name="outroDoenca" id="outroDoenca" maxlength="60" value="${modelo.tratOutroDesc}" />
 								</div>
 							</div>
 	
@@ -1193,103 +1198,79 @@
 					<div class="panel panel-primary">
 						<div class="panel-heading"><label>Detalhamento de Recebimento Financeiro</label></div>
 						<div class="panel-body">
+
 							<div class="col-sm-12">
-								<div class="col-sm-4">
-									<label class="checkbox-inline">
-							    		<input type="checkbox" name="checkDoacao" id="checkDoacao" >Ajuda ou Doa&ccedil;&atilde;o</input>
-							    	</label>
-						    	</div>
-						    	<div class="col-sm-2">
-									<div class="form-group">
+								<div class="form-group row">
+									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Ajuda ou Doa&ccedil;&atilde;o:</label>
+									<div class="col-sm-2">
 										<input type="number" class="form-control input-sm" name="valorDoacao" id="valorDoacao" placeholder="Valor R$" maxlength="16" value="${modelo.valDoacao}" />
 									</div>
 								</div>
-						  	</div> 
-							<div class="col-sm-12"> 
-								<div class="col-sm-6">
-									<label class="checkbox-inline">
-								    	<input type="checkbox" name="checkAposentadoria" id="checkAposentadoria" >Aposentadoria, Pens&atilde;o, Benef&iacute;cio de Presta&ccedil;&atilde;o Continuada-BPC</input>
-								    </label>
-								</div>
-							    <div class="col-sm-2">
-									<div class="form-group">
+							</div>
+	
+							<div class="col-sm-12">
+								<div class="form-group row">
+									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Aposentadoria, Pens&atilde;o, Benef&iacute;cio de Presta&ccedil;&atilde;o Continuada-BPC:</label>
+									<div class="col-sm-2">
 										<input type="text" class="form-control input-sm" name="valorAposentadoria" id="valorAposentadoria" placeholder="Valor R$" maxlength="16" value="${modelo.valAposent}" />
 									</div>
 								</div>
 							</div>
+	
 							<div class="col-sm-12">
-								<div class="col-sm-4">
-									<label class="checkbox-inline">
-								    	<input type="checkbox" name="checkPensao" id="checkPensao" >Pens&atilde;o Aliment&iacute;cia</input>
-								    </label>
-							    </div>
-							    <div class="col-sm-2">
-									<div class="form-group">
+								<div class="form-group row">
+									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Pens&atilde;o Aliment&iacute;cia:</label>
+									<div class="col-sm-2">
 										<input type="text" class="form-control input-sm" name="valorPensao" id="valorPensao" placeholder="Valor R$" maxlength="16" value="${modelo.valPensaoAlimen}" />
 									</div>
 								</div>
 							</div>
+	
 							<div class="col-sm-12">
-								<div class="col-sm-4">
-									<label class="checkbox-inline">
-								    	<input type="checkbox" name="checkSeguroDesemp" id="checkSeguroDesemp" >Seguro Desemprego</input>
-								    </label>
-							    </div>
-							    <div class="col-sm-2">
-									<div class="form-group">
+								<div class="form-group row">
+									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Seguro Desemprego:</label>
+									<div class="col-sm-2">
 										<input type="text" class="form-control input-sm" name="valorSeguroDesemp" id="valorSeguroDesemp" placeholder="Valor R$" maxlength="16" value="${modelo.valSegDesempr}" />
 									</div>
 								</div>
 							</div>
+	
 							<div class="col-sm-12">
-								<div class="col-sm-4">
-									<label class="checkbox-inline">
-								    	<input type="checkbox" name="checkSemCarteira" id="checkSemCarteira" >Empregado sem Carteira Assinada</input>
-								    </label>
-							    </div>
-							    <div class="col-sm-2">
-									<div class="form-group">
+								<div class="form-group row">
+									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Empregado sem Carteira Assinada:</label>
+									<div class="col-sm-2">
 										<input type="number" class="form-control input-sm" name="valorSemCarteira" id="valorSemCarteira" placeholder="Valor R$" maxlength="16" value="${modelo.valEmprInformal}" />
 									</div>
 								</div>
 							</div>
+	
 							<div class="col-sm-12">
-								<div class="col-sm-4">
-									<label class="checkbox-inline">
-								    	<input type="checkbox" name="checkComCarteira" id="checkComCarteira" >Empregado com Carteira Assinada</input>
-								    </label>
-							    </div>
-							    <div class="col-sm-2">
-									<div class="form-group">
+								<div class="form-group row">
+									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Empregado com Carteira Assinada:</label>
+									<div class="col-sm-2">
 										<input type="text" class="form-control input-sm" name="valorComCarteira" id="valorComCarteira" placeholder="Valor R$" maxlength="16" value="${modelo.valEmprFormal}" />
 									</div>
 								</div>
-						    </div>
+							</div>
+	
 							<div class="col-sm-12">
-								<div class="col-sm-4">
-									<label class="checkbox-inline">
-								    	<input type="checkbox" name="checkBolsaFamilia" id="checkBolsaFamilia" >Bolsa Familia</input>
-								    </label>
-							    </div>
-							    <div class="col-sm-2">
-									<div class="form-group">
+								<div class="form-group row">
+									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Bolsa Familia:</label>
+									<div class="col-sm-2">
 										<input type="text" class="form-control input-sm" name="valorBolsaFamilia" id="valorBolsaFamilia" placeholder="Valor R$" maxlength="16" value="${modelo.valBolsaFamil}" />
 									</div>
 								</div>
-						    </div>
-						    
-						    <div class="col-sm-12">
-						    	<div class="col-sm-4">
-									<label class="checkbox-inline">
-								    	<input type="checkbox" name="checkValorOutros" id="checkValorOutros" >Outro</input>
-								    </label>
-							    </div>
-						    	<div class="col-sm-2">
-									<div class="form-group">
+							</div>
+	
+							<div class="col-sm-12">
+								<div class="form-group row">
+									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Outro:</label>
+									<div class="col-sm-2">
 										<input type="number" class="form-control input-sm" name="valorOutros" id="valorOutros" placeholder="Valor R$" maxlength="16" value="${modelo.valOutro}" />
 									</div>
 								</div>
 							</div>
+
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label for="qtdeAdolescente">Qual</label> 

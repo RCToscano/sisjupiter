@@ -10,7 +10,7 @@ public enum GrauEnsinoEnum {
 	CURSO_TECNICO(3, "Especializa&ccedil;&atilde;o (Cursos T&eacute;cnicos)"),
 	ENSINO_SUPEIOR(4, "Ensino Superior"),
 	POS_GRADUACAO(5, "P&oacute;s Gradua&ccedil;&atilde;o"),
-	N_ALFABETIZADO(6, "NN&atilde;o Alfabetizado");
+	N_ALFABETIZADO(6, "N&atilde;o Alfabetizado");
 
 	private int id;
 	private String descricao;

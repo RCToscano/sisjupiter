@@ -12,128 +12,128 @@ public class Diagnostico {
 	private Long idUser;
 	private String coordY;
 	private String coordX;
-	private int codServ;
-	private int idSitImovel;
-	private int idTpConstr;
-	private int idTpInstal;
-	private int categoria1;
-	private int categoria2;
-	private int categoria3;
-	private int categoria4;
-	private int idTpUso;
-	private int qtdeCasas;
-	private int tempoOcup;
+	private Integer codServ;
+	private Integer idSitImovel;
+	private Integer idTpConstr;
+	private Integer idTpInstal;
+	private Integer categoria1;
+	private Integer categoria2;
+	private Integer categoria3;
+	private Integer categoria4;
+	private Integer idTpUso;
+	private Integer qtdeCasas;
+	private Integer tempoOcup;
 	private String atividade;
-	private int energEletr;
-	private int energEletrIrreg;
+	private Integer energEletr;
+	private Integer energEletrIrreg;
 	private String instalacao;
 	private String medidor;
-	private int pavimeExiste;
-	private int colLixoExiste;
-	private int idAbastAgua;
-	private int abastAguaIrreg;
+	private Integer pavimeExiste;
+	private Integer colLixoExiste;
+	private Integer idAbastAgua;
+	private Integer abastAguaIrreg;
 	private String hidrometro;
-	private int idDestEsgoto;
+	private Integer idDestEsgoto;
 	private String nome;
 	private String cpf;
 	private String rg;
-	private int nacionalidade;
+	private Integer nacionalidade;
 	private String ufNasc;
 	private String munNasc;
 	private String dtNasc;
 	private String sexo;
-	private int telRes;
-	private int telCel;
-	private int idEstadoCivil;
+	private Integer telRes;
+	private Integer telCel;
+	private Integer idEstadoCivil;
 	private String email;
 	private String endereco;
-	private int numAtual;
-	private int numAntigo;
+	private Integer numAtual;
+	private Integer numAntigo;
 	private String compl;
 	private String bairro;
 	private String mun;
 	private String uf;
 	private String cep;
-	private int qtdeAdulto;
-	private int qtdeCrianca;
-	private int possuiConta;
+	private Integer qtdeAdulto;
+	private Integer qtdeCrianca;
+	private Integer possuiConta;
 	private String banco;
-	private int possuiCDeb;
+	private Integer possuiCDeb;
 	private BigDecimal rendaTotal;
-	private int rendaPerceUtil;
-	private int meioTransp1;
-	private int meioTransp2;
-	private int meioTransp3;
-	private int meioTransp4;
-	private int meioTransp5;
-	private int internetAcess;
-	private int internetWifi;
-	private int internet3g;
-	private int qtdeCarro;
-	private int qtdeMoto;
-	private int qtdeBicicleta;
+	private Integer rendaPerceUtil;
+	private Integer meioTransp1;
+	private Integer meioTransp2;
+	private Integer meioTransp3;
+	private Integer meioTransp4;
+	private Integer meioTransp5;
+	private Integer internetAcess;
+	private Integer internetWifi;
+	private Integer internet3g;
+	private Integer qtdeCarro;
+	private Integer qtdeMoto;
+	private Integer qtdeBicicleta;
 	private String benefBCPNum;
 	private String benefNISNum;
-	private int possuiTarSocial;
-	private int possuiBolsaFamil;
-	private int benefEntrev;
+	private Integer possuiTarSocial;
+	private Integer possuiBolsaFamil;
+	private Integer benefEntrev;
 	private String benefNome;
 	private String benefCpf;
 	private String benefRg;
 	private String benefSexo;
 	private String benefDtNasc;
 	private String benefObs;
-	private int maior59Qtde;
-	private int menor19Qtde;
-	private int menor1Qtde;
-	private int defVisualQtde;
-	private int defAuditQtde;
-	private int defFisQtde;
-	private int defIntelecQtde;
-	private int defOutrosQtde;
-	private int tratCancer;
-	private int tratTuber;
-	private int tratHansen;
-	private int tratMental;
-	private int tratEscler;
-	private int tratParal;
-	private int tratHepat;
-	private int tratCardiac;
-	private int tratParkins;
-	private int tratRenal;
-	private int tratOutro;
+	private Integer maior59Qtde;
+	private Integer menor19Qtde;
+	private Integer menor1Qtde;
+	private Integer defVisualQtde;
+	private Integer defAuditQtde;
+	private Integer defFisQtde;
+	private Integer defIntelecQtde;
+	private Integer defOutrosQtde;
+	private Integer tratCancer;
+	private Integer tratTuber;
+	private Integer tratHansen;
+	private Integer tratMental;
+	private Integer tratEscler;
+	private Integer tratParal;
+	private Integer tratHepat;
+	private Integer tratCardiac;
+	private Integer tratParkins;
+	private Integer tratRenal;
+	private Integer tratOutro;
 	private String tratOutroDesc;
-	private int amebiase;
+	private Integer amebiase;
 	private String amebiaseMemb;
-	private int gastroent;
+	private Integer gastroent;
 	private String gastroentMemb;
-	private int giardiase;
+	private Integer giardiase;
 	private String giardiaseMemb;
-	private int febreTifo;
+	private Integer febreTifo;
 	private String febreTifoMemb;
-	private int hepatite;
+	private Integer hepatite;
 	private String hepatiteMemb;
-	private int colera;
+	private Integer colera;
 	private String coleraMemb;
-	private int esquitosso;
+	private Integer esquitosso;
 	private String esquitossoMemb;
-	private int ascaridiase;
+	private Integer ascaridiase;
 	private String ascaridiaseMemb;
-	private int teniase;
+	private Integer teniase;
 	private String teniaseMemb;
-	private int leptospirose;
+	private Integer leptospirose;
 	private String leptospiroseMemb;
-	private int malaria;
+	private Integer malaria;
 	private String malariaMemb;
-	private int dengue;
+	private Integer dengue;
 	private String dengueMemb;
-	private int febreAmar;
+	private Integer febreAmar;
 	private String febreAmarMemb;
-	private int chikung;
+	private Integer chikung;
 	private String chikungMemb;
-	private int zicaVirus;
+	private Integer zicaVirus;
 	private String zicaVirusMemb;
-	private int cianobacter;
+	private Integer cianobacter;
 	private String cianobacterMemb;
 	private BigDecimal valDoacao;
 	private BigDecimal valAposent;
@@ -144,30 +144,30 @@ public class Diagnostico {
 	private BigDecimal valBolsaFamil;
 	private BigDecimal valOutro;
 	private String valOutroDescr;
-	private int idGrauEscol;
-	private int grauEscolCompl;
-	private int sabeEscrever;
-	private int sabeLer;
-	private int ensinoFunMembro;
-	private int ensinoMedMembro;
-	private int ensinoSupMembro;
-	private int ensinoPosMembro;
-	private int ensinoCurMembro;
-	private int analfabMembro;
+	private Integer idGrauEscol;
+	private Integer grauEscolCompl;
+	private Integer sabeEscrever;
+	private Integer sabeLer;
+	private Integer ensinoFunMembro;
+	private Integer ensinoMedMembro;
+	private Integer ensinoSupMembro;
+	private Integer ensinoPosMembro;
+	private Integer ensinoCurMembro;
+	private Integer analfabMembro;
 	private String profissRespFamil;
-	private int energNegoc;
+	private Integer energNegoc;
 	private BigDecimal energNegocParcVal;
-	private int energNegocParcQtde;
-	private int energNegocDia;
-	private int aguaNegoc;
+	private Integer energNegocParcQtde;
+	private Integer energNegocDia;
+	private Integer aguaNegoc;
 	private BigDecimal aguaNegocParcVal;
-	private int aguaNegocParcQtde;
-	private int aguaNegocDia;
+	private Integer aguaNegocParcQtde;
+	private Integer aguaNegocDia;
 	private String obraSaneamConhe;
-	private int benefObraSanSaude;
-	private int benefObraSanEco;
-	private int benefObraSanImob;
-	private int benefObraSanTuri;
+	private Integer benefObraSanSaude;
+	private Integer benefObraSanEco;
+	private Integer benefObraSanImob;
+	private Integer benefObraSanTuri;
 	private String obsGerais;
 	
 	
@@ -220,70 +220,70 @@ public class Diagnostico {
 	public void setCoordX(String coordX) {
 		this.coordX = coordX;
 	}
-	public int getCodServ() {
+	public Integer getCodServ() {
 		return codServ;
 	}
-	public void setCodServ(int codServ) {
+	public void setCodServ(Integer codServ) {
 		this.codServ = codServ;
 	}
-	public int getIdSitImovel() {
+	public Integer getIdSitImovel() {
 		return idSitImovel;
 	}
-	public void setIdSitImovel(int idSitImovel) {
+	public void setIdSitImovel(Integer idSitImovel) {
 		this.idSitImovel = idSitImovel;
 	}
-	public int getIdTpConstr() {
+	public Integer getIdTpConstr() {
 		return idTpConstr;
 	}
-	public void setIdTpConstr(int idTpConstr) {
+	public void setIdTpConstr(Integer idTpConstr) {
 		this.idTpConstr = idTpConstr;
 	}
-	public int getIdTpInstal() {
+	public Integer getIdTpInstal() {
 		return idTpInstal;
 	}
-	public void setIdTpInstal(int idTpInstal) {
+	public void setIdTpInstal(Integer idTpInstal) {
 		this.idTpInstal = idTpInstal;
 	}
-	public int getCategoria1() {
+	public Integer getCategoria1() {
 		return categoria1;
 	}
-	public void setCategoria1(int categoria1) {
+	public void setCategoria1(Integer categoria1) {
 		this.categoria1 = categoria1;
 	}
-	public int getCategoria2() {
+	public Integer getCategoria2() {
 		return categoria2;
 	}
-	public void setCategoria2(int categoria2) {
+	public void setCategoria2(Integer categoria2) {
 		this.categoria2 = categoria2;
 	}
-	public int getCategoria3() {
+	public Integer getCategoria3() {
 		return categoria3;
 	}
-	public void setCategoria3(int categoria3) {
+	public void setCategoria3(Integer categoria3) {
 		this.categoria3 = categoria3;
 	}
-	public int getCategoria4() {
+	public Integer getCategoria4() {
 		return categoria4;
 	}
-	public void setCategoria4(int categoria4) {
+	public void setCategoria4(Integer categoria4) {
 		this.categoria4 = categoria4;
 	}
-	public int getIdTpUso() {
+	public Integer getIdTpUso() {
 		return idTpUso;
 	}
-	public void setIdTpUso(int idTpUso) {
+	public void setIdTpUso(Integer idTpUso) {
 		this.idTpUso = idTpUso;
 	}
-	public int getQtdeCasas() {
+	public Integer getQtdeCasas() {
 		return qtdeCasas;
 	}
-	public void setQtdeCasas(int qtdeCasas) {
+	public void setQtdeCasas(Integer qtdeCasas) {
 		this.qtdeCasas = qtdeCasas;
 	}
-	public int getTempoOcup() {
+	public Integer getTempoOcup() {
 		return tempoOcup;
 	}
-	public void setTempoOcup(int tempoOcup) {
+	public void setTempoOcup(Integer tempoOcup) {
 		this.tempoOcup = tempoOcup;
 	}
 	public String getAtividade() {
@@ -292,16 +292,16 @@ public class Diagnostico {
 	public void setAtividade(String atividade) {
 		this.atividade = atividade;
 	}
-	public int getEnergEletr() {
+	public Integer getEnergEletr() {
 		return energEletr;
 	}
-	public void setEnergEletr(int energEletr) {
+	public void setEnergEletr(Integer energEletr) {
 		this.energEletr = energEletr;
 	}
-	public int getEnergEletrIrreg() {
+	public Integer getEnergEletrIrreg() {
 		return energEletrIrreg;
 	}
-	public void setEnergEletrIrreg(int energEletrIrreg) {
+	public void setEnergEletrIrreg(Integer energEletrIrreg) {
 		this.energEletrIrreg = energEletrIrreg;
 	}
 	public String getInstalacao() {
@@ -316,28 +316,28 @@ public class Diagnostico {
 	public void setMedidor(String medidor) {
 		this.medidor = medidor;
 	}
-	public int getPavimeExiste() {
+	public Integer getPavimeExiste() {
 		return pavimeExiste;
 	}
-	public void setPavimeExiste(int pavimeExiste) {
+	public void setPavimeExiste(Integer pavimeExiste) {
 		this.pavimeExiste = pavimeExiste;
 	}
-	public int getColLixoExiste() {
+	public Integer getColLixoExiste() {
 		return colLixoExiste;
 	}
-	public void setColLixoExiste(int colLixoExiste) {
+	public void setColLixoExiste(Integer colLixoExiste) {
 		this.colLixoExiste = colLixoExiste;
 	}
-	public int getIdAbastAgua() {
+	public Integer getIdAbastAgua() {
 		return idAbastAgua;
 	}
-	public void setIdAbastAgua(int idAbastAgua) {
+	public void setIdAbastAgua(Integer idAbastAgua) {
 		this.idAbastAgua = idAbastAgua;
 	}
-	public int getAbastAguaIrreg() {
+	public Integer getAbastAguaIrreg() {
 		return abastAguaIrreg;
 	}
-	public void setAbastAguaIrreg(int abastAguaIrreg) {
+	public void setAbastAguaIrreg(Integer abastAguaIrreg) {
 		this.abastAguaIrreg = abastAguaIrreg;
 	}
 	public String getHidrometro() {
@@ -346,10 +346,10 @@ public class Diagnostico {
 	public void setHidrometro(String hidrometro) {
 		this.hidrometro = hidrometro;
 	}
-	public int getIdDestEsgoto() {
+	public Integer getIdDestEsgoto() {
 		return idDestEsgoto;
 	}
-	public void setIdDestEsgoto(int idDestEsgoto) {
+	public void setIdDestEsgoto(Integer idDestEsgoto) {
 		this.idDestEsgoto = idDestEsgoto;
 	}
 	public String getNome() {
@@ -370,10 +370,10 @@ public class Diagnostico {
 	public void setRg(String rg) {
 		this.rg = rg;
 	}
-	public int getNacionalidade() {
+	public Integer getNacionalidade() {
 		return nacionalidade;
 	}
-	public void setNacionalidade(int nacionalidade) {
+	public void setNacionalidade(Integer nacionalidade) {
 		this.nacionalidade = nacionalidade;
 	}
 	public String getUfNasc() {
@@ -400,22 +400,22 @@ public class Diagnostico {
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
-	public int getTelRes() {
+	public Integer getTelRes() {
 		return telRes;
 	}
-	public void setTelRes(int telRes) {
+	public void setTelRes(Integer telRes) {
 		this.telRes = telRes;
 	}
-	public int getTelCel() {
+	public Integer getTelCel() {
 		return telCel;
 	}
-	public void setTelCel(int telCel) {
+	public void setTelCel(Integer telCel) {
 		this.telCel = telCel;
 	}
-	public int getIdEstadoCivil() {
+	public Integer getIdEstadoCivil() {
 		return idEstadoCivil;
 	}
-	public void setIdEstadoCivil(int idEstadoCivil) {
+	public void setIdEstadoCivil(Integer idEstadoCivil) {
 		this.idEstadoCivil = idEstadoCivil;
 	}
 	public String getEmail() {
@@ -430,16 +430,16 @@ public class Diagnostico {
 	public void setEndereco(String endereco) {
 		this.endereco = endereco;
 	}
-	public int getNumAtual() {
+	public Integer getNumAtual() {
 		return numAtual;
 	}
-	public void setNumAtual(int numAtual) {
+	public void setNumAtual(Integer numAtual) {
 		this.numAtual = numAtual;
 	}
-	public int getNumAntigo() {
+	public Integer getNumAntigo() {
 		return numAntigo;
 	}
-	public void setNumAntigo(int numAntigo) {
+	public void setNumAntigo(Integer numAntigo) {
 		this.numAntigo = numAntigo;
 	}
 	public String getCompl() {
@@ -472,22 +472,22 @@ public class Diagnostico {
 	public void setCep(String cep) {
 		this.cep = cep;
 	}
-	public int getQtdeAdulto() {
+	public Integer getQtdeAdulto() {
 		return qtdeAdulto;
 	}
-	public void setQtdeAdulto(int qtdeAdulto) {
+	public void setQtdeAdulto(Integer qtdeAdulto) {
 		this.qtdeAdulto = qtdeAdulto;
 	}
-	public int getQtdeCrianca() {
+	public Integer getQtdeCrianca() {
 		return qtdeCrianca;
 	}
-	public void setQtdeCrianca(int qtdeCrianca) {
+	public void setQtdeCrianca(Integer qtdeCrianca) {
 		this.qtdeCrianca = qtdeCrianca;
 	}
-	public int getPossuiConta() {
+	public Integer getPossuiConta() {
 		return possuiConta;
 	}
-	public void setPossuiConta(int possuiConta) {
+	public void setPossuiConta(Integer possuiConta) {
 		this.possuiConta = possuiConta;
 	}
 	public String getBanco() {
@@ -496,10 +496,10 @@ public class Diagnostico {
 	public void setBanco(String banco) {
 		this.banco = banco;
 	}
-	public int getPossuiCDeb() {
+	public Integer getPossuiCDeb() {
 		return possuiCDeb;
 	}
-	public void setPossuiCDeb(int possuiCDeb) {
+	public void setPossuiCDeb(Integer possuiCDeb) {
 		this.possuiCDeb = possuiCDeb;
 	}
 	public BigDecimal getRendaTotal() {
@@ -508,76 +508,76 @@ public class Diagnostico {
 	public void setRendaTotal(BigDecimal rendaTotal) {
 		this.rendaTotal = rendaTotal;
 	}
-	public int getRendaPerceUtil() {
+	public Integer getRendaPerceUtil() {
 		return rendaPerceUtil;
 	}
-	public void setRendaPerceUtil(int rendaPerceUtil) {
+	public void setRendaPerceUtil(Integer rendaPerceUtil) {
 		this.rendaPerceUtil = rendaPerceUtil;
 	}
-	public int getMeioTransp1() {
+	public Integer getMeioTransp1() {
 		return meioTransp1;
 	}
-	public void setMeioTransp1(int meioTransp1) {
+	public void setMeioTransp1(Integer meioTransp1) {
 		this.meioTransp1 = meioTransp1;
 	}
-	public int getMeioTransp2() {
+	public Integer getMeioTransp2() {
 		return meioTransp2;
 	}
-	public void setMeioTransp2(int meioTransp2) {
+	public void setMeioTransp2(Integer meioTransp2) {
 		this.meioTransp2 = meioTransp2;
 	}
-	public int getMeioTransp3() {
+	public Integer getMeioTransp3() {
 		return meioTransp3;
 	}
-	public void setMeioTransp3(int meioTransp3) {
+	public void setMeioTransp3(Integer meioTransp3) {
 		this.meioTransp3 = meioTransp3;
 	}
-	public int getMeioTransp4() {
+	public Integer getMeioTransp4() {
 		return meioTransp4;
 	}
-	public void setMeioTransp4(int meioTransp4) {
+	public void setMeioTransp4(Integer meioTransp4) {
 		this.meioTransp4 = meioTransp4;
 	}
-	public int getMeioTransp5() {
+	public Integer getMeioTransp5() {
 		return meioTransp5;
 	}
-	public void setMeioTransp5(int meioTransp5) {
+	public void setMeioTransp5(Integer meioTransp5) {
 		this.meioTransp5 = meioTransp5;
 	}
-	public int getInternetAcess() {
+	public Integer getInternetAcess() {
 		return internetAcess;
 	}
-	public void setInternetAcess(int internetAcess) {
+	public void setInternetAcess(Integer internetAcess) {
 		this.internetAcess = internetAcess;
 	}
-	public int getInternetWifi() {
+	public Integer getInternetWifi() {
 		return internetWifi;
 	}
-	public void setInternetWifi(int internetWifi) {
+	public void setInternetWifi(Integer internetWifi) {
 		this.internetWifi = internetWifi;
 	}
-	public int getInternet3g() {
+	public Integer getInternet3g() {
 		return internet3g;
 	}
-	public void setInternet3g(int internet3g) {
+	public void setInternet3g(Integer internet3g) {
 		this.internet3g = internet3g;
 	}
-	public int getQtdeCarro() {
+	public Integer getQtdeCarro() {
 		return qtdeCarro;
 	}
-	public void setQtdeCarro(int qtdeCarro) {
+	public void setQtdeCarro(Integer qtdeCarro) {
 		this.qtdeCarro = qtdeCarro;
 	}
-	public int getQtdeMoto() {
+	public Integer getQtdeMoto() {
 		return qtdeMoto;
 	}
-	public void setQtdeMoto(int qtdeMoto) {
+	public void setQtdeMoto(Integer qtdeMoto) {
 		this.qtdeMoto = qtdeMoto;
 	}
-	public int getQtdeBicicleta() {
+	public Integer getQtdeBicicleta() {
 		return qtdeBicicleta;
 	}
-	public void setQtdeBicicleta(int qtdeBicicleta) {
+	public void setQtdeBicicleta(Integer qtdeBicicleta) {
 		this.qtdeBicicleta = qtdeBicicleta;
 	}
 	public String getBenefBCPNum() {
@@ -592,22 +592,22 @@ public class Diagnostico {
 	public void setBenefNISNum(String benefNISNum) {
 		this.benefNISNum = benefNISNum;
 	}
-	public int getPossuiTarSocial() {
+	public Integer getPossuiTarSocial() {
 		return possuiTarSocial;
 	}
-	public void setPossuiTarSocial(int possuiTarSocial) {
+	public void setPossuiTarSocial(Integer possuiTarSocial) {
 		this.possuiTarSocial = possuiTarSocial;
 	}
-	public int getPossuiBolsaFamil() {
+	public Integer getPossuiBolsaFamil() {
 		return possuiBolsaFamil;
 	}
-	public void setPossuiBolsaFamil(int possuiBolsaFamil) {
+	public void setPossuiBolsaFamil(Integer possuiBolsaFamil) {
 		this.possuiBolsaFamil = possuiBolsaFamil;
 	}
-	public int getBenefEntrev() {
+	public Integer getBenefEntrev() {
 		return benefEntrev;
 	}
-	public void setBenefEntrev(int benefEntrev) {
+	public void setBenefEntrev(Integer benefEntrev) {
 		this.benefEntrev = benefEntrev;
 	}
 	public String getBenefNome() {
@@ -646,118 +646,118 @@ public class Diagnostico {
 	public void setBenefObs(String benefObs) {
 		this.benefObs = benefObs;
 	}
-	public int getMaior59Qtde() {
+	public Integer getMaior59Qtde() {
 		return maior59Qtde;
 	}
-	public void setMaior59Qtde(int maior59Qtde) {
+	public void setMaior59Qtde(Integer maior59Qtde) {
 		this.maior59Qtde = maior59Qtde;
 	}
-	public int getMenor19Qtde() {
+	public Integer getMenor19Qtde() {
 		return menor19Qtde;
 	}
-	public void setMenor19Qtde(int menor19Qtde) {
+	public void setMenor19Qtde(Integer menor19Qtde) {
 		this.menor19Qtde = menor19Qtde;
 	}
-	public int getMenor1Qtde() {
+	public Integer getMenor1Qtde() {
 		return menor1Qtde;
 	}
-	public void setMenor1Qtde(int menor1Qtde) {
+	public void setMenor1Qtde(Integer menor1Qtde) {
 		this.menor1Qtde = menor1Qtde;
 	}
-	public int getDefVisualQtde() {
+	public Integer getDefVisualQtde() {
 		return defVisualQtde;
 	}
-	public void setDefVisualQtde(int defVisualQtde) {
+	public void setDefVisualQtde(Integer defVisualQtde) {
 		this.defVisualQtde = defVisualQtde;
 	}
-	public int getDefAuditQtde() {
+	public Integer getDefAuditQtde() {
 		return defAuditQtde;
 	}
-	public void setDefAuditQtde(int defAuditQtde) {
+	public void setDefAuditQtde(Integer defAuditQtde) {
 		this.defAuditQtde = defAuditQtde;
 	}
-	public int getDefFisQtde() {
+	public Integer getDefFisQtde() {
 		return defFisQtde;
 	}
-	public void setDefFisQtde(int defFisQtde) {
+	public void setDefFisQtde(Integer defFisQtde) {
 		this.defFisQtde = defFisQtde;
 	}
-	public int getDefIntelecQtde() {
+	public Integer getDefIntegerelecQtde() {
 		return defIntelecQtde;
 	}
-	public void setDefIntelecQtde(int defIntelecQtde) {
+	public void setDefIntelecQtde(Integer defIntelecQtde) {
 		this.defIntelecQtde = defIntelecQtde;
 	}
-	public int getDefOutrosQtde() {
+	public Integer getDefOutrosQtde() {
 		return defOutrosQtde;
 	}
-	public void setDefOutrosQtde(int defOutrosQtde) {
+	public void setDefOutrosQtde(Integer defOutrosQtde) {
 		this.defOutrosQtde = defOutrosQtde;
 	}
-	public int getTratCancer() {
+	public Integer getTratCancer() {
 		return tratCancer;
 	}
-	public void setTratCancer(int tratCancer) {
+	public void setTratCancer(Integer tratCancer) {
 		this.tratCancer = tratCancer;
 	}
-	public int getTratTuber() {
+	public Integer getTratTuber() {
 		return tratTuber;
 	}
-	public void setTratTuber(int tratTuber) {
+	public void setTratTuber(Integer tratTuber) {
 		this.tratTuber = tratTuber;
 	}
-	public int getTratHansen() {
+	public Integer getTratHansen() {
 		return tratHansen;
 	}
-	public void setTratHansen(int tratHansen) {
+	public void setTratHansen(Integer tratHansen) {
 		this.tratHansen = tratHansen;
 	}
-	public int getTratMental() {
+	public Integer getTratMental() {
 		return tratMental;
 	}
-	public void setTratMental(int tratMental) {
+	public void setTratMental(Integer tratMental) {
 		this.tratMental = tratMental;
 	}
-	public int getTratEscler() {
+	public Integer getTratEscler() {
 		return tratEscler;
 	}
-	public void setTratEscler(int tratEscler) {
+	public void setTratEscler(Integer tratEscler) {
 		this.tratEscler = tratEscler;
 	}
-	public int getTratParal() {
+	public Integer getTratParal() {
 		return tratParal;
 	}
-	public void setTratParal(int tratParal) {
+	public void setTratParal(Integer tratParal) {
 		this.tratParal = tratParal;
 	}
-	public int getTratHepat() {
+	public Integer getTratHepat() {
 		return tratHepat;
 	}
-	public void setTratHepat(int tratHepat) {
+	public void setTratHepat(Integer tratHepat) {
 		this.tratHepat = tratHepat;
 	}
-	public int getTratCardiac() {
+	public Integer getTratCardiac() {
 		return tratCardiac;
 	}
-	public void setTratCardiac(int tratCardiac) {
+	public void setTratCardiac(Integer tratCardiac) {
 		this.tratCardiac = tratCardiac;
 	}
-	public int getTratParkins() {
+	public Integer getTratParkins() {
 		return tratParkins;
 	}
-	public void setTratParkins(int tratParkins) {
+	public void setTratParkins(Integer tratParkins) {
 		this.tratParkins = tratParkins;
 	}
-	public int getTratRenal() {
+	public Integer getTratRenal() {
 		return tratRenal;
 	}
-	public void setTratRenal(int tratRenal) {
+	public void setTratRenal(Integer tratRenal) {
 		this.tratRenal = tratRenal;
 	}
-	public int getTratOutro() {
+	public Integer getTratOutro() {
 		return tratOutro;
 	}
-	public void setTratOutro(int tratOutro) {
+	public void setTratOutro(Integer tratOutro) {
 		this.tratOutro = tratOutro;
 	}
 	public String getTratOutroDesc() {
@@ -766,10 +766,10 @@ public class Diagnostico {
 	public void setTratOutroDesc(String tratOutroDesc) {
 		this.tratOutroDesc = tratOutroDesc;
 	}
-	public int getAmebiase() {
+	public Integer getAmebiase() {
 		return amebiase;
 	}
-	public void setAmebiase(int amebiase) {
+	public void setAmebiase(Integer amebiase) {
 		this.amebiase = amebiase;
 	}
 	public String getAmebiaseMemb() {
@@ -778,10 +778,10 @@ public class Diagnostico {
 	public void setAmebiaseMemb(String amebiaseMemb) {
 		this.amebiaseMemb = amebiaseMemb;
 	}
-	public int getGastroent() {
+	public Integer getGastroent() {
 		return gastroent;
 	}
-	public void setGastroent(int gastroent) {
+	public void setGastroent(Integer gastroent) {
 		this.gastroent = gastroent;
 	}
 	public String getGastroentMemb() {
@@ -790,10 +790,10 @@ public class Diagnostico {
 	public void setGastroentMemb(String gastroentMemb) {
 		this.gastroentMemb = gastroentMemb;
 	}
-	public int getGiardiase() {
+	public Integer getGiardiase() {
 		return giardiase;
 	}
-	public void setGiardiase(int giardiase) {
+	public void setGiardiase(Integer giardiase) {
 		this.giardiase = giardiase;
 	}
 	public String getGiardiaseMemb() {
@@ -802,10 +802,10 @@ public class Diagnostico {
 	public void setGiardiaseMemb(String giardiaseMemb) {
 		this.giardiaseMemb = giardiaseMemb;
 	}
-	public int getFebreTifo() {
+	public Integer getFebreTifo() {
 		return febreTifo;
 	}
-	public void setFebreTifo(int febreTifo) {
+	public void setFebreTifo(Integer febreTifo) {
 		this.febreTifo = febreTifo;
 	}
 	public String getFebreTifoMemb() {
@@ -814,10 +814,10 @@ public class Diagnostico {
 	public void setFebreTifoMemb(String febreTifoMemb) {
 		this.febreTifoMemb = febreTifoMemb;
 	}
-	public int getHepatite() {
+	public Integer getHepatite() {
 		return hepatite;
 	}
-	public void setHepatite(int hepatite) {
+	public void setHepatite(Integer hepatite) {
 		this.hepatite = hepatite;
 	}
 	public String getHepatiteMemb() {
@@ -826,10 +826,10 @@ public class Diagnostico {
 	public void setHepatiteMemb(String hepatiteMemb) {
 		this.hepatiteMemb = hepatiteMemb;
 	}
-	public int getColera() {
+	public Integer getColera() {
 		return colera;
 	}
-	public void setColera(int colera) {
+	public void setColera(Integer colera) {
 		this.colera = colera;
 	}
 	public String getColeraMemb() {
@@ -838,10 +838,10 @@ public class Diagnostico {
 	public void setColeraMemb(String coleraMemb) {
 		this.coleraMemb = coleraMemb;
 	}
-	public int getEsquitosso() {
+	public Integer getEsquitosso() {
 		return esquitosso;
 	}
-	public void setEsquitosso(int esquitosso) {
+	public void setEsquitosso(Integer esquitosso) {
 		this.esquitosso = esquitosso;
 	}
 	public String getEsquitossoMemb() {
@@ -850,10 +850,10 @@ public class Diagnostico {
 	public void setEsquitossoMemb(String esquitossoMemb) {
 		this.esquitossoMemb = esquitossoMemb;
 	}
-	public int getAscaridiase() {
+	public Integer getAscaridiase() {
 		return ascaridiase;
 	}
-	public void setAscaridiase(int ascaridiase) {
+	public void setAscaridiase(Integer ascaridiase) {
 		this.ascaridiase = ascaridiase;
 	}
 	public String getAscaridiaseMemb() {
@@ -862,10 +862,10 @@ public class Diagnostico {
 	public void setAscaridiaseMemb(String ascaridiaseMemb) {
 		this.ascaridiaseMemb = ascaridiaseMemb;
 	}
-	public int getTeniase() {
+	public Integer getTeniase() {
 		return teniase;
 	}
-	public void setTeniase(int teniase) {
+	public void setTeniase(Integer teniase) {
 		this.teniase = teniase;
 	}
 	public String getTeniaseMemb() {
@@ -874,10 +874,10 @@ public class Diagnostico {
 	public void setTeniaseMemb(String teniaseMemb) {
 		this.teniaseMemb = teniaseMemb;
 	}
-	public int getLeptospirose() {
+	public Integer getLeptospirose() {
 		return leptospirose;
 	}
-	public void setLeptospirose(int leptospirose) {
+	public void setLeptospirose(Integer leptospirose) {
 		this.leptospirose = leptospirose;
 	}
 	public String getLeptospiroseMemb() {
@@ -886,10 +886,10 @@ public class Diagnostico {
 	public void setLeptospiroseMemb(String leptospiroseMemb) {
 		this.leptospiroseMemb = leptospiroseMemb;
 	}
-	public int getMalaria() {
+	public Integer getMalaria() {
 		return malaria;
 	}
-	public void setMalaria(int malaria) {
+	public void setMalaria(Integer malaria) {
 		this.malaria = malaria;
 	}
 	public String getMalariaMemb() {
@@ -898,10 +898,10 @@ public class Diagnostico {
 	public void setMalariaMemb(String malariaMemb) {
 		this.malariaMemb = malariaMemb;
 	}
-	public int getDengue() {
+	public Integer getDengue() {
 		return dengue;
 	}
-	public void setDengue(int dengue) {
+	public void setDengue(Integer dengue) {
 		this.dengue = dengue;
 	}
 	public String getDengueMemb() {
@@ -910,10 +910,10 @@ public class Diagnostico {
 	public void setDengueMemb(String dengueMemb) {
 		this.dengueMemb = dengueMemb;
 	}
-	public int getFebreAmar() {
+	public Integer getFebreAmar() {
 		return febreAmar;
 	}
-	public void setFebreAmar(int febreAmar) {
+	public void setFebreAmar(Integer febreAmar) {
 		this.febreAmar = febreAmar;
 	}
 	public String getFebreAmarMemb() {
@@ -922,10 +922,10 @@ public class Diagnostico {
 	public void setFebreAmarMemb(String febreAmarMemb) {
 		this.febreAmarMemb = febreAmarMemb;
 	}
-	public int getChikung() {
+	public Integer getChikung() {
 		return chikung;
 	}
-	public void setChikung(int chikung) {
+	public void setChikung(Integer chikung) {
 		this.chikung = chikung;
 	}
 	public String getChikungMemb() {
@@ -934,10 +934,10 @@ public class Diagnostico {
 	public void setChikungMemb(String chikungMemb) {
 		this.chikungMemb = chikungMemb;
 	}
-	public int getZicaVirus() {
+	public Integer getZicaVirus() {
 		return zicaVirus;
 	}
-	public void setZicaVirus(int zicaVirus) {
+	public void setZicaVirus(Integer zicaVirus) {
 		this.zicaVirus = zicaVirus;
 	}
 	public String getZicaVirusMemb() {
@@ -946,10 +946,10 @@ public class Diagnostico {
 	public void setZicaVirusMemb(String zicaVirusMemb) {
 		this.zicaVirusMemb = zicaVirusMemb;
 	}
-	public int getCianobacter() {
+	public Integer getCianobacter() {
 		return cianobacter;
 	}
-	public void setCianobacter(int cianobacter) {
+	public void setCianobacter(Integer cianobacter) {
 		this.cianobacter = cianobacter;
 	}
 	public String getCianobacterMemb() {
@@ -1012,64 +1012,64 @@ public class Diagnostico {
 	public void setValOutroDescr(String valOutroDescr) {
 		this.valOutroDescr = valOutroDescr;
 	}
-	public int getIdGrauEscol() {
+	public Integer getIdGrauEscol() {
 		return idGrauEscol;
 	}
-	public void setIdGrauEscol(int idGrauEscol) {
+	public void setIdGrauEscol(Integer idGrauEscol) {
 		this.idGrauEscol = idGrauEscol;
 	}
-	public int getGrauEscolCompl() {
+	public Integer getGrauEscolCompl() {
 		return grauEscolCompl;
 	}
-	public void setGrauEscolCompl(int grauEscolCompl) {
+	public void setGrauEscolCompl(Integer grauEscolCompl) {
 		this.grauEscolCompl = grauEscolCompl;
 	}
-	public int getSabeEscrever() {
+	public Integer getSabeEscrever() {
 		return sabeEscrever;
 	}
-	public void setSabeEscrever(int sabeEscrever) {
+	public void setSabeEscrever(Integer sabeEscrever) {
 		this.sabeEscrever = sabeEscrever;
 	}
-	public int getSabeLer() {
+	public Integer getSabeLer() {
 		return sabeLer;
 	}
-	public void setSabeLer(int sabeLer) {
+	public void setSabeLer(Integer sabeLer) {
 		this.sabeLer = sabeLer;
 	}
-	public int getEnsinoFunMembro() {
+	public Integer getEnsinoFunMembro() {
 		return ensinoFunMembro;
 	}
-	public void setEnsinoFunMembro(int ensinoFunMembro) {
+	public void setEnsinoFunMembro(Integer ensinoFunMembro) {
 		this.ensinoFunMembro = ensinoFunMembro;
 	}
-	public int getEnsinoMedMembro() {
+	public Integer getEnsinoMedMembro() {
 		return ensinoMedMembro;
 	}
-	public void setEnsinoMedMembro(int ensinoMedMembro) {
+	public void setEnsinoMedMembro(Integer ensinoMedMembro) {
 		this.ensinoMedMembro = ensinoMedMembro;
 	}
-	public int getEnsinoSupMembro() {
+	public Integer getEnsinoSupMembro() {
 		return ensinoSupMembro;
 	}
-	public void setEnsinoSupMembro(int ensinoSupMembro) {
+	public void setEnsinoSupMembro(Integer ensinoSupMembro) {
 		this.ensinoSupMembro = ensinoSupMembro;
 	}
-	public int getEnsinoPosMembro() {
+	public Integer getEnsinoPosMembro() {
 		return ensinoPosMembro;
 	}
-	public void setEnsinoPosMembro(int ensinoPosMembro) {
+	public void setEnsinoPosMembro(Integer ensinoPosMembro) {
 		this.ensinoPosMembro = ensinoPosMembro;
 	}
-	public int getEnsinoCurMembro() {
+	public Integer getEnsinoCurMembro() {
 		return ensinoCurMembro;
 	}
-	public void setEnsinoCurMembro(int ensinoCurMembro) {
+	public void setEnsinoCurMembro(Integer ensinoCurMembro) {
 		this.ensinoCurMembro = ensinoCurMembro;
 	}
-	public int getAnalfabMembro() {
+	public Integer getAnalfabMembro() {
 		return analfabMembro;
 	}
-	public void setAnalfabMembro(int analfabMembro) {
+	public void setAnalfabMembro(Integer analfabMembro) {
 		this.analfabMembro = analfabMembro;
 	}
 	public String getProfissRespFamil() {
@@ -1078,10 +1078,10 @@ public class Diagnostico {
 	public void setProfissRespFamil(String profissRespFamil) {
 		this.profissRespFamil = profissRespFamil;
 	}
-	public int getEnergNegoc() {
+	public Integer getEnergNegoc() {
 		return energNegoc;
 	}
-	public void setEnergNegoc(int energNegoc) {
+	public void setEnergNegoc(Integer energNegoc) {
 		this.energNegoc = energNegoc;
 	}
 	public BigDecimal getEnergNegocParcVal() {
@@ -1090,22 +1090,22 @@ public class Diagnostico {
 	public void setEnergNegocParcVal(BigDecimal energNegocParcVal) {
 		this.energNegocParcVal = energNegocParcVal;
 	}
-	public int getEnergNegocParcQtde() {
+	public Integer getEnergNegocParcQtde() {
 		return energNegocParcQtde;
 	}
-	public void setEnergNegocParcQtde(int energNegocParcQtde) {
+	public void setEnergNegocParcQtde(Integer energNegocParcQtde) {
 		this.energNegocParcQtde = energNegocParcQtde;
 	}
-	public int getEnergNegocDia() {
+	public Integer getEnergNegocDia() {
 		return energNegocDia;
 	}
-	public void setEnergNegocDia(int energNegocDia) {
+	public void setEnergNegocDia(Integer energNegocDia) {
 		this.energNegocDia = energNegocDia;
 	}
-	public int getAguaNegoc() {
+	public Integer getAguaNegoc() {
 		return aguaNegoc;
 	}
-	public void setAguaNegoc(int aguaNegoc) {
+	public void setAguaNegoc(Integer aguaNegoc) {
 		this.aguaNegoc = aguaNegoc;
 	}
 	public BigDecimal getAguaNegocParcVal() {
@@ -1114,16 +1114,16 @@ public class Diagnostico {
 	public void setAguaNegocParcVal(BigDecimal aguaNegocParcVal) {
 		this.aguaNegocParcVal = aguaNegocParcVal;
 	}
-	public int getAguaNegocParcQtde() {
+	public Integer getAguaNegocParcQtde() {
 		return aguaNegocParcQtde;
 	}
-	public void setAguaNegocParcQtde(int aguaNegocParcQtde) {
+	public void setAguaNegocParcQtde(Integer aguaNegocParcQtde) {
 		this.aguaNegocParcQtde = aguaNegocParcQtde;
 	}
-	public int getAguaNegocDia() {
+	public Integer getAguaNegocDia() {
 		return aguaNegocDia;
 	}
-	public void setAguaNegocDia(int aguaNegocDia) {
+	public void setAguaNegocDia(Integer aguaNegocDia) {
 		this.aguaNegocDia = aguaNegocDia;
 	}
 	public String getObraSaneamConhe() {
@@ -1132,28 +1132,28 @@ public class Diagnostico {
 	public void setObraSaneamConhe(String obraSaneamConhe) {
 		this.obraSaneamConhe = obraSaneamConhe;
 	}
-	public int getBenefObraSanSaude() {
+	public Integer getBenefObraSanSaude() {
 		return benefObraSanSaude;
 	}
-	public void setBenefObraSanSaude(int benefObraSanSaude) {
+	public void setBenefObraSanSaude(Integer benefObraSanSaude) {
 		this.benefObraSanSaude = benefObraSanSaude;
 	}
-	public int getBenefObraSanEco() {
+	public Integer getBenefObraSanEco() {
 		return benefObraSanEco;
 	}
-	public void setBenefObraSanEco(int benefObraSanEco) {
+	public void setBenefObraSanEco(Integer benefObraSanEco) {
 		this.benefObraSanEco = benefObraSanEco;
 	}
-	public int getBenefObraSanImob() {
+	public Integer getBenefObraSanImob() {
 		return benefObraSanImob;
 	}
-	public void setBenefObraSanImob(int benefObraSanImob) {
+	public void setBenefObraSanImob(Integer benefObraSanImob) {
 		this.benefObraSanImob = benefObraSanImob;
 	}
-	public int getBenefObraSanTuri() {
+	public Integer getBenefObraSanTuri() {
 		return benefObraSanTuri;
 	}
-	public void setBenefObraSanTuri(int benefObraSanTuri) {
+	public void setBenefObraSanTuri(Integer benefObraSanTuri) {
 		this.benefObraSanTuri = benefObraSanTuri;
 	}
 	public String getObsGerais() {

@@ -446,4 +446,16 @@ public class Auxiliar {
 		}
     }
     
+    public static Integer converteCheckBox(String parametro) {
+    	try {
+    		if(parametro != null && !parametro.isEmpty())
+    			return 1;
+    		
+    		return null;
+    	} 
+    	catch (Exception e) {
+    		return null;
+    	}
+    }
+    
 }

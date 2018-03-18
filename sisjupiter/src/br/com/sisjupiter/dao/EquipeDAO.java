@@ -26,7 +26,7 @@ public class EquipeDAO {
             stmt = connection.prepareStatement(
             "SELECT    TB_EQUIPE.* " +
             "FROM      TB_EQUIPE " +
-            "ORDER BY  TB_DIAGNOSTICO.EQUIP "
+            "ORDER BY  TB_EQUIPE.EQUIPE "
             );
             
             rs = stmt.executeQuery();
@@ -35,7 +35,6 @@ public class EquipeDAO {
             	Equipe equipe = new Equipe();
                 equipe.setIdEquipe(rs.getLong("ID_EQUIPE"));
                 equipe.setIdEquipeTp(rs.getLong("ID_EQUIPETP"));
-                equipe.setEquipeTp(rs.getString("EQUIPETP"));
                 equipe.setIdEquipeSit(rs.getLong("ID_EQUIPESIT"));
                 equipe.setEquipe(rs.getString("EQUIPE"));
                 equipe.setLogin(rs.getString("LOGIN"));
