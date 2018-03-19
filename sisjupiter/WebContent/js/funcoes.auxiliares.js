@@ -82,3 +82,53 @@ function nullParaVazio(texto) {
     
     return texto;
 }
+
+function numerico(input) {
+    if ((event.keyCode < 48) || (event.keyCode > 57)) {
+        if ((event.keyCode == 13)) {
+        }
+        else {
+            event.returnValue = false;
+        }
+    }
+}
+
+function mascaraCpf(input){
+    
+    if ((event.keyCode<48)||(event.keyCode>57)){
+        event.returnValue = false; 
+    }
+    else{
+        if(input.value.length == 3){
+            input.value = input.value + ".";
+        }
+        else if(input.value.length == 7){
+            input.value = input.value + ".";
+        }
+        else if(input.value.length == 11){
+            input.value = input.value + "-";
+        }
+    }
+}
+
+function mascaraCnpj(input){
+    
+    if ((event.keyCode<48)||(event.keyCode>57)){
+        event.returnValue = false; 
+    }
+    else{
+        if(input.value.length == 2){
+            input.value = input.value + ".";
+        }
+        else if(input.value.length == 6){
+            input.value = input.value + ".";
+        }
+        else if(input.value.length == 10){
+            input.value = input.value + "/";
+        }
+        else if(input.value.length == 15){
+            input.value = input.value + "-";
+        }
+    }
+}
+

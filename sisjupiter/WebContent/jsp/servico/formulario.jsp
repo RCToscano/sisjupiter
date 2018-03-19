@@ -14,25 +14,48 @@
 		<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
 		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.9.0/moment-with-locales.js"></script>
 		<script type="text/javascript" src="https://cdn.rawgit.com/Eonasdan/bootstrap-datetimepicker/e8bddc60e73c1ec2475f827be36e1957af72e2ea/src/js/bootstrap-datetimepicker.js"></script>
+		<script src='./js/funcoes.auxiliares.js'></script>
+		<script src='./js/servico/formulario.js'></script>
     </head>
     <body>
         <jsp:include page="../../menu/${sessionScope.user.perfil.menu}" ></jsp:include>
         <div class="container">
-	        <ul class="breadcrumb">
-			    <li><a href="HomeBO?acao=home">Home</a></li>
-			    <li><a href="ServicoBO?acao=consultar">Servi&ccedil;o</a></li>
-			    <li><a href="ServicoBO?acao=consultar">Consulta</a></li>
-			    <li><a href="ServicoBO?acao=pesquisar">Lista</a></li>
-			    <li class="active">Formul&aacute;rio</li>
-			</ul>
+        	<c:choose>
+	        	<c:when test="${botao == 'Cadastrar'}">
+	        		<ul class="breadcrumb">
+					    <li><a href="HomeBO?acao=home">Home</a></li>
+					    <li class="active">Servi&ccedil;o</li>
+					    <li class="active">Cadastro</li>
+					    <li class="active">Formul&aacute;rio</li>
+					</ul>
+	        	</c:when>
+	        	<c:otherwise>
+	        		<ul class="breadcrumb">
+					    <li><a href="HomeBO?acao=home">Home</a></li>
+					    <li><a href="ServicoBO?acao=consultar">Servi&ccedil;o</a></li>
+					    <li><a href="ServicoBO?acao=consultar">Consulta</a></li>
+					    <li><a href="ServicoBO?acao=pesquisar&dtInicio=${dtInicio}&dtFim=${dtFim}">Lista</a></li>
+					    <li class="active">Formul&aacute;rio</li>
+					</ul>
+	        	</c:otherwise>
+        	</c:choose>
 			
 			<c:if test="${aviso != ''}">
-				<div class="alert alert-danger">
-					<strong><c:out value="${aviso}"/></strong>
+				<div id="divAviso" name="divAviso" class="alert alert-danger" style="display:none;">
+					<strong><label id='aviso' name='aviso'>${aviso}</strong>
+				</div>
+			</c:if>
+			
+			<c:if test="${sucesso != ''}">
+				<div class="alert alert-success">
+					<strong><c:out value="${sucesso}"/></strong>
 				</div>
 			</c:if>
 		
 			<form action="ServicoBO?acao=inserir" method="post">
+				<input type="hidden" id="dtInicio" name="dtInicio" value="${dtInicio}" />
+				<input type="hidden" id="dtFim" name="dtFim" value="${dtFim}" />
+				
 				<h2>Formul&aacute;rio de Diagn&oacute;stico</h2>
 				<div class="panel-group">
 				
@@ -44,8 +67,8 @@
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label for="sel1">Cadastrante:</label> 
-									<select class="form-control" name="cadastrante" id="cadastrante" >
-	                                	<option value="nenhum" selected>Selecione...</option>
+									<select class="form-control" name="cadastrante" id="cadastrante" required>
+	                                	<option value="" selected>Selecione...</option>
 	                                    <c:forEach var="listaEquipe" items="${listaEquipe}">
 	                                    	<c:choose>
 		                                        <c:when test="${modelo.idEquipe == listaEquipe.idEquipe}">
@@ -72,15 +95,15 @@
 							<div class="col-sm-2"> 
 								<div class="form-group">
 									<label for="codServico">C&oacute;digo do Servi&ccedil;o: </label> 
-									<input type="text" class="form-control input-sm" name="codServico" id="codServico" maxlength="15" value="${modelo.codServ}" />
+									<input type="text" class="form-control input-sm" name="codServico" id="codServico" maxlength="11" value="${modelo.codServ}" onKeyPress="numerico(this)" />
 								</div>
 							</div>
 							
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label for="sel1">Comunidade:</label> 
-									<select class="form-control" name="comunidade" id="comunidade" >
-	                                    <option value="nenhum" selected>Selecione...</option>
+									<select class="form-control" name="comunidade" id="comunidade" required>
+	                                    <option value="" selected>Selecione...</option>
 	                                    <c:forEach var="listaComunidades" items="${listaComunidades}">
 	                                    	<c:choose>
 		                                        <c:when test="${modelo.idComunidade == listaComunidades.idComunidade}">
@@ -103,10 +126,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.idTpInstal}">
-													<input type="radio" name="radioTpInst" id="tpInstRegular${total.descricao}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioTpInst" id="tpInstRegular${total.descricao}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioTpInst" id="tpInstRegular${total.descricao}" >${total.descricao} </input>
+													<input type="radio" name="radioTpInst" id="tpInstRegular${total.descricao}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -121,10 +144,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.idTpConstr}">
-													<input type="radio" name="radioTpConstrucao" id="tpConstrucao${total.descricao}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioTpConstrucao" id="tpConstrucao${total.descricao}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioTpConstrucao" id="tpConstrucao${total.descricao}" >${total.descricao} </input>
+													<input type="radio" name="radioTpConstrucao" id="tpConstrucao${total.descricao}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -139,10 +162,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.idSitImovel}">
-													<input type="radio" name="radioSitImovel" id="sitImovel${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioSitImovel" id="sitImovel${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioSitImovel" id="sitImovel${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioSitImovel" id="sitImovel${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -175,10 +198,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.idTpUso}">
-													<input type="radio" name="radioImovel" id="imovel${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioImovel" id="imovel${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioImovel" id="imovel${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioImovel" id="imovel${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -189,14 +212,14 @@
 							<div class="col-sm-4">
 								<div class="form-group">
 									<label for="qtdeCasas">Qtde. de Casas no Mesmo Endere&ccedil;o/Terreno</label> 
-									<input type="text" class="form-control input-sm" name="qtdeCasas" id="qtdeCasas" maxlength="2" value="${modelo.qtdeCasas}" />
+									<input type="text" class="form-control input-sm" name="qtdeCasas" id="qtdeCasas" maxlength="2" value="${modelo.qtdeCasas}" onKeyPress="numerico(this)" />
 								</div>
 							</div>
 							 
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="ocupacao">Tempo de Ocupa&ccedil;&atilde;o</label> 
-									<input type="text" class="form-control input-sm" name="ocupacao" id="ocupacao" maxlength="100" value="${modelo.tempoOcup}" />
+									<input type="text" class="form-control input-sm" name="ocupacao" id="ocupacao" maxlength="11" value="${modelo.tempoOcup}" onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
@@ -214,10 +237,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.energEletr}">
-													<input type="radio" name="radioEnergia" id="energia${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioEnergia" id="energia${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioEnergia" id="energia${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioEnergia" id="energia${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -232,10 +255,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.energEletrIrreg}">
-													<input type="radio" name="radioEnergiaIrregular" id="irregularEnerg${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioEnergiaIrregular" id="irregularEnerg${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioEnergiaIrregular" id="irregularEnerg${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioEnergiaIrregular" id="irregularEnerg${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -266,10 +289,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.pavimeExiste}">
-													<input type="radio" name="radioPavimento" id="pavimento${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioPavimento" id="pavimento${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioPavimento" id="pavimento${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioPavimento" id="pavimento${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -284,10 +307,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.colLixoExiste}">
-													<input type="radio" name="radioLixo" id="lixo${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioLixo" id="lixo${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioLixo" id="lixo${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioLixo" id="lixo${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -302,10 +325,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.idAbastAgua}">
-													<input type="radio" name="radioAbastecimento" id="abast${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioAbastecimento" id="abast${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioAbastecimento" id="abast${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioAbastecimento" id="abast${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -320,10 +343,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.abastAguaIrreg}">
-													<input type="radio" name="radioAguaIrregular" id="irregularAgua${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioAguaIrregular" id="irregularAgua${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioAguaIrregular" id="irregularAgua${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioAguaIrregular" id="irregularAgua${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -345,10 +368,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.idDestEsgoto}">
-													<input type="radio" name="radioEsgoto" id="esgoto${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioEsgoto" id="esgoto${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioEsgoto" id="esgoto${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioEsgoto" id="esgoto${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -371,7 +394,7 @@
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="cpfCliente">CPF</label> 
-									<input type="text" class="form-control input-sm" name="cpfCliente" id="cpfCliente" maxlength="14" value="${modelo.cpf}" />
+									<input type="text" class="form-control input-sm" name="cpfCliente" id="cpfCliente" maxlength="14" value="${modelo.cpf}" onKeyPress="mascaraCpf(this)"/>
 								</div>
 							</div>
 								
@@ -391,9 +414,9 @@
 	
 						<div class="col-sm-3">
 							<div class="form-group">
-								<label for="sel1">Estado de Nascimento:</label> 
+								<label for="sel1">Estado de Nascimento</label> 
 								<select class="form-control" name="estadoNascimento" id="estadoNascimento" >
-									<option value="nenhum" selected>Selecione...</option>
+									<option value="" selected>Selecione...</option>
 									<c:forEach items="${listaEstados}" var="total">
 										<label class="radio-inline">
 											<c:choose>
@@ -424,10 +447,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.nacionalidade}">
-													<input type="radio" name="radioNacionalidade" id="nacionalidade${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioNacionalidade" id="nacionalidade${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioNacionalidade" id="nacionalidade${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioNacionalidade" id="nacionalidade${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -442,10 +465,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.sexo}">
-													<input type="radio" name="radioSexo" id="sexo${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioSexo" id="sexo${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioSexo" id="sexo${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioSexo" id="sexo${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -460,10 +483,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.idEstadoCivil}">
-													<input type="radio" name="radioEstadoCivil" id="estCivil${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioEstadoCivil" id="estCivil${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioEstadoCivil" id="estCivil${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioEstadoCivil" id="estCivil${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -474,14 +497,14 @@
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="telefone">Telefone Resid&ecirc;ncial</label> 
-									<input type="text" class="form-control input-sm" name="telefone" id="telefone" maxlength="13" value="${modelo.telRes}"  />
+									<input type="text" class="form-control input-sm" name="telefone" id="telefone" maxlength="10" value="${modelo.telRes}"  onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="celular">Celular</label> 
-									<input type="text" class="form-control input-sm" name="celular" id="celular" maxlength="14" value="${modelo.telCel}"  />
+									<input type="text" class="form-control input-sm" name="celular" id="celular" maxlength="10" value="${modelo.telCel}"  onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
@@ -502,14 +525,14 @@
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="numeroAtualEndereco">N&deg; Atual</label> 
-									<input type="number" class="form-control input-sm" name="numeroAtualEndereco" id="numeroAtualEndereco" max="99999" value="${modelo.numAtual}"  />
+									<input type="text" class="form-control input-sm" name="numeroAtualEndereco" id="numeroAtualEndereco" maxlength="5" value="${modelo.numAtual}"  onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="numeroAntigoEndereco">N&deg; Antigo</label> 
-									<input type="number" class="form-control input-sm" name="numeroAntigoEndereco" id="numeroAntigoEndereco" max="99999" value="${modelo.numAntigo}"  />
+									<input type="text" class="form-control input-sm" name="numeroAntigoEndereco" id="numeroAntigoEndereco" maxlength="5" value="${modelo.numAntigo}"  onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
@@ -536,11 +559,25 @@
 							
 							<div class="col-sm-3">
 								<div class="form-group">
-									<label for="estadoEndereco">Estado</label> 
-									<input type="text" class="form-control input-sm" name="estadoEndereco" id="estadoEndereco" maxlength="30" value="${modelo.uf}"  />
+									<label for="sel1">Estado</label> 
+									<select class="form-control" name="estadoEndereco" id="estadoEndereco" >
+										<option value="" selected>Selecione...</option>
+										<c:forEach items="${listaEstados}" var="total">
+											<label class="radio-inline">
+												<c:choose>
+													<c:when test="${total.id == modelo.uf}">
+														<option value="${total.id}" selected>${total.descricao}</option>
+													</c:when>
+													<c:otherwise>
+														<option value="${total.id}">${total.descricao}</option>
+													</c:otherwise>
+												</c:choose>
+											</label> 
+										</c:forEach>
+									</select>
 								</div>
 							</div>
-							
+
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="cepEndereco">CEP</label> 
@@ -551,14 +588,14 @@
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="qtdeAdultos">Qtde. Adultos</label> 
-									<input type="text" class="form-control input-sm" name="qtdeAdultos" id="qtdeAdultos" maxlength="2" value="${modelo.qtdeAdulto}"  />
+									<input type="text" class="form-control input-sm" name="qtdeAdultos" id="qtdeAdultos" maxlength="2" value="${modelo.qtdeAdulto}" onKeyPress="numerico(this)" />
 								</div>
 							</div>
 							
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="qtdeCriancas">Qtde. Crian&ccedil;as</label> 
-									<input type="text" class="form-control input-sm" name="qtdeCriancas" id="qtdeCriancas" maxlength="2" value="${modelo.qtdeCrianca}"  />
+									<input type="text" class="form-control input-sm" name="qtdeCriancas" id="qtdeCriancas" maxlength="2" value="${modelo.qtdeCrianca}" onKeyPress="numerico(this)"  />
 								</div>
 							</div>
 							
@@ -571,10 +608,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.possuiConta}">
-													<input type="radio" name="radioBanco" id="banco${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioBanco" id="banco${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioBanco" id="banco${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioBanco" id="banco${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -589,10 +626,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.possuiCDeb}">
-													<input type="radio" name="radioCartaoDebito" id="cartaoDebito${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioCartaoDebito" id="cartaoDebito${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioCartaoDebito" id="cartaoDebito${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioCartaoDebito" id="cartaoDebito${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -610,14 +647,14 @@
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="rendaFamilia">Renda Total da Fam&iacute;lia</label> 
-									<input type="text" class="form-control input-sm" name="rendaFamilia" id="rendaFamilia" maxlength="16" value="${modelo.rendaTotal}"  />
+									<input type="text" class="form-control input-sm" name="rendaFamilia" id="rendaFamilia" maxlength="12" value="${modelo.rendaTotal}" onKeyPress="moeda(this)"/>
 								</div>
 							</div>
 	
 							<div class="col-sm-6">
 								<div class="form-group">
 									<label for="financeiroMensal">Qual &eacute; o % M&eacute;dio de Comprometimento  Financeiro Mensal</label> 
-									<input type="number" class="form-control input-sm" name="financeiroMensal" id="financeiroMensal" maxlength="2" value="${modelo.rendaPerceUtil}"  />
+									<input type="text" class="form-control input-sm" name="financeiroMensal" id="financeiroMensal" maxlength="2" value="${modelo.rendaPerceUtil}"  onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
@@ -649,10 +686,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.internetAcess}">
-													<input type="radio" name="radioInternet" id="internet${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioInternet" id="internet${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioInternet" id="internet${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioInternet" id="internet${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -681,21 +718,21 @@
 							<div class="col-sm-1">
 								<div class="form-group">
 									<label for="carro">Carro</label> 
-									<input type="number" class="form-control input-sm" name="qtdeCarro" id="qtdeCarro" placeholder="Qtde" max="99" value="${modelo.qtdeCarro}" />
+									<input type="text" class="form-control input-sm" name="qtdeCarro" id="qtdeCarro" placeholder="Qtde" maxlength="11" value="${modelo.qtdeCarro}" onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
 							<div class="col-sm-1">
 								<div class="form-group">
 									<label for="moto">Moto</label> 
-									<input type="number" class="form-control input-sm" name="qtdeMoto" id="qtdeMoto" placeholder="Qtde" max="99" value="${modelo.qtdeMoto}" />
+									<input type="text" class="form-control input-sm" name="qtdeMoto" id="qtdeMoto" placeholder="Qtde" maxlength="11" value="${modelo.qtdeMoto}" onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
 							<div class="col-sm-1">
 								<div class="form-group">
 									<label for="bicicleta">Bicicleta</label> 
-									<input type="number" class="form-control input-sm" name="qtdeBicicleta" id="qtdeBicicleta" placeholder="Qtde" max="99" value="${modelo.qtdeBicicleta}" />
+									<input type="text" class="form-control input-sm" name="qtdeBicicleta" id="qtdeBicicleta" placeholder="Qtde" maxlength="11" value="${modelo.qtdeBicicleta}" onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 						</div>
@@ -726,10 +763,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.possuiTarSocial}">
-													<input type="radio" name="radioTarifaAgua" id="tarifaAgua${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioTarifaAgua" id="tarifaAgua${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioTarifaAgua" id="tarifaAgua${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioTarifaAgua" id="tarifaAgua${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -744,10 +781,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.possuiBolsaFamil}">
-													<input type="radio" name="radioBolsaFamilia" id="bolsaFamilia${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioBolsaFamilia" id="bolsaFamilia${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioBolsaFamilia" id="bolsaFamilia${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioBolsaFamilia" id="bolsaFamilia${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -772,14 +809,14 @@
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="cpfNTitular">CPF</label> 
-									<input type="text" class="form-control input-sm" name="cpfNTitular" id="cpfNTitular" maxlength="14" value="${modelo.benefCpf}" />
+									<input type="text" class="form-control input-sm" name="cpfNTitular" id="cpfNTitular" maxlength="14" value="${modelo.benefCpf}" onKeyPress="mascaraCpf(this)"/>
 								</div>
 							</div>
 								
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="rgNTitular">RG</label> 
-									<input type="text" class="form-control input-sm" name="rgCliente" id="rgCliente" maxlength="45" value="${modelo.benefRg}"  />
+									<input type="text" class="form-control input-sm" name="rgNTitular" id="rgNTitular" maxlength="45" value="${modelo.benefRg}"  />
 								</div>
 							</div>
 								
@@ -797,10 +834,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.benefSexo}">
-													<input type="radio" name="radioSexoNTitular" id="sexo${total.id}NTitular" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioSexoNTitular" id="sexo${total.id}NTitular" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioSexoNTitular" id="sexo${total.id}NTitular" >${total.descricao} </input>
+													<input type="radio" name="radioSexoNTitular" id="sexo${total.id}NTitular" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -811,7 +848,7 @@
 							<div class="col-sm-12">
 								<div class="form-group">
 									<label for="observacoes">Observa&ccedil;&otilde;es</label> 
-									<textarea class="form-control" rows="3" id="observacoes" style="resize:none;" >${modelo.benefObs}</textarea>
+									<textarea class="form-control" rows="3" id="observacoes" name="observacoes" style="resize:none;" >${modelo.benefObs}</textarea>
 								</div>
 							</div>
 						</div>
@@ -824,21 +861,21 @@
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="qtdeIdosos">Idosos com idade de 60 anos ou mais</label> 
-									<input type="number" class="form-control input-sm" name="qtdeIdosos" id="qtdeIdosos" placeholder="Digite a quantidade" maxlength="2" value="${modelo.maior59Qtde}" />
+									<input type="text" class="form-control input-sm" name="qtdeIdosos" id="qtdeIdosos" placeholder="Digite a quantidade" maxlength="11" value="${modelo.maior59Qtde}" onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
 							<div class="col-sm-3">
 								<div class="form-group">
 									<label for="qtdeAdolescente">Adolescentes com idade de 18 anos ou menos</label> 
-									<input type="number" class="form-control input-sm" name="qtdeAdolescente" id="qtdeAdolescente" placeholder="Digite a quantidade" maxlength="2" value="${modelo.menor19Qtde}" />
+									<input type="text" class="form-control input-sm" name="qtdeAdolescente" id="qtdeAdolescente" placeholder="Digite a quantidade" maxlength="11" value="${modelo.menor19Qtde}" onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="qtdeAdolescente">Bebes com menos de 12 meses de idade</label> 
-									<input type="number" class="form-control input-sm" name="qtdeBebes" id="qtdeBebes" placeholder="Digite a quantidade" maxlength="2" value="${modelo.menor1Qtde}" />
+									<input type="text" class="form-control input-sm" name="qtdeBebes" id="qtdeBebes" placeholder="Digite a quantidade" maxlength="11" value="${modelo.menor1Qtde}" onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
@@ -854,7 +891,7 @@
 							    </div>
 							    <div class="col-sm-2">
 									<div class="form-group">
-										<input type="number" class="form-control input-sm" name="defVisual" id="defVisual" placeholder="Digite a quantidade" maxlength="2" value="${modelo.defVisualQtde}" />
+										<input type="text" class="form-control input-sm" name="defVisual" id="defVisual" placeholder="Digite a quantidade" maxlength="11" value="${modelo.defVisualQtde}" onKeyPress="numerico(this)"/>
 									</div>
 								</div>
 						    </div>
@@ -867,7 +904,7 @@
 							    </div>
 							    <div class="col-sm-2">
 									<div class="form-group">
-										<input type="number" class="form-control input-sm" name="defAuditivo" id="defAuditivo" placeholder="Digite a quantidade" maxlength="2" value="${modelo.defAuditQtde}" />
+										<input type="text" class="form-control input-sm" name="defAuditivo" id="defAuditivo" placeholder="Digite a quantidade" maxlength="11" value="${modelo.defAuditQtde}" onKeyPress="numerico(this)"/>
 									</div>
 								</div>
 						    </div>
@@ -880,7 +917,7 @@
 							    </div>
 							    <div class="col-sm-2">
 									<div class="form-group">
-										<input type="number" class="form-control input-sm" name="defFisico" id="defFisico" placeholder="Digite a quantidade" maxlength="2" value="${modelo.defFisQtde}" />
+										<input type="text" class="form-control input-sm" name="defFisico" id="defFisico" placeholder="Digite a quantidade" maxlength="11" value="${modelo.defFisQtde}" onKeyPress="numerico(this)"/>
 									</div>
 								</div>
 						    </div>
@@ -893,7 +930,7 @@
 							    </div>
 							    <div class="col-sm-2">
 									<div class="form-group">
-										<input type="number" class="form-control input-sm" name="defIntelectual" id="defIntelectual" placeholder="Digite a quantidade" maxlength="2" value="${modelo.defIntelecQtde}" />
+										<input type="text" class="form-control input-sm" name="defIntelectual" id="defIntelectual" placeholder="Digite a quantidade" maxlength="11" value="${modelo.defIntelecQtde}" onKeyPress="numerico(this)"/>
 									</div>
 								</div>
 						    </div>
@@ -906,7 +943,7 @@
 							    </div>
 							    <div class="col-sm-2">
 									<div class="form-group">
-										<input type="number" class="form-control input-sm" name="defOutros" id="defOutros" placeholder="Digite a quantidade" maxlength="2" value="${modelo.defOutrosQtde}" />
+										<input type="text" class="form-control input-sm" name="defOutros" id="defOutros" placeholder="Digite a quantidade" maxlength="11" value="${modelo.defOutrosQtde}" onKeyPress="numerico(this)"/>
 									</div>
 								</div>
 						    </div>
@@ -914,12 +951,6 @@
 						    <div class="col-sm-12">
 								<div class="form-group">
 									<label for="tratamento">Membro Fam&iacute;lia em Tratamento: </label> 
-									<label class="radio-inline">
-										<input type="radio" name="radioTratamento" id="tratamentoSim" >Sim </input>
-									</label> 
-									<label class="radio-inline">
-										<input type="radio" name="radioTratamento" id="tratamentoNao" >N&atilde;o </input>
-									</label> 
 								</div>
 							</div>
 						
@@ -1203,7 +1234,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Ajuda ou Doa&ccedil;&atilde;o:</label>
 									<div class="col-sm-2">
-										<input type="number" class="form-control input-sm" name="valorDoacao" id="valorDoacao" placeholder="Valor R$" maxlength="16" value="${modelo.valDoacao}" />
+										<input type="text" class="form-control input-sm" name="valorDoacao" id="valorDoacao" placeholder="Valor R$" maxlength="12" value="${modelo.valDoacao}" onKeyPress="moeda(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1212,7 +1243,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Aposentadoria, Pens&atilde;o, Benef&iacute;cio de Presta&ccedil;&atilde;o Continuada-BPC:</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control input-sm" name="valorAposentadoria" id="valorAposentadoria" placeholder="Valor R$" maxlength="16" value="${modelo.valAposent}" />
+										<input type="text" class="form-control input-sm" name="valorAposentadoria" id="valorAposentadoria" placeholder="Valor R$" maxlength="12" value="${modelo.valAposent}" onKeyPress="moeda(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1221,7 +1252,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Pens&atilde;o Aliment&iacute;cia:</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control input-sm" name="valorPensao" id="valorPensao" placeholder="Valor R$" maxlength="16" value="${modelo.valPensaoAlimen}" />
+										<input type="text" class="form-control input-sm" name="valorPensao" id="valorPensao" placeholder="Valor R$" maxlength="12" value="${modelo.valPensaoAlimen}" onKeyPress="moeda(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1230,7 +1261,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Seguro Desemprego:</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control input-sm" name="valorSeguroDesemp" id="valorSeguroDesemp" placeholder="Valor R$" maxlength="16" value="${modelo.valSegDesempr}" />
+										<input type="text" class="form-control input-sm" name="valorSeguroDesemp" id="valorSeguroDesemp" placeholder="Valor R$" maxlength="12" value="${modelo.valSegDesempr}" onKeyPress="moeda(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1239,7 +1270,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Empregado sem Carteira Assinada:</label>
 									<div class="col-sm-2">
-										<input type="number" class="form-control input-sm" name="valorSemCarteira" id="valorSemCarteira" placeholder="Valor R$" maxlength="16" value="${modelo.valEmprInformal}" />
+										<input type="text" class="form-control input-sm" name="valorSemCarteira" id="valorSemCarteira" placeholder="Valor R$" maxlength="12" value="${modelo.valEmprInformal}" onKeyPress="moeda(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1248,7 +1279,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Empregado com Carteira Assinada:</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control input-sm" name="valorComCarteira" id="valorComCarteira" placeholder="Valor R$" maxlength="16" value="${modelo.valEmprFormal}" />
+										<input type="text" class="form-control input-sm" name="valorComCarteira" id="valorComCarteira" placeholder="Valor R$" maxlength="12" value="${modelo.valEmprFormal}" onKeyPress="moeda(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1257,7 +1288,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Bolsa Familia:</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control input-sm" name="valorBolsaFamilia" id="valorBolsaFamilia" placeholder="Valor R$" maxlength="16" value="${modelo.valBolsaFamil}" />
+										<input type="text" class="form-control input-sm" name="valorBolsaFamilia" id="valorBolsaFamilia" placeholder="Valor R$" maxlength="12" value="${modelo.valBolsaFamil}" onKeyPress="moeda(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1266,7 +1297,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Outro:</label>
 									<div class="col-sm-2">
-										<input type="number" class="form-control input-sm" name="valorOutros" id="valorOutros" placeholder="Valor R$" maxlength="16" value="${modelo.valOutro}" />
+										<input type="text" class="form-control input-sm" name="valorOutros" id="valorOutros" placeholder="Valor R$" maxlength="12" value="${modelo.valOutro}" onKeyPress="moeda(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1292,10 +1323,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.idGrauEscol}">
-													<input type="radio" name="radioEnsino" id="ensino${total.descricao}r" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioEnsino" id="ensino${total.id}r" value="${total.id}" checked="true" onclick="verificaAnalfabeto()">${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioEnsino" id="ensino${total.descricao}" >${total.descricao} </input>
+													<input type="radio" name="radioEnsino" id="ensino${total.id}" value="${total.id}" onclick="verificaAnalfabeto()">${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -1310,10 +1341,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.grauEscolCompl}">
-													<input type="radio" name="radioEnsinoSituacao" id="ensino${total.id}r" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioEnsinoSituacao" id="situacaoEnsino${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioEnsinoSituacao" id="ensino${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioEnsinoSituacao" id="SituacaoEnsino${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -1332,10 +1363,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.sabeLer}">
-													<input type="radio" name="radioConsegueLer" id="consegueLer${total.id}r" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioConsegueLer" id="consegueLer${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioConsegueLer" id="consegueLer${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioConsegueLer" id="consegueLer${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -1350,10 +1381,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.sabeEscrever}">
-													<input type="radio" name="radioConsegueEscrever" id="consegueEscrever${total.id}r" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioConsegueEscrever" id="consegueEscrever${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioConsegueEscrever" id="consegueEscrever${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioConsegueEscrever" id="consegueEscrever${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -1421,10 +1452,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.energNegoc}">
-													<input type="radio" name="radioNegociacaoEnergia" id="negociacaoEnergia${total.id}r" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioNegociacaoEnergia" id="negociacaoEnergia${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioNegociacaoEnergia" id="negociacaoEnergia${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioNegociacaoEnergia" id="negociacaoEnergia${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -1435,21 +1466,21 @@
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="qtdeParcelaEnergia">Qtde de Parcelas</label> 
-									<input type="number" class="form-control input-sm" name="qtdeParcelaEnergia" id="qtdeParcelaEnergia" maxlength="2" value="${modelo.energNegocParcQtde}" /> 
+									<input type="text" class="form-control input-sm" name="qtdeParcelaEnergia" id="qtdeParcelaEnergia" maxlength="4" value="${modelo.energNegocParcQtde}" onKeyPress="numerico(this)"/> 
 								</div>
 							</div>
 							
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="valorParcelaEnergia">Valor da Parcela</label> 
-									<input type="text" class="form-control input-sm" name="valorParcelaEnergia" id="valorParcelaEnergia" maxlength="16" value="${modelo.energNegocParcVal}" /> 
+									<input type="text" class="form-control input-sm" name="valorParcelaEnergia" id="valorParcelaEnergia" maxlength="12" value="${modelo.energNegocParcVal}" onKeyPress="moeda(this)"/> 
 								</div>
 							</div>
 							
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="diaParcelaEnergia">Dia do Vencimento</label> 
-									<input type="number" class="form-control input-sm" name="diaParcelaEnergia" id="diaParcelaEnergia" maxlength="2" value="${modelo.energNegocDia}" /> 
+									<input type="text" class="form-control input-sm" name="diaParcelaEnergia" id="diaParcelaEnergia" maxlength="2" value="${modelo.energNegocDia}" onKeyPress="numerico(this)"/> 
 								</div>
 							</div>
 						
@@ -1464,10 +1495,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.aguaNegoc}">
-													<input type="radio" name="radioNegociacaoAgua" id="negociacaoAgua${total.id}r" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioNegociacaoAgua" id="negociacaoAgua${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioNegociacaoAgua" id="negociacaoAgua${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioNegociacaoAgua" id="negociacaoAgua${total.id}" value="${total.id}" >${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -1478,21 +1509,21 @@
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="qtdeParcelaAgua">Qtde de Parcelas</label> 
-									<input type="number" class="form-control input-sm" name="qtdeParcelaAgua" id="qtdeParcelaAgua" maxlength="2" value="${modelo.aguaNegocParcQtde}" /> 
+									<input type="text" class="form-control input-sm" name="qtdeParcelaAgua" id="qtdeParcelaAgua" maxlength="4" value="${modelo.aguaNegocParcQtde}" onKeyPress="numerico(this)"/> 
 								</div>
 							</div>
 							
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="valorParcelaAgua">Valor da Parcela</label> 
-									<input type="text" class="form-control input-sm" name="valorParcelaAgua" id="valorParcelaAgua" maxlength="16" value="${modelo.aguaNegocParcVal}" /> 
+									<input type="text" class="form-control input-sm" name="valorParcelaAgua" id="valorParcelaAgua" maxlength="12" value="${modelo.aguaNegocParcVal}" onKeyPress="moeda(this)"/> 
 								</div>
 							</div>
 							
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="diaParcelaAgua">Dia do Vencimento</label> 
-									<input type="number" class="form-control input-sm" name="diaParcelaAgua" id="diaParcelaAgua" maxlength="2" value="${modelo.aguaNegocDia}" /> 
+									<input type="text" class="form-control input-sm" name="diaParcelaAgua" id="diaParcelaAgua" maxlength="2" value="${modelo.aguaNegocDia}" onKeyPress="numerico(this)"/> 
 								</div>
 							</div>
 						</div>
@@ -1540,7 +1571,7 @@
 							<div class="col-sm-12">
 								<div class="form-group">
 									<label>Observa&ccedil;&otilde;es</label> 
-									<textarea class="form-control" rows="3" id="observacoesInformacoes" style="resize:none;" >${modelo.obsGerais}</textarea>
+									<textarea class="form-control" rows="3" id="observacoesInformacoes" name="observacoesInformacoes" style="resize:none;" >${modelo.obsGerais}</textarea>
 								</div>
 							</div>
 					
@@ -1550,8 +1581,8 @@
 					
 				</div>
 				<div class="form-group">
-			    	<div class="col-sm-offset-10 col-sm-10">
-			        	<button type="submit" class="btn btn-primary btn-primary">${botao}</button>
+			    	<div class="col-sm-offset-6">
+			        	<button type="submit" class="btn btn-primary">${botao}</button>
 			      	</div>
 			    </div>
 			</form>

@@ -439,7 +439,13 @@ public class Auxiliar {
     
     public static BigDecimal converteBigDecimal(String parametro) {
     	try {
-			return new BigDecimal(parametro);
+    		if(parametro != null && !parametro.isEmpty()) {
+    			parametro = parametro.replace(".", "").replace(",", ".");
+    			return new BigDecimal(parametro);
+    		}
+    		else {
+    			return null;
+    		}
 		} 
     	catch (Exception e) {
 			return null;

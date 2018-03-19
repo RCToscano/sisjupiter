@@ -12,7 +12,7 @@ public class Diagnostico {
 	private Long idUser;
 	private String coordY;
 	private String coordX;
-	private Integer codServ;
+	private Long codServ;
 	private Integer idSitImovel;
 	private Integer idTpConstr;
 	private Integer idTpInstal;
@@ -22,7 +22,7 @@ public class Diagnostico {
 	private Integer categoria4;
 	private Integer idTpUso;
 	private Integer qtdeCasas;
-	private Integer tempoOcup;
+	private Long tempoOcup;
 	private String atividade;
 	private Integer energEletr;
 	private Integer energEletrIrreg;
@@ -220,10 +220,10 @@ public class Diagnostico {
 	public void setCoordX(String coordX) {
 		this.coordX = coordX;
 	}
-	public Integer getCodServ() {
+	public Long getCodServ() {
 		return codServ;
 	}
-	public void setCodServ(Integer codServ) {
+	public void setCodServ(Long codServ) {
 		this.codServ = codServ;
 	}
 	public Integer getIdSitImovel() {
@@ -280,10 +280,10 @@ public class Diagnostico {
 	public void setQtdeCasas(Integer qtdeCasas) {
 		this.qtdeCasas = qtdeCasas;
 	}
-	public Integer getTempoOcup() {
+	public Long getTempoOcup() {
 		return tempoOcup;
 	}
-	public void setTempoOcup(Integer tempoOcup) {
+	public void setTempoOcup(Long tempoOcup) {
 		this.tempoOcup = tempoOcup;
 	}
 	public String getAtividade() {
@@ -682,7 +682,7 @@ public class Diagnostico {
 	public void setDefFisQtde(Integer defFisQtde) {
 		this.defFisQtde = defFisQtde;
 	}
-	public Integer getDefIntegerelecQtde() {
+	public Integer getDefIntelecQtde() {
 		return defIntelecQtde;
 	}
 	public void setDefIntelecQtde(Integer defIntelecQtde) {

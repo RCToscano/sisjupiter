@@ -52,27 +52,51 @@
 									<c:url value="ServicoBO" var="link">
 			                            <c:param name="acao" value="detalhe"/>
 			                            <c:param name="id" value="${total.idDiagnostico}"/>
+			                            <c:param name="dtInicio" value="${dtInicio}"/>
+			                            <c:param name="dtFim" value="${dtFim}"/>
 			                        </c:url>
 									<td><a href="${link}">${total.idDiagnostico}</a></td>
-									<td>${total.dtInsert}</td>
-									<c:forEach items="${listaSituacaoImovel}" var="lista">
-										<c:if test="${lista.id == total.idSitImovel}">
-											<td>${lista.descricao}</td>
-										</c:if>
-									</c:forEach>
+									<td>${total.data}</td>
+									<c:choose>
+										<c:when test="${total.idSitImovel != ''}">
+											<c:forEach items="${listaSituacaoImovel}" var="lista">
+												<c:if test="${lista.id == total.idSitImovel}">
+													<td>${lista.descricao}</td>
+												</c:if>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<td></td>
+										</c:otherwise>
+									</c:choose>
 									<td>${total.nome}</td>
 									<td>${total.cpf}</td>
 									<td>${total.endereco} ${total.numAtual}</td>
-									<c:forEach items="${listaAbastecimentoAgua}" var="lista">
-										<c:if test="${lista.id == total.abastAguaIrreg}">
-											<td>${lista.descricao}</td>
-										</c:if>
-									</c:forEach>
-									<c:forEach items="${listaDestinoEsgoto}" var="lista">
-										<c:if test="${lista.id == total.idDestEsgoto}">
-											<td>${lista.descricao}</td>
-										</c:if>
-									</c:forEach>
+									<c:choose>
+										<c:when test="${total.abastAguaIrreg != ''}">
+											<c:forEach items="${listaAbastecimentoAgua}" var="lista">
+												<c:if test="${lista.id == total.abastAguaIrreg}">
+													<td>${lista.descricao}</td>
+												</c:if>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<td></td>
+										</c:otherwise>
+									</c:choose>
+									
+									<c:choose>
+										<c:when test="${total.idDestEsgoto != ''}">
+											<c:forEach items="${listaDestinoEsgoto}" var="lista">
+												<c:if test="${lista.id == total.idDestEsgoto}">
+													<td>${lista.descricao}</td>
+												</c:if>
+											</c:forEach>
+										</c:when>
+										<c:otherwise>
+											<td></td>
+										</c:otherwise>
+									</c:choose>
 								</tr>
 							</c:forEach>
 						</tbody>
