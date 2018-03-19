@@ -3,6 +3,7 @@ package br.com.sisjupiter.bo;
 import java.io.IOException;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -16,6 +17,7 @@ import br.com.sisjupiter.connection.ConnectionFactory;
 import br.com.sisjupiter.dao.ComunidadeDAO;
 import br.com.sisjupiter.dao.DiagnosticoDAO;
 import br.com.sisjupiter.dao.EquipeDAO;
+import br.com.sisjupiter.dao.EscolaridadeParenteDAO;
 import br.com.sisjupiter.enuns.DestinoEsgotoEnum;
 import br.com.sisjupiter.enuns.EstadoCivilEnum;
 import br.com.sisjupiter.enuns.EstadosEnum;
@@ -32,6 +34,7 @@ import br.com.sisjupiter.enuns.TipoUsoImovelEnum;
 import br.com.sisjupiter.modelo.Comunidade;
 import br.com.sisjupiter.modelo.Diagnostico;
 import br.com.sisjupiter.modelo.Equipe;
+import br.com.sisjupiter.modelo.EscolaridadeParente;
 import br.com.sisjupiter.modelo.User;
 
 public class ServicoBO extends HttpServlet {
@@ -107,6 +110,9 @@ public class ServicoBO extends HttpServlet {
 	            	ComunidadeDAO comunidadeDAO = new ComunidadeDAO(connection);
 	            	List<Comunidade> listaComunidades = comunidadeDAO.listarTodos();
 	            	
+	            	EscolaridadeParenteDAO parenteDAO = new EscolaridadeParenteDAO(connection);
+	            	List<EscolaridadeParente> listaParente = parenteDAO.listaPorIdDiagnostico(id);
+	            	
 	            	List<TipoConstrucaoEnum> listaTpContrucao = TipoConstrucaoEnum.listCodigos();
 	            	List<TipoInstalacaoEnum> listaTpInstalacao = TipoInstalacaoEnum.listCodigos();
 	            	List<SituacaoImovelEnum> listaSituacaoImovel = SituacaoImovelEnum.listCodigos();
@@ -136,10 +142,12 @@ public class ServicoBO extends HttpServlet {
 	            	req.setAttribute("listaSituacaoEnsino", listaSituacaoEnsino);
 	            	req.setAttribute("listaEquipe", listaEquipe);
 	            	req.setAttribute("listaComunidades", listaComunidades);
+	            	req.setAttribute("listaGrauMembros", listaParente);
 
 	            	req.setAttribute("modelo", diagnostico);
 	            	req.setAttribute("botao", "Alterar");
 	            	req.setAttribute("aviso", "");
+	            	req.setAttribute("display", "none");
 	            	req.setAttribute("sucesso", "");
 	            	req.setAttribute("dtInicio", req.getParameter("dtInicio"));
             		req.setAttribute("dtFim", req.getParameter("dtFim"));
@@ -207,12 +215,14 @@ public class ServicoBO extends HttpServlet {
 	            	req.setAttribute("listaComunidades", listaComunidades);
 	            	
 	            	req.setAttribute("aviso", "");
+	            	req.setAttribute("display", "none");
 	            	req.setAttribute("sucesso", "");
 	            	req.setAttribute("botao", "Cadastrar");
 	                req.getRequestDispatcher("/jsp/servico/formulario.jsp").forward(req, res);
             	}
                 catch (Exception e) {
             		System.out.println(e);
+            		req.setAttribute("display", "block");
             		req.setAttribute("aviso", "Nao foi possivel mostrar o formulario, contate o suporte!");
             		req.getRequestDispatcher("/jsp/home.jsp").forward(req, res);
 				}
@@ -262,8 +272,9 @@ public class ServicoBO extends HttpServlet {
 	            	diagnostico.setNacionalidade(Auxiliar.converteInteger(req.getParameter("radioNacionalidade")));
 	            	diagnostico.setSexo(req.getParameter("radioSexo"));
 	            	diagnostico.setIdEstadoCivil(Auxiliar.converteInteger(req.getParameter("radioEstadoCivil")));
-	            	diagnostico.setTelRes(Auxiliar.converteInteger(req.getParameter("telefone")));
-	            	diagnostico.setTelCel(Auxiliar.converteInteger(req.getParameter("celular")));
+	            	diagnostico.setTelRes(Auxiliar.converteLong(req.getParameter("telefone")));
+	            	diagnostico.setTelCel(Auxiliar.converteLong(req.getParameter("celular")));
+	            	diagnostico.setEmail(req.getParameter("email"));
 	            	diagnostico.setEndereco(req.getParameter("endereco"));
 	            	diagnostico.setNumAtual(Auxiliar.converteInteger(req.getParameter("numeroAtualEndereco")));
 	            	diagnostico.setNumAntigo(Auxiliar.converteInteger(req.getParameter("numeroAntigoEndereco")));
@@ -285,8 +296,8 @@ public class ServicoBO extends HttpServlet {
 	            	diagnostico.setMeioTransp4(Auxiliar.converteCheckBox(req.getParameter("checkTransporteMetro")));
 	            	diagnostico.setMeioTransp5(Auxiliar.converteCheckBox(req.getParameter("checkTransporteTaxi")));
 	            	diagnostico.setInternetAcess(Auxiliar.converteInteger(req.getParameter("radioInternet")));
-	            	diagnostico.setInternetWifi(Auxiliar.converteInteger(req.getParameter("checkWifi")));
-	            	diagnostico.setInternet3g(Auxiliar.converteInteger(req.getParameter("check3g")));
+	            	diagnostico.setInternetWifi(Auxiliar.converteCheckBox(req.getParameter("checkWifi")));
+	            	diagnostico.setInternet3g(Auxiliar.converteCheckBox(req.getParameter("check3g")));
 	            	diagnostico.setQtdeCarro(Auxiliar.converteInteger(req.getParameter("qtdeCarro")));
 	            	diagnostico.setQtdeMoto(Auxiliar.converteInteger(req.getParameter("qtdeMoto")));
 	            	diagnostico.setQtdeBicicleta(Auxiliar.converteInteger(req.getParameter("qtdeBicicleta")));
@@ -310,6 +321,7 @@ public class ServicoBO extends HttpServlet {
 	            	diagnostico.setDefIntelecQtde(Auxiliar.converteInteger(req.getParameter("defIntelectual")));
 	            	diagnostico.setDefOutrosQtde(Auxiliar.converteInteger(req.getParameter("defOutros")));
 	            	diagnostico.setTratCancer(Auxiliar.converteCheckBox(req.getParameter("checkCancer")));
+	            	diagnostico.setTratTuber(Auxiliar.converteCheckBox(req.getParameter("checkTuberculose")));
 	            	diagnostico.setTratHansen(Auxiliar.converteCheckBox(req.getParameter("checkHanseniase")));
 	            	diagnostico.setTratMental(Auxiliar.converteCheckBox(req.getParameter("checkMental")));
 	            	diagnostico.setTratEscler(Auxiliar.converteCheckBox(req.getParameter("checkEsclerose")));
@@ -318,7 +330,7 @@ public class ServicoBO extends HttpServlet {
 	            	diagnostico.setTratCardiac(Auxiliar.converteCheckBox(req.getParameter("checkCardiaca")));
 	            	diagnostico.setTratParkins(Auxiliar.converteCheckBox(req.getParameter("checkParkinson")));
 	            	diagnostico.setTratRenal(Auxiliar.converteCheckBox(req.getParameter("checkRenais")));
-	            	diagnostico.setTratOutro(Auxiliar.converteCheckBox(req.getParameter("outroDoenca")));
+	            	diagnostico.setTratOutro(Auxiliar.converteCheckBox(req.getParameter("checkOutro")));
 	            	diagnostico.setTratOutroDesc(req.getParameter("outroDoenca"));
 	            	diagnostico.setAmebiase(Auxiliar.converteCheckBox(req.getParameter("checkAmebiase")));
 	            	diagnostico.setAmebiaseMemb(req.getParameter("amebiase"));
@@ -365,12 +377,6 @@ public class ServicoBO extends HttpServlet {
 	            	diagnostico.setGrauEscolCompl(Auxiliar.converteInteger(req.getParameter("radioEnsinoSituacao")));
 	            	diagnostico.setSabeLer(Auxiliar.converteInteger(req.getParameter("radioConsegueLer")));
 	            	diagnostico.setSabeEscrever(Auxiliar.converteInteger(req.getParameter("radioConsegueEscrever")));
-	//            	req.getParameter("checkEnsinoFundamentalMembro");
-	//            	req.getParameter("checkEnsinoMedioMembro");
-	//            	req.getParameter("checkEnsinoTecnicoMembro");
-	//            	req.getParameter("checkEnsinoSuperiorMembro");
-	//            	req.getParameter("checkEnsinoGraduacaoMembro");
-	//            	req.getParameter("checkAnalfabetoMembro");
 	            	diagnostico.setProfissRespFamil(req.getParameter("profissaoResponsavel"));
 	            	diagnostico.setEnergNegoc(Auxiliar.converteInteger(req.getParameter("radioNegociacaoEnergia")));
 	            	diagnostico.setEnergNegocParcQtde(Auxiliar.converteInteger(req.getParameter("qtdeParcelaEnergia")));
@@ -386,19 +392,67 @@ public class ServicoBO extends HttpServlet {
 	            	diagnostico.setBenefObraSanImob(Auxiliar.converteCheckBox(req.getParameter("checkBeneficioValorizacaoImovel")));
 	            	diagnostico.setBenefObraSanTuri(Auxiliar.converteCheckBox(req.getParameter("checkBeneficioValorizacaoTurismo")));
 	            	diagnostico.setObsGerais(req.getParameter("observacoesInformacoes"));
+	            	
             	
 	            	DiagnosticoDAO diagnosticoDAO = new DiagnosticoDAO(connection);
-	            	diagnosticoDAO.inserir(diagnostico);
+	            	if(req.getParameter("id") == null || (req.getParameter("id") != null && req.getParameter("id").isEmpty())) {
+		            	diagnosticoDAO.inserir(diagnostico);
+		            	Diagnostico diagnostico2 = new Diagnostico();
+		            	diagnostico2 = diagnosticoDAO.buscarUltimoIdUser(user.getIdUser());
+		            	diagnostico.setIdDiagnostico(diagnostico2.getIdDiagnostico());
+		            	
+		            	if(req.getParameter("cont") != null) {
+			            	EscolaridadeParenteDAO parenteDAO = new EscolaridadeParenteDAO(connection);
+			            	List<EscolaridadeParente> listaParente = new ArrayList<>();
+			            	for(int i = 1; i < Integer.parseInt(req.getParameter("cont")); i++) {
+			            		EscolaridadeParente parente = new EscolaridadeParente();
+			            		parente.setIdDiagnostico(diagnostico2.getIdDiagnostico());
+			            		parente.setIdGrauEscol(Auxiliar.converteLong(req.getParameter("radioEnsinoMembro"+i+"")));
+			            		parente.setNome(req.getParameter("grauMembro"+i+""));
+			            		parente.setParentesco(req.getParameter("parentescoMembro"+i+""));
+			            		parenteDAO.inserir(parente);
+			            		listaParente.add(parente);
+			            	}
+			            	req.setAttribute("listaGrauMembros", listaParente);
+		            	}
+		            	
+		            	req.setAttribute("sucesso", "Serviço cadastrado com sucesso");
+	            	}
+	            	else {
+	            		diagnostico.setIdDiagnostico(Auxiliar.converteLong(req.getParameter("id")));
+	            		diagnosticoDAO.alterar(diagnostico);
+	            		
+	            		if(req.getParameter("cont") != null) {
+			            	EscolaridadeParenteDAO parenteDAO = new EscolaridadeParenteDAO(connection);
+			            	List<EscolaridadeParente> listaParente = new ArrayList<>();
+			            	for(int i = 1; i < Integer.parseInt(req.getParameter("cont")); i++) {
+			            		EscolaridadeParente parente = new EscolaridadeParente();
+			            		parente.setIdDiagnostico(Auxiliar.converteLong(req.getParameter("id")));
+			            		parente.setIdGrauEscol(Auxiliar.converteLong(req.getParameter("radioEnsinoMembro"+i+"")));
+			            		parente.setNome(req.getParameter("grauMembro"+i+""));
+			            		parente.setParentesco(req.getParameter("parentescoMembro"+i+""));
+			            		parente.setIdDiagnoEscolParente(Auxiliar.converteLong(req.getParameter("idGrauMembro"+i)));
+			            		parenteDAO.alterar(parente);
+			            		listaParente.add(parente);
+			            	}
+			            	req.setAttribute("listaGrauMembros", listaParente);
+		            	}
+	            		
+	            		req.setAttribute("sucesso", "Alteração realizada com sucesso");
+	            	}
 	            	
 	            	req.setAttribute("botao", "Alterar");
-	            	req.setAttribute("sucesso", "Serviço cadastrado com sucesso");
+	            	req.setAttribute("display", "none");
 	            	req.setAttribute("aviso", "");
         		} 
         		catch (Exception e) {
         			System.out.println(e);
-            		req.setAttribute("aviso", "Nao foi possivel inserir as informacoes, contate o suporte!");
+            		req.setAttribute("aviso", "Nao foi possível realizar a operação, contate o suporte!");
+            		req.setAttribute("display", "block");
             		req.setAttribute("sucesso", "");
-            		req.setAttribute("botao", "Cadastrar");
+            		req.setAttribute("botao", "Alterar");
+            		if(req.getParameter("id") == null)
+            			req.setAttribute("botao", "Cadastrar");
 				}
         		finally {
         			EquipeDAO equipeDAO = new EquipeDAO(connection);
@@ -444,6 +498,8 @@ public class ServicoBO extends HttpServlet {
 	            		diagnostico.setDtNasc(req.getParameter("dtNascimento"));
 	            	
 	            	req.setAttribute("modelo", diagnostico);
+	            	req.setAttribute("dtInicio", req.getParameter("dtInicio"));
+            		req.setAttribute("dtFim", req.getParameter("dtFim"));
 	            	req.getRequestDispatcher("/jsp/servico/formulario.jsp").forward(req, res);
         		}
             	

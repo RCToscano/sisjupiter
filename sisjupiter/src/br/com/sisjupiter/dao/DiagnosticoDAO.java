@@ -31,7 +31,8 @@ public class DiagnosticoDAO {
             "FROM      TB_DIAGNOSTICO " +
             "WHERE     TB_DIAGNOSTICO.DATA >= ? " +
             "AND       TB_DIAGNOSTICO.DATA <= ? " +
-            "ORDER BY  TB_DIAGNOSTICO.DATA DESC "
+            "ORDER BY  TB_DIAGNOSTICO.DATA DESC, " +
+            "          TB_DIAGNOSTICO.ID_DIAGNOSTICO DESC "
             );
             
             stmt.setString(1, dtInicio);
@@ -120,8 +121,8 @@ public class DiagnosticoDAO {
             	if(rs.getString("DTNASC") != null && ! rs.getString("DTNASC").isEmpty())
             		diagnostico.setDtNasc(formatoData.format(formatoBanco.parse(rs.getString("DTNASC"))));
             	diagnostico.setSexo(rs.getString("SEXO"));
-            	diagnostico.setTelRes(Auxiliar.converteInteger(rs.getString("TELRES")));
-            	diagnostico.setTelCel(Auxiliar.converteInteger(rs.getString("TELCEL")));
+            	diagnostico.setTelRes(Auxiliar.converteLong(rs.getString("TELRES")));
+            	diagnostico.setTelCel(Auxiliar.converteLong(rs.getString("TELCEL")));
             	diagnostico.setIdEstadoCivil(Auxiliar.converteInteger(rs.getString("ID_ESTADOCIVIL")));
             	diagnostico.setEmail(rs.getString("EMAIL"));
             	diagnostico.setEndereco(rs.getString("ENDERECO"));
@@ -258,7 +259,6 @@ public class DiagnosticoDAO {
                 rs.close();
         }
     }
-    
     
     public void inserir(Diagnostico diagnostico) throws Exception {
     	PreparedStatement stmt = null;
@@ -620,5 +620,377 @@ public class DiagnosticoDAO {
 	            rs.close();
 	    }
     }
+    
+    public void alterar(Diagnostico diagnostico) throws Exception {
+    	PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = connection.prepareStatement(
+            				" UPDATE TB_DIAGNOSTICO SET " +
+    						"DATA = ?," + 
+    	            		"DTINSERT = ?," + 
+    	            		"ID_COMUNIDADE = ?," + 
+    	            		"ID_EQUIPE = ?," + 
+    	            		"ID_USER = ?," + 
+    	            		"CODSERV = ?," + 
+    	            		"ID_SITIMOVEL = ?," + 
+    	            		"ID_TPCONSTR = ?," + 
+    	            		"ID_TPINSTAL = ?," + 
+    	            		"CATEGORIA1 = ?," + 
+    	            		"CATEGORIA2 = ?," + 
+    	            		"CATEGORIA3 = ?," + 
+    	            		"CATEGORIA4 = ?," + 
+    	            		"ID_TPUSO = ?," + 
+    	            		"QTDECASAS = ?," + 
+    	            		"TEMPOOCUP = ?," + 
+    	            		"ATIVIDADE = ?," + 
+    	            		"ENERGELETR = ?," + 
+    	            		"ENERGELETRIRREG = ?," + 
+    	            		"INSTALACAO = ?," + 
+    	            		"MEDIDOR = ?," + 
+    	            		"PAVIMEXISTE = ?," + 
+    	            		"COLLIXOEXISTE = ?," + 
+    	            		"ID_ABASTAGUA = ?," + 
+    	            		"ABASTAGUAIRREG = ?," + 
+    	            		"HIDROMETRO = ?," + 
+    	            		"ID_DESTESGOTO = ?," + 
+    	            		"NOME = ?," + 
+    	            		"CPF = ?," + 
+    	            		"RG = ?," + 
+    	            		"NACIONALIDADE = ?," + 
+    	            		"UFNASC = ?," + 
+    	            		"MUNNASC = ?," + 
+    	            		"DTNASC = ?," + 
+    	            		"SEXO = ?," + 
+    	            		"TELRES = ?," + 
+    	            		"TELCEL = ?," + 
+    	            		"ID_ESTADOCIVIL = ?," + 
+    	            		"EMAIL = ?," + 
+    	            		"ENDERECO = ?," + 
+    	            		"NUMATUAL = ?," + 
+    	            		"NUMANTIGO = ?," + 
+    	            		"COMPL = ?," + 
+    	            		"BAIRRO = ?," + 
+    	            		"MUN = ?," + 
+    	            		"UF = ?," + 
+    	            		"CEP = ?," + 
+    	            		"QTDEADULTO = ?," + 
+    	            		"QTDECRIANCA = ?," + 
+    	            		"POSSUICONTA = ?," + 
+    	            		"BANCO = ?," + 
+    	            		"POSSUICDEB = ?," + 
+    	            		"RENDATOTAL = ?," + 
+    	            		"RENDAPERCEUTIL = ?," + 
+    	            		"MEIOTRANSP1 = ?," + 
+    	            		"MEIOTRANSP2 = ?," + 
+    	            		"MEIOTRANSP3 = ?," + 
+    	            		"MEIOTRANSP4 = ?," + 
+    	            		"MEIOTRANSP5 = ?," + 
+    	            		"INTERNETACESS = ?," + 
+    	            		"INTERNETWIFI = ?," + 
+    	            		"INTERNET3G = ?," + 					
+    	            		"QTDECARRO = ?," + 
+    	            		"QTDEMOTO = ?," + 
+    	            		"QTDEBICICLETA = ?," + 
+    	            		"BENEFBCPNUM = ?," + 
+    	            		"BENEFNISNUM = ?," + 
+    	            		"POSSUITARSOCIAL = ?," + 
+    	            		"POSSUIBOLSAFAMIL = ?," + 
+    	            		"BENEFENTREV = ?," + 
+    	            		"BENEFNOME = ?," + 
+    	            		"BENEFCPF = ?," + 
+    	            		"BENEFRG = ?," + 
+    	            		"BENEFSEXO = ?," + 
+    	            		"BENEFDTNASC = ?," + 
+    	            		"BENEFOBS = ?," + 
+    	            		"MAIOR59QTDE = ?," + 
+    	            		"MENOR19QTDE = ?," + 
+    	            		"MENOR1QTDE = ?," + 
+    	            		"DEFVISUALQTDE = ?," + 
+    	            		"DEFAUDITQTDE = ?," + 
+    	            		"DEFFISQTDE = ?," + 
+    	            		"DEFINTELECQTDE = ?," + 
+    	            		"DEFOUTROSQTDE = ?," + 
+    	            		"TRATCANCER = ?," + 
+    	            		"TRATTUBER = ?," + 
+    	            		"TRATHANSEN = ?," + 
+    	            		"TRATMENTAL = ?," + 
+    	            		"TRATESCLER = ?," + 
+    	            		"TRATPARAL = ?," + 
+    	            		"TRATHEPAT = ?," + 
+    	            		"TRATCARDIAC = ?," + 
+    	            		"TRATPARKINS = ?," + 
+    	            		"TRATRENAL = ?," + 
+    	            		"TRATOUTRO = ?," + 
+    	            		"TRATOUTRODESC = ?," + 
+    	            		"AMEBIASE = ?," + 
+    	            		"AMBIASEMEMB = ?," + 
+    	            		"GASTROENT = ?," + 
+    	            		"GASTROENTMEMB = ?," + 
+    	            		"GIARDIASE = ?," + 
+    	            		"GIARDIASEMEMB = ?," + 
+    	            		"FEBRETIFO = ?," + 
+    	            		"FEBRETIFOMEMB = ?," + 
+    	            		"HEPATITE = ?," + 
+    	            		"HEPATITEMEMB = ?," + 
+    	            		"COLERA = ?," + 
+    	            		"COLERAMEMB = ?," + 
+    	            		"ESQUITOSSO = ?," + 
+    	            		"ESQUITOSSOMEMB = ?," + 
+    	            		"ASCARIDIASE = ?," + 
+    	            		"ASCARIDIASEMEMB = ?," + 
+    	            		"TENIASE = ?," + 
+    	            		"TENIASEMEMB = ?," + 
+    	            		"LEPTOSPIROSE = ?," + 
+    	            		"LEPTOSPIROSEMEMB = ?," + 
+    	            		"MALARIA = ?," + 
+    	            		"MALARIAMEMB = ?," + 
+    	            		"DENGUE = ?," + 
+    	            		"DENGUEMEMB = ?," + 
+    	            		"FEBREAMAR = ?," + 
+    	            		"FEBREAMARMEMB = ?," + 
+    	            		"CHIKUNG = ?," + 
+    	            		"CHIKUNGMEMB = ?," + 
+    	            		"ZICAVIRUS = ?," + 
+    	            		"ZICAVIRUSMEMB = ?," + 
+    	            		"CIANOBACTER = ?," + 
+    	            		"CIANOBACTERMEMB = ?," + 
+    	            		"VALDOACAO = ?," + 
+    	            		"VALAPOSENT = ?," + 
+    	            		"VALPENSAOALIMEN = ?," + 
+    	            		"VALSEGDESEMPR = ?," + 
+    	            		"VALEMPRINFORMAL = ?," + 
+    	            		"VALEMPRFORMAL = ?," + 
+    	            		"VALBOLSAFAMIL = ?," + 
+    	            		"VALOUTRO = ?," + 
+    	            		"VALOUTRDESCR = ?," + 
+    	            		"ID_GRAUESCOL = ?," + 
+    	            		"GRAUESCOLCOMPL = ?," + 
+    	            		"SABEESCREVER = ?," + 
+    	            		"SABELER = ?," + 
+    	            		"ENSINOFUNMEMBRO = ?," + 
+    	            		"ENSINOMEDMEMBRO = ?," + 
+    	            		"ENSINOSUPMEMBRO = ?," + 
+    	            		"ENSINOPOSMEMBRO = ?," + 
+    	            		"ENSINOCURMEMBRO = ?," + 
+    	            		"ANALFABMEMBRO = ?," + 
+    	            		"PROFISSRESPFAMIL = ?," + 
+    	            		"ENERGNEGOC = ?," + 
+    	            		"ENERGNEGOCPARCVAL = ?," + 
+    	            		"ENERGNEGOCPARCQTDE = ?," + 
+    	            		"ENERGNEGOCDIA = ?," + 
+    	            		"AGUANEGOC = ?," + 
+    	            		"AGUANEGOCPARCVAL = ?," + 
+    	            		"AGUANEGOCPARCQTDE = ?," + 
+    	            		"AGUANEGOCDIA = ?," + 
+    	            		"OBRASANEAMCONHE = ?," + 
+    	            		"BENEFOBRASANSAUDE = ?," + 
+    	            		"BENEFOBRASANECO = ?," + 
+    	            		"BENEFOBRASANIMOB = ?," + 
+    	            		"BENEFOBRASANTURI = ?," + 
+    	            		"OBSGERAIS = ? " +
+    	            		"WHERE ID_DIAGNOSTICO = ? "
+    	            		);
+		            		
+				            stmt.setObject(1, diagnostico.getData());
+				            stmt.setObject(2, diagnostico.getDtInsert());
+				            stmt.setObject(3, diagnostico.getIdComunidade());
+				            stmt.setObject(4, diagnostico.getIdEquipe());
+				            stmt.setObject(5, diagnostico.getIdUser());
+				            stmt.setObject(6, diagnostico.getCodServ());
+				            stmt.setObject(7, diagnostico.getIdSitImovel());
+				            stmt.setObject(8, diagnostico.getIdTpConstr());
+				            stmt.setObject(9, diagnostico.getIdTpInstal());
+				            stmt.setObject(10, diagnostico.getCategoria1());
+				            stmt.setObject(11, diagnostico.getCategoria2());
+				            stmt.setObject(12, diagnostico.getCategoria3());
+				            stmt.setObject(13, diagnostico.getCategoria4());
+				            stmt.setObject(14, diagnostico.getIdTpUso());
+				            stmt.setObject(15, diagnostico.getQtdeCasas());
+				            stmt.setObject(16, diagnostico.getTempoOcup());
+				            stmt.setObject(17, diagnostico.getAtividade());
+				            stmt.setObject(18, diagnostico.getEnergEletr());
+				            stmt.setObject(19, diagnostico.getEnergEletrIrreg());
+				            stmt.setObject(20, diagnostico.getInstalacao());
+				            stmt.setObject(21, diagnostico.getMedidor());
+				            stmt.setObject(22, diagnostico.getPavimeExiste());
+				            stmt.setObject(23, diagnostico.getColLixoExiste());
+				            stmt.setObject(24, diagnostico.getIdAbastAgua());
+				            stmt.setObject(25, diagnostico.getAbastAguaIrreg());
+				            stmt.setObject(26, diagnostico.getHidrometro());
+				            stmt.setObject(27, diagnostico.getIdDestEsgoto());
+				            stmt.setObject(28, diagnostico.getNome());
+				            stmt.setObject(29, diagnostico.getCpf());
+				            stmt.setObject(30, diagnostico.getRg());
+				            stmt.setObject(31, diagnostico.getNacionalidade());
+				            stmt.setObject(32, diagnostico.getUfNasc());
+				            stmt.setObject(33, diagnostico.getMunNasc());
+				            stmt.setObject(34, diagnostico.getDtNasc());
+				            stmt.setObject(35, diagnostico.getSexo());
+				            stmt.setObject(36, diagnostico.getTelRes());
+				            stmt.setObject(37, diagnostico.getTelCel());
+				            stmt.setObject(38, diagnostico.getIdEstadoCivil());
+				            stmt.setObject(39, diagnostico.getEmail());
+				            stmt.setObject(40, diagnostico.getEndereco());
+				            stmt.setObject(41, diagnostico.getNumAtual());
+				            stmt.setObject(42, diagnostico.getNumAntigo());
+				            stmt.setObject(43, diagnostico.getCompl());
+				            stmt.setObject(44, diagnostico.getBairro());
+				            stmt.setObject(45, diagnostico.getMun());
+				            stmt.setObject(46, diagnostico.getUf());
+				            stmt.setObject(47, diagnostico.getCep());
+				            stmt.setObject(48, diagnostico.getQtdeAdulto());
+				            stmt.setObject(49, diagnostico.getQtdeCrianca());
+				            stmt.setObject(50, diagnostico.getPossuiConta());
+				            stmt.setObject(51, diagnostico.getBanco());
+				            stmt.setObject(52, diagnostico.getPossuiCDeb());
+				            stmt.setObject(53, diagnostico.getRendaTotal());
+				            stmt.setObject(54, diagnostico.getRendaPerceUtil());
+				            stmt.setObject(55, diagnostico.getMeioTransp1());
+				            stmt.setObject(56, diagnostico.getMeioTransp2());
+				            stmt.setObject(57, diagnostico.getMeioTransp3());
+				            stmt.setObject(58, diagnostico.getMeioTransp4());
+				            stmt.setObject(59, diagnostico.getMeioTransp5());
+				            stmt.setObject(60, diagnostico.getInternetAcess());
+				            stmt.setObject(61, diagnostico.getInternetWifi());
+				            stmt.setObject(62, diagnostico.getInternet3g());
+				            stmt.setObject(63, diagnostico.getQtdeCarro());
+				            stmt.setObject(64, diagnostico.getQtdeMoto());
+				            stmt.setObject(65, diagnostico.getQtdeBicicleta());
+				            stmt.setObject(66, diagnostico.getBenefBCPNum());
+				            stmt.setObject(67, diagnostico.getBenefNISNum());
+				            stmt.setObject(68, diagnostico.getPossuiTarSocial());
+				            stmt.setObject(69, diagnostico.getPossuiBolsaFamil());
+				            stmt.setObject(70, diagnostico.getBenefEntrev());
+				            stmt.setObject(71, diagnostico.getBenefNome());
+				            stmt.setObject(72, diagnostico.getBenefCpf());
+				            stmt.setObject(73, diagnostico.getBenefRg());
+				            stmt.setObject(74, diagnostico.getBenefSexo());
+				            stmt.setObject(75, diagnostico.getBenefDtNasc());
+				            stmt.setObject(76, diagnostico.getBenefObs());
+				            stmt.setObject(77, diagnostico.getMaior59Qtde());
+				            stmt.setObject(78, diagnostico.getMenor19Qtde());
+				            stmt.setObject(79, diagnostico.getMenor1Qtde());
+				            stmt.setObject(80, diagnostico.getDefVisualQtde());
+				            stmt.setObject(81, diagnostico.getDefAuditQtde());
+				            stmt.setObject(82, diagnostico.getDefFisQtde());
+				            stmt.setObject(83, diagnostico.getDefIntelecQtde());
+				            stmt.setObject(84, diagnostico.getDefOutrosQtde());
+				            stmt.setObject(85, diagnostico.getTratCancer());
+				            stmt.setObject(86, diagnostico.getTratTuber());
+				            stmt.setObject(87, diagnostico.getTratHansen());
+				            stmt.setObject(88, diagnostico.getTratMental());
+				            stmt.setObject(89, diagnostico.getTratEscler());
+				            stmt.setObject(90, diagnostico.getTratParal());
+				            stmt.setObject(91, diagnostico.getTratHepat());
+				            stmt.setObject(92, diagnostico.getTratCardiac());
+				            stmt.setObject(93, diagnostico.getTratParkins());
+				            stmt.setObject(94, diagnostico.getTratRenal());
+				            stmt.setObject(95, diagnostico.getTratOutro());
+				            stmt.setObject(96, diagnostico.getTratOutroDesc());
+				            stmt.setObject(97, diagnostico.getAmebiase());
+				            stmt.setObject(98, diagnostico.getAmebiaseMemb());
+				            stmt.setObject(99, diagnostico.getGastroent());
+				            stmt.setObject(100, diagnostico.getGastroentMemb());
+				            stmt.setObject(101, diagnostico.getGiardiase());
+				            stmt.setObject(102, diagnostico.getGiardiaseMemb());
+				            stmt.setObject(103, diagnostico.getFebreTifo());
+				            stmt.setObject(104, diagnostico.getFebreTifoMemb());
+				            stmt.setObject(105, diagnostico.getHepatite());
+				            stmt.setObject(106, diagnostico.getHepatiteMemb());
+				            stmt.setObject(107, diagnostico.getColera());
+				            stmt.setObject(108, diagnostico.getColeraMemb());
+				            stmt.setObject(109, diagnostico.getEsquitosso());
+				            stmt.setObject(110, diagnostico.getEsquitossoMemb());
+				            stmt.setObject(111, diagnostico.getAscaridiase());
+				            stmt.setObject(112, diagnostico.getAscaridiaseMemb());
+				            stmt.setObject(113, diagnostico.getTeniase());
+				            stmt.setObject(114, diagnostico.getTeniaseMemb());
+				            stmt.setObject(115, diagnostico.getLeptospirose());
+				            stmt.setObject(116, diagnostico.getLeptospiroseMemb());
+				            stmt.setObject(117, diagnostico.getMalaria());
+				            stmt.setObject(118, diagnostico.getMalariaMemb());
+				            stmt.setObject(119, diagnostico.getDengue());
+				            stmt.setObject(120, diagnostico.getDengueMemb());
+				            stmt.setObject(121, diagnostico.getFebreAmar());
+				            stmt.setObject(122, diagnostico.getFebreAmarMemb());
+				            stmt.setObject(123, diagnostico.getChikung());
+				            stmt.setObject(124, diagnostico.getChikungMemb());
+				            stmt.setObject(125, diagnostico.getZicaVirus());
+				            stmt.setObject(126, diagnostico.getZicaVirusMemb());
+				            stmt.setObject(127, diagnostico.getCianobacter());
+				            stmt.setObject(128, diagnostico.getCianobacterMemb());
+				            stmt.setObject(129, diagnostico.getValDoacao());
+				            stmt.setObject(130, diagnostico.getValAposent());
+				            stmt.setObject(131, diagnostico.getValPensaoAlimen());
+				            stmt.setObject(132, diagnostico.getValSegDesempr());
+				            stmt.setObject(133, diagnostico.getValEmprInformal());
+				            stmt.setObject(134, diagnostico.getValEmprFormal());
+				            stmt.setObject(135, diagnostico.getValBolsaFamil());
+				            stmt.setObject(136, diagnostico.getValOutro());
+				            stmt.setObject(137, diagnostico.getValOutroDescr());
+				            stmt.setObject(138, diagnostico.getIdGrauEscol());
+				            stmt.setObject(139, diagnostico.getGrauEscolCompl());
+				            stmt.setObject(140, diagnostico.getSabeEscrever());
+				            stmt.setObject(141, diagnostico.getSabeLer());
+				            stmt.setObject(142, diagnostico.getEnsinoFunMembro());
+				            stmt.setObject(143, diagnostico.getEnsinoMedMembro());
+				            stmt.setObject(144, diagnostico.getEnsinoSupMembro());
+				            stmt.setObject(145, diagnostico.getEnsinoPosMembro());
+				            stmt.setObject(146, diagnostico.getEnsinoCurMembro());
+				            stmt.setObject(147, diagnostico.getAnalfabMembro());
+				            stmt.setObject(148, diagnostico.getProfissRespFamil());
+				            stmt.setObject(149, diagnostico.getEnergNegoc());
+				            stmt.setObject(150, diagnostico.getEnergNegocParcVal());
+				            stmt.setObject(151, diagnostico.getEnergNegocParcQtde());
+				            stmt.setObject(152, diagnostico.getEnergNegocDia());
+				            stmt.setObject(153, diagnostico.getAguaNegoc());
+				            stmt.setObject(154, diagnostico.getAguaNegocParcVal());
+				            stmt.setObject(155, diagnostico.getAguaNegocParcQtde());
+				            stmt.setObject(156, diagnostico.getAguaNegocDia());
+				            stmt.setObject(157, diagnostico.getObraSaneamConhe());
+				            stmt.setObject(158, diagnostico.getBenefObraSanSaude());
+				            stmt.setObject(159, diagnostico.getBenefObraSanEco());
+				            stmt.setObject(160, diagnostico.getBenefObraSanImob());
+				            stmt.setObject(161, diagnostico.getBenefObraSanTuri());
+				            stmt.setObject(162, diagnostico.getObsGerais());
+				            stmt.setObject(163, diagnostico.getIdDiagnostico());
+				            stmt.executeUpdate();
+	    }
+	    finally {
+	        if(stmt != null)
+	            stmt.close();
+	        if(rs != null)
+	            rs.close();
+	    }
+    }
 
+    public Diagnostico buscarUltimoIdUser(Long id_user) throws Exception {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = connection.prepareStatement(
+            "SELECT    MAX(TB_DIAGNOSTICO.ID_DIAGNOSTICO) AS ID_DIAGNOSTICO " +
+            "FROM      TB_DIAGNOSTICO " +
+            "WHERE     TB_DIAGNOSTICO.ID_USER = ? "
+            );
+            stmt.setLong(1, id_user);
+
+            rs = stmt.executeQuery();
+
+            Diagnostico diagnostico = null;
+            if(rs.next()) {
+            	diagnostico = new Diagnostico();
+            	diagnostico.setIdDiagnostico(rs.getLong("ID_DIAGNOSTICO"));
+            }
+            return diagnostico;
+        }
+        finally {
+            if(stmt != null)
+                stmt.close();
+            if(rs != null)
+                rs.close();
+        }
+    }
+    
 }

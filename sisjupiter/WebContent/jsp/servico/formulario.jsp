@@ -40,11 +40,11 @@
 	        	</c:otherwise>
         	</c:choose>
 			
-			<c:if test="${aviso != ''}">
-				<div id="divAviso" name="divAviso" class="alert alert-danger" style="display:none;">
+<%-- 			<c:if test="${aviso != ''}"> --%>
+				<div id="divAviso" name="divAviso" class="alert alert-danger" style="display:${display};">
 					<strong><label id='aviso' name='aviso'>${aviso}</strong>
 				</div>
-			</c:if>
+<%-- 			</c:if> --%>
 			
 			<c:if test="${sucesso != ''}">
 				<div class="alert alert-success">
@@ -52,9 +52,11 @@
 				</div>
 			</c:if>
 		
-			<form action="ServicoBO?acao=inserir" method="post">
+			<form action="ServicoBO?acao=inserir" method="post" onSubmit="return validaForm()">
 				<input type="hidden" id="dtInicio" name="dtInicio" value="${dtInicio}" />
 				<input type="hidden" id="dtFim" name="dtFim" value="${dtFim}" />
+				<input type="hidden" id="id" name="id" value="${modelo.idDiagnostico}" />
+				
 				
 				<h2>Formul&aacute;rio de Diagn&oacute;stico</h2>
 				<div class="panel-group">
@@ -63,10 +65,18 @@
 						<div class="panel-heading"><label>Servi&ccedil;o</label></div>
 						<div class="panel-body">
 						
-						
-							<div class="col-sm-6">
+							<div class="col-sm-2">
 								<div class="form-group">
-									<label for="sel1">Cadastrante:</label> 
+									<label for="id">ID: </label> 
+									<input type="text" class="form-control input-sm" name="id" id="id" value="${modelo.idDiagnostico}" disabled />
+								</div>
+							</div>
+						
+							<div class="col-sm-12"></div>
+							
+							<div class="col-sm-6">
+								<div class="form-group has-error has-feedback">
+									<label for="sel1">Cadastrante *:</label> 
 									<select class="form-control" name="cadastrante" id="cadastrante" required>
 	                                	<option value="" selected>Selecione...</option>
 	                                    <c:forEach var="listaEquipe" items="${listaEquipe}">
@@ -84,8 +94,8 @@
 							</div>
 							
 							<div class="col-sm-2">
-								<div class="form-group">
-									<label for="dtExecucao">Data de Execu&ccedil;&atilde;o: </label> 
+								<div class="form-group has-error has-feedback">
+									<label for="dtExecucao">Data de Execu&ccedil;&atilde;o *: </label> 
 									<input type="text" class="form-control input-sm" name="dtExecucao" id="dtExecucao" data-date-format="DD/MM/YYYY" placeholder="dd/mm/aaaa" maxlength="10" value="${modelo.data}" required />
 								</div>
 							</div>
@@ -100,8 +110,8 @@
 							</div>
 							
 							<div class="col-sm-6">
-								<div class="form-group">
-									<label for="sel1">Comunidade:</label> 
+								<div class="form-group has-error has-feedback">
+									<label for="sel1">Comunidade *:</label> 
 									<select class="form-control" name="comunidade" id="comunidade" required>
 	                                    <option value="" selected>Selecione...</option>
 	                                    <c:forEach var="listaComunidades" items="${listaComunidades}">
@@ -126,7 +136,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.idTpInstal}">
-													<input type="radio" name="radioTpInst" id="tpInstRegular${total.descricao}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioTpInst" id="tpInstRegular${total.descricao}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioTpInst" id="tpInstRegular${total.descricao}" value="${total.id}" >${total.descricao} </input>
@@ -144,7 +154,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.idTpConstr}">
-													<input type="radio" name="radioTpConstrucao" id="tpConstrucao${total.descricao}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioTpConstrucao" id="tpConstrucao${total.descricao}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioTpConstrucao" id="tpConstrucao${total.descricao}" value="${total.id}" >${total.descricao} </input>
@@ -162,7 +172,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.idSitImovel}">
-													<input type="radio" name="radioSitImovel" id="sitImovel${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioSitImovel" id="sitImovel${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioSitImovel" id="sitImovel${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -177,16 +187,44 @@
 								<div class="form-group">
 									<label for="email">Categoria do Im&oacute;vel: </label> 
 									<label class="checkbox-inline">
-										<input type="checkbox" name="checkTpImovelResidencia" id="checkTpImovelResidencia" >Resid&ecirc;ncia</input>
+										<c:choose>
+											<c:when test="${not empty modelo.categoria1}">
+												<input type="checkbox" name="checkTpImovelResidencia" id="checkTpImovelResidencia" checked>Resid&ecirc;ncia</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkTpImovelResidencia" id="checkTpImovelResidencia" >Resid&ecirc;ncia</input>
+											</c:otherwise>
+										</c:choose>
 									</label>
 									<label class="checkbox-inline">
-										<input type="checkbox" name="checkTpImovelComercio" id="checkTpImovelComercio" >Com&eacute;rcio</input>
+										<c:choose>
+											<c:when test="${not empty modelo.categoria2}">
+												<input type="checkbox" name="checkTpImovelComercio" id="checkTpImovelComercio" checked >Com&eacute;rcio</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkTpImovelComercio" id="checkTpImovelComercio" >Com&eacute;rcio</input>
+											</c:otherwise>
+										</c:choose>
 									</label>
 									<label class="checkbox-inline">
-										<input type="checkbox" name="checkTpImovelIndustria" id="checkTpImovelIndustria" >Ind&uacute;stria</input>
+										<c:choose>
+											<c:when test="${not empty modelo.categoria3}">
+												<input type="checkbox" name="checkTpImovelIndustria" id="checkTpImovelIndustria" checked >Ind&uacute;stria</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkTpImovelIndustria" id="checkTpImovelIndustria" >Ind&uacute;stria</input>
+											</c:otherwise>
+										</c:choose>
 									</label>
 									<label class="checkbox-inline">
-										<input type="checkbox" name="checkTpImovelPublica" id="checkTpImovelPublica" >P&uacute;blica</input>
+										<c:choose>
+											<c:when test="${not empty modelo.categoria4}">
+												<input type="checkbox" name="checkTpImovelPublica" id="checkTpImovelPublica" checked >P&uacute;blica</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkTpImovelPublica" id="checkTpImovelPublica" >P&uacute;blica</input>
+											</c:otherwise>
+										</c:choose>
 									</label>
 								</div>
 							</div>
@@ -198,7 +236,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.idTpUso}">
-													<input type="radio" name="radioImovel" id="imovel${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioImovel" id="imovel${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioImovel" id="imovel${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -237,7 +275,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.energEletr}">
-													<input type="radio" name="radioEnergia" id="energia${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioEnergia" id="energia${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioEnergia" id="energia${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -255,7 +293,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.energEletrIrreg}">
-													<input type="radio" name="radioEnergiaIrregular" id="irregularEnerg${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioEnergiaIrregular" id="irregularEnerg${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioEnergiaIrregular" id="irregularEnerg${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -289,7 +327,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.pavimeExiste}">
-													<input type="radio" name="radioPavimento" id="pavimento${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioPavimento" id="pavimento${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioPavimento" id="pavimento${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -307,7 +345,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.colLixoExiste}">
-													<input type="radio" name="radioLixo" id="lixo${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioLixo" id="lixo${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioLixo" id="lixo${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -325,7 +363,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.idAbastAgua}">
-													<input type="radio" name="radioAbastecimento" id="abast${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioAbastecimento" id="abast${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioAbastecimento" id="abast${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -343,7 +381,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.abastAguaIrreg}">
-													<input type="radio" name="radioAguaIrregular" id="irregularAgua${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioAguaIrregular" id="irregularAgua${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioAguaIrregular" id="irregularAgua${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -368,7 +406,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.idDestEsgoto}">
-													<input type="radio" name="radioEsgoto" id="esgoto${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioEsgoto" id="esgoto${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioEsgoto" id="esgoto${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -447,7 +485,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.nacionalidade}">
-													<input type="radio" name="radioNacionalidade" id="nacionalidade${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioNacionalidade" id="nacionalidade${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioNacionalidade" id="nacionalidade${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -465,7 +503,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.sexo}">
-													<input type="radio" name="radioSexo" id="sexo${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioSexo" id="sexo${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioSexo" id="sexo${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -483,7 +521,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.idEstadoCivil}">
-													<input type="radio" name="radioEstadoCivil" id="estCivil${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioEstadoCivil" id="estCivil${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioEstadoCivil" id="estCivil${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -603,15 +641,15 @@
 							
 							<div class="col-sm-4">
 								<div class="form-group">
-									<label for="banco">Tem Conta Banc&oacute;ria: </label> 
+									<label for="banco">Tem Conta Banc&aacute;ria: </label> 
 									<c:forEach items="${listaSimNao}" var="total">
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.possuiConta}">
-													<input type="radio" name="radioBanco" id="banco${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioBanco" id="banco${total.id}" value="${total.id}" checked onClick="verificaContaBanco()">${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioBanco" id="banco${total.id}" value="${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioBanco" id="banco${total.id}" value="${total.id}" onClick="verificaContaBanco()">${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -626,7 +664,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.possuiCDeb}">
-													<input type="radio" name="radioCartaoDebito" id="cartaoDebito${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioCartaoDebito" id="cartaoDebito${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioCartaoDebito" id="cartaoDebito${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -647,7 +685,7 @@
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="rendaFamilia">Renda Total da Fam&iacute;lia</label> 
-									<input type="text" class="form-control input-sm" name="rendaFamilia" id="rendaFamilia" maxlength="12" value="${modelo.rendaTotal}" onKeyPress="moeda(this)"/>
+									<input type="text" class="form-control input-sm" name="rendaFamilia" id="rendaFamilia" maxlength="12" value="${modelo.rendaTotal}" onBlur="moeda(this)" onKeyPress="moeda(this)"/>
 								</div>
 							</div>
 	
@@ -662,19 +700,54 @@
 								<div class="form-group">
 									<label for="sel3">Meios de Transporte: </label> 
 									<label class="checkbox-inline">
-										<input type="checkbox" name="checkTransporteCarro" id="checkTransporteCarro" >Carro Pr&oacute;prio</input>
+										<c:choose>
+											<c:when test="${not empty modelo.meioTransp1}">
+												<input type="checkbox" name="checkTransporteCarro" id="checkTransporteCarro" checked >Carro Pr&oacute;prio</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkTransporteCarro" id="checkTransporteCarro" >Carro Pr&oacute;prio</input>
+											</c:otherwise>
+										</c:choose>
 									</label>
 									<label class="checkbox-inline">
-										<input type="checkbox" name="checkTransporteOnibus" id="checkTransporteOnibus" >&Ocirc;nibus</input>
+										<c:choose>
+											<c:when test="${not empty modelo.meioTransp2}">
+												<input type="checkbox" name="checkTransporteOnibus" id="checkTransporteOnibus" checked >&Ocirc;nibus</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkTransporteOnibus" id="checkTransporteOnibus" >&Ocirc;nibus</input>
+											</c:otherwise>
+										</c:choose>
 									</label>
 									<label class="checkbox-inline">
-										<input type="checkbox" name="checkTransporteTrem" id="checkTransporteTrem" >Trem</input>
+										<c:choose>
+											<c:when test="${not empty modelo.meioTransp3}">
+												<input type="checkbox" name="checkTransporteTrem" id="checkTransporteTrem" checked >Trem</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkTransporteTrem" id="checkTransporteTrem" >Trem</input>
+											</c:otherwise>
+										</c:choose>
 									</label>
 									<label class="checkbox-inline">
-										<input type="checkbox" name="checkTransporteMetro" id="checkTransporteMetro" >Metro</input>
+										<c:choose>
+											<c:when test="${not empty modelo.meioTransp4}">
+												<input type="checkbox" name="checkTransporteMetro" id="checkTransporteMetro" checked >Metro</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkTransporteMetro" id="checkTransporteMetro" >Metro</input>
+											</c:otherwise>
+										</c:choose>
 									</label>
 									<label class="checkbox-inline">
-										<input type="checkbox" name="checkTransporteTaxi" id="checkTransporteTaxi" >Taxi</input>
+										<c:choose>
+											<c:when test="${not empty modelo.meioTransp5}">
+												<input type="checkbox" name="checkTransporteTaxi" id="checkTransporteTaxi" checked >Taxi</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkTransporteTaxi" id="checkTransporteTaxi" >Taxi</input>
+											</c:otherwise>
+										</c:choose>
 									</label>
 								</div>
 							</div>
@@ -686,10 +759,10 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.internetAcess}">
-													<input type="radio" name="radioInternet" id="internet${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioInternet" id="internet${total.id}" value="${total.id}" checked onClick="verificaAcessoInternet()">${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
-													<input type="radio" name="radioInternet" id="internet${total.id}" value="${total.id}" >${total.descricao} </input>
+													<input type="radio" name="radioInternet" id="internet${total.id}" value="${total.id}" onClick="verificaAcessoInternet()">${total.descricao} </input>
 												</c:otherwise>
 											</c:choose>
 										</label> 
@@ -701,10 +774,24 @@
 								<div class="form-group">
 									<label for="email">Tipo de Internet: </label> 
 									<label class="checkbox-inline">
-										<input type="checkbox" name="checkWifi" id="checkWifi" >WI-FI</input>
+										<c:choose>
+											<c:when test="${not empty modelo.internetWifi}">
+												<input type="checkbox" name="checkWifi" id="checkWifi" checked>WI-FI</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkWifi" id="checkWifi" >WI-FI</input>
+											</c:otherwise>
+										</c:choose>
 									</label>
 									<label class="checkbox-inline">
-										<input type="checkbox" name="check3g" id="check3g" >3G</input>
+										<c:choose>
+											<c:when test="${not empty modelo.internet3g}">
+												<input type="checkbox" name="check3g" id="check3g" checked >3G</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="check3g" id="check3g" >3G</input>
+											</c:otherwise>
+										</c:choose>
 									</label>
 								</div>
 							</div>
@@ -763,7 +850,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.possuiTarSocial}">
-													<input type="radio" name="radioTarifaAgua" id="tarifaAgua${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioTarifaAgua" id="tarifaAgua${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioTarifaAgua" id="tarifaAgua${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -781,7 +868,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.possuiBolsaFamil}">
-													<input type="radio" name="radioBolsaFamilia" id="bolsaFamilia${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioBolsaFamilia" id="bolsaFamilia${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioBolsaFamilia" id="bolsaFamilia${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -834,7 +921,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.benefSexo}">
-													<input type="radio" name="radioSexoNTitular" id="sexo${total.id}NTitular" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioSexoNTitular" id="sexo${total.id}NTitular" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioSexoNTitular" id="sexo${total.id}NTitular" value="${total.id}" >${total.descricao} </input>
@@ -884,70 +971,41 @@
 							</div>
 							
 							<div class="col-sm-12">
-								<div class="col-sm-1" style="padding-top: 0.5%;">
-									<label class="checkbox-inline">
-								    	<input type="checkbox" name="checkDefVisual" id="checkDefVisual" >Visual</input>
-								    </label>
-							    </div>
-							    <div class="col-sm-2">
-									<div class="form-group">
+								<div class="form-group row">
+									<label for="inputPassword" class="col-sm-2 col-form-label" style="padding-top: 0.5%;">Visual:</label>
+									<div class="col-sm-2">
 										<input type="text" class="form-control input-sm" name="defVisual" id="defVisual" placeholder="Digite a quantidade" maxlength="11" value="${modelo.defVisualQtde}" onKeyPress="numerico(this)"/>
 									</div>
 								</div>
-						    </div>
+							</div>
 							
 							<div class="col-sm-12">
-								<div class="col-sm-1" style="padding-top: 0.5%;">
-									<label class="checkbox-inline">
-								    	<input type="checkbox" name="checkDefAuditivo" id="checkDefAuditivo" >Auditivo</input>
-								    </label>
-							    </div>
-							    <div class="col-sm-2">
-									<div class="form-group">
+								<div class="form-group row">
+									<label for="inputPassword" class="col-sm-2 col-form-label" style="padding-top: 0.5%;">Auditivo:</label>
+									<div class="col-sm-2">
 										<input type="text" class="form-control input-sm" name="defAuditivo" id="defAuditivo" placeholder="Digite a quantidade" maxlength="11" value="${modelo.defAuditQtde}" onKeyPress="numerico(this)"/>
 									</div>
 								</div>
-						    </div>
+							</div>
 							
 							<div class="col-sm-12">
-								<div class="col-sm-1" style="padding-top: 0.5%;">
-									<label class="checkbox-inline">
-								    	<input type="checkbox" name="checkDefFisico" id="checkDefFisico" >F&iacute;sico</input>
-								    </label>
-							    </div>
-							    <div class="col-sm-2">
-									<div class="form-group">
-										<input type="text" class="form-control input-sm" name="defFisico" id="defFisico" placeholder="Digite a quantidade" maxlength="11" value="${modelo.defFisQtde}" onKeyPress="numerico(this)"/>
-									</div>
-								</div>
-						    </div>
-							
-							<div class="col-sm-12">
-								<div class="col-sm-3" style="padding-top: 0.5%;">
-									<label class="checkbox-inline">
-								    	<input type="checkbox" name="checkDefIntelectual" id="checkDefIntelectual" >Defici&ecirc;ncia Intelectual</input>
-								    </label>
-							    </div>
-							    <div class="col-sm-2">
-									<div class="form-group">
+								<div class="form-group row">
+									<label for="inputPassword" class="col-sm-2 col-form-label" style="padding-top: 0.5%;">Defici&ecirc;ncia Intelectual:</label>
+									<div class="col-sm-2">
 										<input type="text" class="form-control input-sm" name="defIntelectual" id="defIntelectual" placeholder="Digite a quantidade" maxlength="11" value="${modelo.defIntelecQtde}" onKeyPress="numerico(this)"/>
 									</div>
 								</div>
-						    </div>
+							</div>
 							
 							<div class="col-sm-12">
-								<div class="col-sm-1" style="padding-top: 0.5%;">
-									<label class="checkbox-inline">
-								    	<input type="checkbox" name="checkDefOutros" id="checkDefOutros" >Outros</input>
-								    </label>
-							    </div>
-							    <div class="col-sm-2">
-									<div class="form-group">
+								<div class="form-group row">
+									<label for="inputPassword" class="col-sm-2 col-form-label" style="padding-top: 0.5%;">Outros:</label>
+									<div class="col-sm-2">
 										<input type="text" class="form-control input-sm" name="defOutros" id="defOutros" placeholder="Digite a quantidade" maxlength="11" value="${modelo.defOutrosQtde}" onKeyPress="numerico(this)"/>
 									</div>
 								</div>
-						    </div>
-						    
+							</div>
+							
 						    <div class="col-sm-12">
 								<div class="form-group">
 									<label for="tratamento">Membro Fam&iacute;lia em Tratamento: </label> 
@@ -956,52 +1014,134 @@
 						
 							<div class="col-sm-12">
 								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkCancer" id="checkCancer" >C&acirc;ncer</input>
+									<c:choose>
+										<c:when test="${not empty modelo.tratCancer}">
+											<input type="checkbox" name="checkCancer" id="checkCancer" checked >C&acirc;ncer</input>
+										</c:when>
+										<c:otherwise>
+											<input type="checkbox" name="checkCancer" id="checkCancer" >C&acirc;ncer</input>
+										</c:otherwise>
+									</c:choose>
 							    </label>
 							</div> 
 							<div class="col-sm-12"> 
 								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkHanseniase" id="checkHanseniase" >Hansen&iacute;ase</input>
+									<c:choose>
+										<c:when test="${not empty modelo.tratTuber}">
+											<input type="checkbox" name="checkTuberculose" id="checkTuberculose" checked >Tuberculose</input>
+										</c:when>
+										<c:otherwise>
+											<input type="checkbox" name="checkTuberculose" id="checkTuberculose" >Tuberculose</input>
+										</c:otherwise>
+									</c:choose>
 							    </label>
 							</div> 
 							<div class="col-sm-12"> 
 								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkMental" id="checkMental" >Aliena&ccedil;&atilde;o Mental</input>
+									<c:choose>
+										<c:when test="${not empty modelo.tratHansen}">
+											<input type="checkbox" name="checkHanseniase" id="checkHanseniase" checked >Hansen&iacute;ase</input>
+										</c:when>
+										<c:otherwise>
+											<input type="checkbox" name="checkHanseniase" id="checkHanseniase" >Hansen&iacute;ase</input>
+										</c:otherwise>
+									</c:choose>
 							    </label>
 							</div> 
 							<div class="col-sm-12"> 
 								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkEsclerose" id="checkEsclerose" >Esclerose M&uacute;ltipla</input>
+									<c:choose>
+										<c:when test="${not empty modelo.tratMental}">
+											<input type="checkbox" name="checkMental" id="checkMental" checked >Aliena&ccedil;&atilde;o Mental</input>
+										</c:when>
+										<c:otherwise>
+											<input type="checkbox" name="checkMental" id="checkMental" >Aliena&ccedil;&atilde;o Mental</input>
+										</c:otherwise>
+									</c:choose>
 							    </label>
 							</div> 
 							<div class="col-sm-12"> 
 								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkParalisia" id="checkParalisia" >Paralisia Irrevers&iacute;vel ou Incapacitante</input>
+									<c:choose>
+										<c:when test="${not empty modelo.tratEscler}">
+											<input type="checkbox" name="checkEsclerose" id="checkEsclerose" checked >Esclerose M&uacute;ltipla</input>
+										</c:when>
+										<c:otherwise>
+											<input type="checkbox" name="checkEsclerose" id="checkEsclerose" >Esclerose M&uacute;ltipla</input>
+										</c:otherwise>
+									</c:choose>
 							    </label>
 							</div> 
 							<div class="col-sm-12"> 
 								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkHepatica" id="checkHepatica" >Doen&ccedil;as Hep&aacute;ticas (F&iacute;gado)</input>
+									<c:choose>
+										<c:when test="${not empty modelo.tratParal}">
+											<input type="checkbox" name="checkParalisia" id="checkParalisia" checked >Paralisia Irrevers&iacute;vel ou Incapacitante</input>
+										</c:when>
+										<c:otherwise>
+											<input type="checkbox" name="checkParalisia" id="checkParalisia" >Paralisia Irrevers&iacute;vel ou Incapacitante</input>
+										</c:otherwise>
+									</c:choose>
 							    </label>
 							</div> 
 							<div class="col-sm-12"> 
 								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkCardiaca" id="checkCardiaca" >Doen&ccedil;as Card&iacute;acas</input>
+									<c:choose>
+										<c:when test="${not empty modelo.tratHepat}">
+											<input type="checkbox" name="checkHepatica" id="checkHepatica" checked >Doen&ccedil;as Hep&aacute;ticas (F&iacute;gado)</input>
+										</c:when>
+										<c:otherwise>
+											<input type="checkbox" name="checkHepatica" id="checkHepatica" >Doen&ccedil;as Hep&aacute;ticas (F&iacute;gado)</input>
+										</c:otherwise>
+									</c:choose>
 							    </label>
 							</div> 
 							<div class="col-sm-12"> 
 								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkParkinson" id="checkParkinson" >Doen&ccedil;as de Parkinson</input>
+									<c:choose>
+										<c:when test="${not empty modelo.tratCardiac}">
+											<input type="checkbox" name="checkCardiaca" id="checkCardiaca" checked >Doen&ccedil;as Card&iacute;acas</input>
+										</c:when>
+										<c:otherwise>
+											<input type="checkbox" name="checkCardiaca" id="checkCardiaca" >Doen&ccedil;as Card&iacute;acas</input>
+										</c:otherwise>
+									</c:choose>
 							    </label>
 							</div> 
 							<div class="col-sm-12"> 
 								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkRenais" id="checkRenais" >Doen&ccedil;as Renais (Rins)</input>
+									<c:choose>
+										<c:when test="${not empty modelo.tratParkins}">
+											<input type="checkbox" name="checkParkinson" id="checkParkinson" checked >Doen&ccedil;as de Parkinson</input>
+										</c:when>
+										<c:otherwise>
+											<input type="checkbox" name="checkParkinson" id="checkParkinson" >Doen&ccedil;as de Parkinson</input>
+										</c:otherwise>
+									</c:choose>
+							    </label>
+							</div> 
+							<div class="col-sm-12"> 
+								<label class="checkbox-inline">
+									<c:choose>
+										<c:when test="${not empty modelo.tratRenal}">
+											<input type="checkbox" name="checkRenais" id="checkRenais" checked >Doen&ccedil;as Renais (Rins)</input>
+										</c:when>
+										<c:otherwise>
+											<input type="checkbox" name="checkRenais" id="checkRenais" >Doen&ccedil;as Renais (Rins)</input>
+										</c:otherwise>
+									</c:choose>
 							    </label>
 						    </div>
 						    <div class="col-sm-12"> 
 								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkOutro" id="checkOutro" >Outro</input>
+									<c:choose>
+										<c:when test="${not empty modelo.tratOutro}">
+											<input type="checkbox" name="checkOutro" id="checkOutro" checked onClick="verificaOutraDoenca()">Outro</input>
+										</c:when>
+										<c:otherwise>
+											<input type="checkbox" name="checkOutro" id="checkOutro" onClick="verificaOutraDoenca()">Outro</input>
+										</c:otherwise>
+									</c:choose>
 							    </label>
 						    </div>
 						    
@@ -1019,7 +1159,14 @@
 							<div class="col-sm-12">
 								<div class="col-sm-3" style="padding-top: 0.5%;">
 									<label class="checkbox-inline">
-								    	<input type="checkbox" name="checkAmebiase" id="checkAmebiase" >Ameb&iacute;ase</input>
+										<c:choose>
+											<c:when test="${not empty modelo.amebiase}">
+												<input type="checkbox" name="checkAmebiase" id="checkAmebiase" checked >Ameb&iacute;ase</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkAmebiase" id="checkAmebiase" >Ameb&iacute;ase</input>
+											</c:otherwise>
+										</c:choose>
 								    </label>
 							    </div>
 							    <div class="col-sm-3">
@@ -1032,7 +1179,14 @@
 							<div class="col-sm-12">
 								<div class="col-sm-3" style="padding-top: 0.5%;">
 									<label class="checkbox-inline"> 
-								    	<input type="checkbox" name="checkGastroenterite" id="checkGastroenterite" >Gastroenterite</input>
+										<c:choose>
+											<c:when test="${not empty modelo.gastroent}">
+												<input type="checkbox" name="checkGastroenterite" id="checkGastroenterite" checked >Gastroenterite</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkGastroenterite" id="checkGastroenterite" >Gastroenterite</input>
+											</c:otherwise>
+										</c:choose>
 								    </label>
 							    </div>
 							    <div class="col-sm-3">
@@ -1045,7 +1199,14 @@
 							<div class="col-sm-12">
 								<div class="col-sm-3" style="padding-top: 0.5%;">
 									<label class="checkbox-inline"> 
-								    	<input type="checkbox" name="checkGiardiase" id="checkGiardiase" >Giard&iacute;ase e Criptosporid&iacute;ase</input>
+										<c:choose>
+											<c:when test="${not empty modelo.giardiase}">
+												<input type="checkbox" name="checkGiardiase" id="checkGiardiase" checked >Giard&iacute;ase e Criptosporid&iacute;ase</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkGiardiase" id="checkGiardiase" >Giard&iacute;ase e Criptosporid&iacute;ase</input>
+											</c:otherwise>
+										</c:choose>
 								    </label>
 							    </div>
 							    <div class="col-sm-3">
@@ -1058,7 +1219,14 @@
 							<div class="col-sm-12">
 								<div class="col-sm-3" style="padding-top: 0.5%;">
 									<label class="checkbox-inline"> 
-								    	<input type="checkbox" name="checkTifoide" id="checkTifoide" >Febres Tif&oacute;ide e Paratif&oacute;ide</input>
+										<c:choose>
+											<c:when test="${not empty modelo.febreTifo}">
+												<input type="checkbox" name="checkTifoide" id="checkTifoide" checked >Febres Tif&oacute;ide e Paratif&oacute;ide</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkTifoide" id="checkTifoide" >Febres Tif&oacute;ide e Paratif&oacute;ide</input>
+											</c:otherwise>
+										</c:choose>
 								    </label>
 							    </div>
 							    <div class="col-sm-3">
@@ -1071,7 +1239,14 @@
 							<div class="col-sm-12">
 								<div class="col-sm-3" style="padding-top: 0.5%;">
 									<label class="checkbox-inline"> 
-								    	<input type="checkbox" name="checkHepatite" id="checkHepatite" >Hepatite Infecciosa</input>
+										<c:choose>
+											<c:when test="${not empty modelo.hepatite}">
+												<input type="checkbox" name="checkHepatite" id="checkHepatite" checked >Hepatite Infecciosa</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkHepatite" id="checkHepatite" >Hepatite Infecciosa</input>
+											</c:otherwise>
+										</c:choose>
 								    </label>
 							    </div>
 							    <div class="col-sm-3">
@@ -1084,7 +1259,14 @@
 							<div class="col-sm-12">
 								<div class="col-sm-3" style="padding-top: 0.5%;">
 									<label class="checkbox-inline"> 
-								    	<input type="checkbox" name="checkColera" id="checkColera" >C&oacute;lera</input>
+										<c:choose>
+											<c:when test="${not empty modelo.colera}">
+												<input type="checkbox" name="checkColera" id="checkColera" checked >C&oacute;lera</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkColera" id="checkColera" >C&oacute;lera</input>
+											</c:otherwise>
+										</c:choose>
 								    </label>
 							    </div>
 							    <div class="col-sm-3">
@@ -1097,7 +1279,14 @@
 							<div class="col-sm-12">
 								<div class="col-sm-3" style="padding-top: 0.5%;">
 									<label class="checkbox-inline"> 
-								    	<input type="checkbox" name="checkEsquistossomose" id="checkEsquistossomose" >Esquistossomose (XISTOSA)</input>
+										<c:choose>
+											<c:when test="${not empty modelo.esquitosso}">
+												<input type="checkbox" name="checkEsquistossomose" id="checkEsquistossomose" checked >Esquistossomose (XISTOSA)</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkEsquistossomose" id="checkEsquistossomose" >Esquistossomose (XISTOSA)</input>
+											</c:otherwise>
+										</c:choose>
 								    </label>
 							    </div>
 							    <div class="col-sm-3">
@@ -1110,7 +1299,14 @@
 							<div class="col-sm-12">
 								<div class="col-sm-3" style="padding-top: 0.5%;">
 									<label class="checkbox-inline"> 
-								    	<input type="checkbox" name="checkAscaridiase" id="checkAscaridiase" >Ascarid&iacute;ase (Lombrigas ou Bichas)</input>
+										<c:choose>
+											<c:when test="${not empty modelo.ascaridiase}">
+												<input type="checkbox" name="checkAscaridiase" id="checkAscaridiase" checked >Ascarid&iacute;ase (Lombrigas ou Bichas)</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkAscaridiase" id="checkAscaridiase" >Ascarid&iacute;ase (Lombrigas ou Bichas)</input>
+											</c:otherwise>
+										</c:choose>
 								    </label>
 							    </div>
 							    <div class="col-sm-3">
@@ -1123,7 +1319,14 @@
 							<div class="col-sm-12">
 								<div class="col-sm-3" style="padding-top: 0.5%;">
 									<label class="checkbox-inline"> 
-								    	<input type="checkbox" name="checkTeniase" id="checkTeniase" >Ten&iacute;ase (Solit&aacute;ria)</input>
+										<c:choose>
+											<c:when test="${not empty modelo.teniase}">
+												<input type="checkbox" name="checkTeniase" id="checkTeniase" checked >Ten&iacute;ase (Solit&aacute;ria)</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkTeniase" id="checkTeniase" >Ten&iacute;ase (Solit&aacute;ria)</input>
+											</c:otherwise>
+										</c:choose>
 								    </label>
 							    </div>
 							    <div class="col-sm-3">
@@ -1136,7 +1339,14 @@
 							<div class="col-sm-12">
 								<div class="col-sm-3" style="padding-top: 0.5%;">
 									<label class="checkbox-inline"> 
-								    	<input type="checkbox" name="checkLeptospirose" id="checkLeptospirose" >Leptospirose</input>
+										<c:choose>
+											<c:when test="${not empty modelo.leptospirose}">
+												<input type="checkbox" name="checkLeptospirose" id="checkLeptospirose" checked >Leptospirose</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkLeptospirose" id="checkLeptospirose" >Leptospirose</input>
+											</c:otherwise>
+										</c:choose>
 								    </label>
 							    </div>
 							    <div class="col-sm-3">
@@ -1149,7 +1359,14 @@
 							<div class="col-sm-12">
 								<div class="col-sm-3" style="padding-top: 0.5%;">
 									<label class="checkbox-inline"> 
-								    	<input type="checkbox" name="checkMalaria" id="checkMalaria" >Mal&aacute;ria</input>
+										<c:choose>
+											<c:when test="${not empty modelo.malaria}">
+												<input type="checkbox" name="checkMalaria" id="checkMalaria" checked >Mal&aacute;ria</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkMalaria" id="checkMalaria" >Mal&aacute;ria</input>
+											</c:otherwise>
+										</c:choose>
 								    </label>
 							    </div>
 							    <div class="col-sm-3">
@@ -1162,7 +1379,14 @@
 							<div class="col-sm-12">
 								<div class="col-sm-3" style="padding-top: 0.5%;">
 									<label class="checkbox-inline"> 
-								    	<input type="checkbox" name="checkDengue" id="checkDengue" >Dengue</input>
+										<c:choose>
+											<c:when test="${not empty modelo.dengue}">
+												<input type="checkbox" name="checkDengue" id="checkDengue" checked >Dengue</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkDengue" id="checkDengue" >Dengue</input>
+											</c:otherwise>
+										</c:choose>
 								    </label>
 							    </div>
 							    <div class="col-sm-3">
@@ -1175,7 +1399,14 @@
 							<div class="col-sm-12">
 								<div class="col-sm-3" style="padding-top: 0.5%;">
 									<label class="checkbox-inline"> 
-								    	<input type="checkbox" name="checkFebreAmarela" id="checkFebreAmarela" >Febre Amarela</input>
+										<c:choose>
+											<c:when test="${not empty modelo.febreAmar}">
+												<input type="checkbox" name="checkFebreAmarela" id="checkFebreAmarela" checked >Febre Amarela</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkFebreAmarela" id="checkFebreAmarela" >Febre Amarela</input>
+											</c:otherwise>
+										</c:choose>
 								    </label>
 							    </div>
 							    <div class="col-sm-3">
@@ -1188,7 +1419,14 @@
 							<div class="col-sm-12">
 								<div class="col-sm-3" style="padding-top: 0.5%;">
 									<label class="checkbox-inline">
-								    	<input type="checkbox" name="checkChikungunya" id="checkChikungunya" >Chikungunya</input>
+										<c:choose>
+											<c:when test="${not empty modelo.chikung}">
+												<input type="checkbox" name="checkChikungunya" id="checkChikungunya" checked >Chikungunya</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkChikungunya" id="checkChikungunya" >Chikungunya</input>
+											</c:otherwise>
+										</c:choose>
 								    </label>
 							    </div>
 							    <div class="col-sm-3">
@@ -1201,7 +1439,14 @@
 							<div class="col-sm-12">
 								<div class="col-sm-3" style="padding-top: 0.5%;">
 									<label class="checkbox-inline">
-								    	<input type="checkbox" name="checkZika" id="checkZika" >Zika V&iacute;rus</input>
+										<c:choose>
+											<c:when test="${not empty modelo.zicaVirus}">
+												<input type="checkbox" name="checkZika" id="checkZika" checked >Zika V&iacute;rus</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkZika" id="checkZika" >Zika V&iacute;rus</input>
+											</c:otherwise>
+										</c:choose>
 								    </label>
 							    </div>
 							    <div class="col-sm-3">
@@ -1214,7 +1459,14 @@
 							<div class="col-sm-12">
 								<div class="col-sm-3" style="padding-top: 0.5%;">
 									<label class="checkbox-inline">
-								    	<input type="checkbox" name="checkCianobacterias" id="checkCianobacterias" >Cianobact&eacute;rias</input>
+										<c:choose>
+											<c:when test="${not empty modelo.cianobacter}">
+												<input type="checkbox" name="checkCianobacterias" id="checkCianobacterias" checked >Cianobact&eacute;rias</input>
+											</c:when>
+											<c:otherwise>
+												<input type="checkbox" name="checkCianobacterias" id="checkCianobacterias" >Cianobact&eacute;rias</input>
+											</c:otherwise>
+										</c:choose>
 								    </label>
 							    </div>
 							    <div class="col-sm-3">
@@ -1234,7 +1486,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Ajuda ou Doa&ccedil;&atilde;o:</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control input-sm" name="valorDoacao" id="valorDoacao" placeholder="Valor R$" maxlength="12" value="${modelo.valDoacao}" onKeyPress="moeda(this)"/>
+										<input type="text" class="form-control input-sm" name="valorDoacao" id="valorDoacao" placeholder="Valor R$" maxlength="12" value="${modelo.valDoacao}" onBlur="moeda(this)"  onKeyPress="moeda(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1243,7 +1495,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Aposentadoria, Pens&atilde;o, Benef&iacute;cio de Presta&ccedil;&atilde;o Continuada-BPC:</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control input-sm" name="valorAposentadoria" id="valorAposentadoria" placeholder="Valor R$" maxlength="12" value="${modelo.valAposent}" onKeyPress="moeda(this)"/>
+										<input type="text" class="form-control input-sm" name="valorAposentadoria" id="valorAposentadoria" placeholder="Valor R$" maxlength="12" value="${modelo.valAposent}" onBlur="moeda(this)"  onKeyPress="moeda(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1252,7 +1504,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Pens&atilde;o Aliment&iacute;cia:</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control input-sm" name="valorPensao" id="valorPensao" placeholder="Valor R$" maxlength="12" value="${modelo.valPensaoAlimen}" onKeyPress="moeda(this)"/>
+										<input type="text" class="form-control input-sm" name="valorPensao" id="valorPensao" placeholder="Valor R$" maxlength="12" value="${modelo.valPensaoAlimen}" onBlur="moeda(this)"  onKeyPress="moeda(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1261,7 +1513,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Seguro Desemprego:</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control input-sm" name="valorSeguroDesemp" id="valorSeguroDesemp" placeholder="Valor R$" maxlength="12" value="${modelo.valSegDesempr}" onKeyPress="moeda(this)"/>
+										<input type="text" class="form-control input-sm" name="valorSeguroDesemp" id="valorSeguroDesemp" placeholder="Valor R$" maxlength="12" value="${modelo.valSegDesempr}" onBlur="moeda(this)"  onKeyPress="moeda(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1270,7 +1522,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Empregado sem Carteira Assinada:</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control input-sm" name="valorSemCarteira" id="valorSemCarteira" placeholder="Valor R$" maxlength="12" value="${modelo.valEmprInformal}" onKeyPress="moeda(this)"/>
+										<input type="text" class="form-control input-sm" name="valorSemCarteira" id="valorSemCarteira" placeholder="Valor R$" maxlength="12" value="${modelo.valEmprInformal}" onBlur="moeda(this)"  onKeyPress="moeda(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1279,7 +1531,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Empregado com Carteira Assinada:</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control input-sm" name="valorComCarteira" id="valorComCarteira" placeholder="Valor R$" maxlength="12" value="${modelo.valEmprFormal}" onKeyPress="moeda(this)"/>
+										<input type="text" class="form-control input-sm" name="valorComCarteira" id="valorComCarteira" placeholder="Valor R$" maxlength="12" value="${modelo.valEmprFormal}" onBlur="moeda(this)"  onKeyPress="moeda(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1288,7 +1540,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Bolsa Familia:</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control input-sm" name="valorBolsaFamilia" id="valorBolsaFamilia" placeholder="Valor R$" maxlength="12" value="${modelo.valBolsaFamil}" onKeyPress="moeda(this)"/>
+										<input type="text" class="form-control input-sm" name="valorBolsaFamilia" id="valorBolsaFamilia" placeholder="Valor R$" maxlength="12" value="${modelo.valBolsaFamil}" onBlur="moeda(this)"  onKeyPress="moeda(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1297,7 +1549,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-3 col-form-label" style="padding-top: 0.5%;">Outro:</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control input-sm" name="valorOutros" id="valorOutros" placeholder="Valor R$" maxlength="12" value="${modelo.valOutro}" onKeyPress="moeda(this)"/>
+										<input type="text" class="form-control input-sm" name="valorOutros" id="valorOutros" placeholder="Valor R$" maxlength="12" value="${modelo.valOutro}" onBlur="moeda(this)"  onKeyPress="moeda(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1323,7 +1575,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.idGrauEscol}">
-													<input type="radio" name="radioEnsino" id="ensino${total.id}r" value="${total.id}" checked="true" onclick="verificaAnalfabeto()">${total.descricao} </input>
+													<input type="radio" name="radioEnsino" id="ensino${total.id}r" value="${total.id}" checked onclick="verificaAnalfabeto()">${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioEnsino" id="ensino${total.id}" value="${total.id}" onclick="verificaAnalfabeto()">${total.descricao} </input>
@@ -1341,7 +1593,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.grauEscolCompl}">
-													<input type="radio" name="radioEnsinoSituacao" id="situacaoEnsino${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioEnsinoSituacao" id="situacaoEnsino${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioEnsinoSituacao" id="SituacaoEnsino${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -1363,7 +1615,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.sabeLer}">
-													<input type="radio" name="radioConsegueLer" id="consegueLer${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioConsegueLer" id="consegueLer${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioConsegueLer" id="consegueLer${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -1381,7 +1633,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.sabeEscrever}">
-													<input type="radio" name="radioConsegueEscrever" id="consegueEscrever${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioConsegueEscrever" id="consegueEscrever${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioConsegueEscrever" id="consegueEscrever${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -1397,36 +1649,63 @@
 							</div>
 							
 							<div class="col-sm-12">
-								<label class="checkbox-inline">
-						    		<input type="checkbox" name="checkEnsinoFundamentalMembro" id="checkEnsinoFundamentalMembro" >Ensino Fundamental</input>
-						    	</label>
+								<% int cont = 1;%>
+								<c:choose>
+									<c:when test="${not empty listaGrauMembros}">
+										<c:forEach items="${listaGrauMembros}" var="listaMembro">
+											<input type="hidden" id="idGrauMembro<%=cont%>" name="idGrauMembro<%=cont%>" value="${listaMembro.idDiagnoEscolParente}" />
+											<div class="form-group">
+												<div class="col-sm-8">
+													<input type="text" class="form-control" id="grauMembro<%=cont%>" name="grauMembro<%=cont%>" placeholder="Membro Familia" value="${listaMembro.nome}"></input>
+												</div>
+												<div class="col-sm-4">
+													<input type="text" class="form-control" id="parentescoMembro<%=cont%>" name="parentescoMembro<%=cont%>" placeholder="Parentesco" value="${listaMembro.parentesco}"></input>
+												</div>
+											
+												<c:forEach items="${listaGrauEnsino}" var="total">
+													<label class="radio-inline">
+														<c:choose>
+															<c:when test="${total.id == listaMembro.idGrauEscol}">
+																<input type="radio" name="radioEnsinoMembro<%=cont%>" id="radioEnsinoMembro<%=cont%>" value="${total.id}" checked >${total.descricao}</input>
+															</c:when>
+															<c:otherwise>
+																<input type="radio" name="radioEnsinoMembro<%=cont%>" id="radioEnsinoMembro<%=cont%>" value="${total.id}" >${total.descricao}</input>
+															</c:otherwise>
+														</c:choose>
+													</label> 
+												</c:forEach>
+											</div>
+											<%cont++;%>
+										</c:forEach>
+									</c:when>
+									<c:otherwise>
+										<input type="hidden" id="idGrauMembro<%=cont%>" name="idGrauMembro<%=cont%>" value="${listaMembro.idDiagnoEscolParente}" />
+										<div class="form-group">
+											<div class="col-sm-8">
+												<input type="text" class="form-control" id="grauMembro<%=cont%>" name="grauMembro<%=cont%>" placeholder="Nome Membro"></input>
+											</div>
+											<div class="col-sm-4">
+												<input type="text" class="form-control" id="parentescoMembro<%=cont%>" name="parentescoMembro<%=cont%>" placeholder="Parentesco"></input>
+											</div>
+											<c:forEach items="${listaGrauEnsino}" var="total">
+												<label class="radio-inline">
+													<c:choose>
+														<c:when test="${total.id == listaMembro.idGrauEscol}">
+															<input type="radio" name="radioEnsinoMembro<%=cont%>" id="radioEnsinoMembro<%=cont%>" value="${total.id}" checked >${total.descricao}</input>
+														</c:when>
+														<c:otherwise>
+															<input type="radio" name="radioEnsinoMembro<%=cont%>" id="radioEnsinoMembro<%=cont%>" value="${total.id}" >${total.descricao}</input>
+														</c:otherwise>
+													</c:choose>
+												</label> 
+											</c:forEach>
+									    </div>
+									    <%cont++;%>
+									</c:otherwise>
+								</c:choose>
+								<input type="hidden" id="cont" name="cont" value="<%=cont%>" />
 						  	</div> 
-							<div class="col-sm-12"> 
-								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkEnsinoMedioMembro" id="checkEnsinoMedioMembro" >Ensino M&eacute;dio</input>
-							    </label>
-							</div>
-							<div class="col-sm-12"> 
-								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkEnsinoTecnicoMembro" id="checkEnsinoTecnicoMembro" >Especializa&ccedil;&atilde;o (Cursos T&eacute;cnicos)</input>
-							    </label>
-							</div>
-							<div class="col-sm-12"> 
-								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkEnsinoSuperiorMembro" id="checkEnsinoSuperiorMembro" >Ensino Superior</input>
-							    </label>
-							</div>
-							<div class="col-sm-12"> 
-								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkEnsinoGraduacaoMembro" id="checkEnsinoGraduacaoMembro" >P&oacute;s Gradua&ccedil;&atilde;o</input>
-							    </label>
-							</div>
-							<div class="col-sm-12"> 
-								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkEnsinoAnalfabetoMembro" id="checkEnsinoAnalfabetoMembro" >Analfabeto</input>
-							    </label>
-							</div>
-							
+						  	
 							<div class="col-sm-12">
 								<div class="form-group">
 									<label for="profissaoResponsavel">Qual &eacute; a Profiss&atilde;o do Membro da Fam&iacute;lia Respons&aacute;vel pela Resid&ecirc;ncia</label> 
@@ -1452,7 +1731,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.energNegoc}">
-													<input type="radio" name="radioNegociacaoEnergia" id="negociacaoEnergia${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioNegociacaoEnergia" id="negociacaoEnergia${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioNegociacaoEnergia" id="negociacaoEnergia${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -1473,7 +1752,7 @@
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="valorParcelaEnergia">Valor da Parcela</label> 
-									<input type="text" class="form-control input-sm" name="valorParcelaEnergia" id="valorParcelaEnergia" maxlength="12" value="${modelo.energNegocParcVal}" onKeyPress="moeda(this)"/> 
+									<input type="text" class="form-control input-sm" name="valorParcelaEnergia" id="valorParcelaEnergia" maxlength="12" value="${modelo.energNegocParcVal}" onBlur="moeda(this)"  onKeyPress="moeda(this)"/> 
 								</div>
 							</div>
 							
@@ -1495,7 +1774,7 @@
 										<label class="radio-inline">
 											<c:choose>
 												<c:when test="${total.id == modelo.aguaNegoc}">
-													<input type="radio" name="radioNegociacaoAgua" id="negociacaoAgua${total.id}" value="${total.id}" checked="true" >${total.descricao} </input>
+													<input type="radio" name="radioNegociacaoAgua" id="negociacaoAgua${total.id}" value="${total.id}" checked >${total.descricao} </input>
 												</c:when>
 												<c:otherwise>
 													<input type="radio" name="radioNegociacaoAgua" id="negociacaoAgua${total.id}" value="${total.id}" >${total.descricao} </input>
@@ -1516,7 +1795,7 @@
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="valorParcelaAgua">Valor da Parcela</label> 
-									<input type="text" class="form-control input-sm" name="valorParcelaAgua" id="valorParcelaAgua" maxlength="12" value="${modelo.aguaNegocParcVal}" onKeyPress="moeda(this)"/> 
+									<input type="text" class="form-control input-sm" name="valorParcelaAgua" id="valorParcelaAgua" maxlength="12" value="${modelo.aguaNegocParcVal}" onBlur="moeda(this)"  onKeyPress="moeda(this)"/> 
 								</div>
 							</div>
 							
@@ -1546,25 +1825,53 @@
 							
 							<div class="col-sm-12"> 
 								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkBeneficioPrevencaoDoenca" id="checkBeneficioPrevencaoDoenca" >Preven&ccedil;&atilde;o de Doen&ccedil;as e Promoc&atilde;o da Sa&uacute;de</input>
+									<c:choose>
+										<c:when test="${not empty modelo.benefObraSanSaude}">
+											<input type="checkbox" name="checkBeneficioPrevencaoDoenca" id="checkBeneficioPrevencaoDoenca" checked >Preven&ccedil;&atilde;o de Doen&ccedil;as e Promoc&atilde;o da Sa&uacute;de</input>
+										</c:when>
+										<c:otherwise>
+											<input type="checkbox" name="checkBeneficioPrevencaoDoenca" id="checkBeneficioPrevencaoDoenca" >Preven&ccedil;&atilde;o de Doen&ccedil;as e Promoc&atilde;o da Sa&uacute;de</input>
+										</c:otherwise>
+									</c:choose>
 							    </label>
 							</div>
 							
 							<div class="col-sm-12"> 
 								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkBeneficioFortalecimento" id="checkBeneficioFortalecimento" >Fortalecimento da Economia Local</input>
+									<c:choose>
+										<c:when test="${not empty modelo.benefObraSanEco}">
+											<input type="checkbox" name="checkBeneficioFortalecimento" id="checkBeneficioFortalecimento" checked >Fortalecimento da Economia Local</input>
+										</c:when>
+										<c:otherwise>
+											<input type="checkbox" name="checkBeneficioFortalecimento" id="checkBeneficioFortalecimento" >Fortalecimento da Economia Local</input>
+										</c:otherwise>
+									</c:choose>
 							    </label>
 							</div>
 							
 							<div class="col-sm-12"> 
 								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkBeneficioValorizacaoImovel" id="checkBeneficioValorizacaoImovel" >Valoriza&ccedil;&atilde;o Imobili&aacute;ria</input>
+									<c:choose>
+										<c:when test="${not empty modelo.benefObraSanImob}">
+											<input type="checkbox" name="checkBeneficioValorizacaoImovel" id="checkBeneficioValorizacaoImovel" checked >Valoriza&ccedil;&atilde;o Imobili&aacute;ria</input>
+										</c:when>
+										<c:otherwise>
+											<input type="checkbox" name="checkBeneficioValorizacaoImovel" id="checkBeneficioValorizacaoImovel" >Valoriza&ccedil;&atilde;o Imobili&aacute;ria</input>
+										</c:otherwise>
+									</c:choose>
 							    </label>
 							</div>
 							
 							<div class="col-sm-12"> 
 								<label class="checkbox-inline">
-							    	<input type="checkbox" name="checkBeneficioValorizacaoTurismo" id="checkBeneficioValorizacaoTurismo" >Valoriza&ccedil;&atilde;o do Turismo Local</input>
+									<c:choose>
+										<c:when test="${not empty modelo.benefObraSanTuri}">
+											<input type="checkbox" name="checkBeneficioValorizacaoTurismo" id="checkBeneficioValorizacaoTurismo" checked >Valoriza&ccedil;&atilde;o do Turismo Local</input>
+										</c:when>
+										<c:otherwise>
+											<input type="checkbox" name="checkBeneficioValorizacaoTurismo" id="checkBeneficioValorizacaoTurismo" >Valoriza&ccedil;&atilde;o do Turismo Local</input>
+										</c:otherwise>
+									</c:choose>
 							    </label>
 							</div>
 							

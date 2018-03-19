@@ -42,8 +42,8 @@ public class Diagnostico {
 	private String munNasc;
 	private String dtNasc;
 	private String sexo;
-	private Integer telRes;
-	private Integer telCel;
+	private Long telRes;
+	private Long telCel;
 	private Integer idEstadoCivil;
 	private String email;
 	private String endereco;
@@ -400,16 +400,16 @@ public class Diagnostico {
 	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
-	public Integer getTelRes() {
+	public Long getTelRes() {
 		return telRes;
 	}
-	public void setTelRes(Integer telRes) {
+	public void setTelRes(Long telRes) {
 		this.telRes = telRes;
 	}
-	public Integer getTelCel() {
+	public Long getTelCel() {
 		return telCel;
 	}
-	public void setTelCel(Integer telCel) {
+	public void setTelCel(Long telCel) {
 		this.telCel = telCel;
 	}
 	public Integer getIdEstadoCivil() {

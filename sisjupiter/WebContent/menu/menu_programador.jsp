@@ -31,6 +31,7 @@
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Servi&ccedil;o <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
                         <li><a href="ServicoBO?acao=consultar">Consultar</a></li>
+                         <li class="divider"></li>
                         <li><a href="ServicoBO?acao=cadastrar">Cadastrar</a></li>
                     </ul>
                 </li>

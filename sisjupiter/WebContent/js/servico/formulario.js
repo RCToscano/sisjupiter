@@ -11,6 +11,46 @@ window.onload = function iniciarForm() {
 			radios[i].disabled = true;
 		}
 	}
+	
+	if(document.getElementById("banco1").checked === true){
+		document.getElementById("descBanco").disabled = false;
+	}
+	else {
+		document.getElementById("descBanco").disabled = true;
+		document.getElementById("descBanco").value = '';
+	}
+
+	if(document.getElementById("internet1").checked === true){
+		document.getElementById("checkWifi").disabled = false;
+		document.getElementById("check3g").disabled = false;
+	}
+	else {
+		document.getElementById("checkWifi").disabled = true;
+		document.getElementById("check3g").disabled = true;
+		document.getElementById("check3g").checked = false;
+		document.getElementById("checkWifi").checked = false;
+	}
+	
+	if(document.getElementById("checkOutro").checked === true){
+		document.getElementById("outroDoenca").disabled = false;
+	}
+	else {
+		document.getElementById("outroDoenca").disabled = true;
+		document.getElementById("outroDoenca").value = '';
+	}
+	
+	 moeda(document.getElementById("rendaFamilia"));
+	 moeda(document.getElementById("valorDoacao"));
+	 moeda(document.getElementById("valorAposentadoria"));
+	 moeda(document.getElementById("valorPensao"));
+	 moeda(document.getElementById("valorSeguroDesemp"));
+	 moeda(document.getElementById("valorSemCarteira"));
+	 moeda(document.getElementById("valorComCarteira"));
+	 moeda(document.getElementById("valorBolsaFamilia"));
+	 moeda(document.getElementById("valorOutros"));
+	 moeda(document.getElementById("valorParcelaEnergia"));
+	 moeda(document.getElementById("valorParcelaAgua"));
+	
 }
 
 function validaForm(){
@@ -21,14 +61,24 @@ function validaForm(){
     var valida = true;
     
     
-    if(document.getElementById("rgi").value === ""){
-        texto = "Favor informar o rgi!";
-        focar = document.getElementById("rgi");
-        valida = false;
+    if(document.getElementById("cpfCliente").value != "") {
+    	if(!consistenciaCPF(document.getElementById("cpfCliente").value)) {
+	        texto = "CPF informado invalido!";
+	        focar = document.getElementById("cpfCliente");
+	        valida = false;
+    	}
+    }
+    
+    else if(document.getElementById("cpfNTitular").value != "") {
+    	if(!consistenciaCPF(document.getElementById("cpfNTitular").value)) {
+	        texto = "CPF informado invalido!";
+	        focar = document.getElementById("cpfNTitular");
+	        valida = false;
+    	}
     }
     
     if (valida == false) {
-    	document.getElementById("divEfluDomestico").style.display = "block";
+    	divAviso.style.display = "block";
         aviso.innerHTML = texto;
         focar.focus();
         return false;
@@ -50,11 +100,46 @@ function verificaAnalfabeto() {
 		var radios = document.getElementsByName('radioConsegueLer');
 		for (var i = 0; i< radios.length;  i++){
 			radios[i].disabled = true;
+			radios[i].checked = false;
 		}
 		radios = document.getElementsByName('radioConsegueEscrever');
 		for (var i = 0; i< radios.length;  i++){
 			radios[i].disabled = true;
+			radios[i].checked = false;
 		}
+	}
+}
+
+function verificaContaBanco() {
+	if(document.getElementById("banco1").checked === true){
+		document.getElementById("descBanco").disabled = false;
+	}
+	else {
+		document.getElementById("descBanco").disabled = true;
+		document.getElementById("descBanco").value = '';
+	}
+}
+
+function verificaAcessoInternet() {
+	if(document.getElementById("internet1").checked === true){
+		document.getElementById("checkWifi").disabled = false;
+		document.getElementById("check3g").disabled = false;
+	}
+	else {
+		document.getElementById("checkWifi").disabled = true;
+		document.getElementById("check3g").disabled = true;
+		document.getElementById("check3g").checked = false;
+		document.getElementById("checkWifi").checked = false;
+	}
+}
+
+function verificaOutraDoenca() {
+	if(document.getElementById("checkOutro").checked === true){
+		document.getElementById("outroDoenca").disabled = false;
+	}
+	else {
+		document.getElementById("outroDoenca").disabled = true;
+		document.getElementById("outroDoenca").value = '';
 	}
 }
 
@@ -80,8 +165,6 @@ function moeda(z){
 }
 
 function consistenciaCPF(campo) {
-    var aviso = document.getElementById("aviso");
-    aviso.innerHTML = "";
     cpf = campo.replace(/\./g, "").replace(/\-/g, "");
     erro = new String;
 
@@ -122,7 +205,9 @@ function consistenciaCPF(campo) {
         erro += "Numero de CPF invalido";
     }
     if (erro.length > 0) {
-        aviso.innerHTML = erro;
         return false;
+    }
+    else {
+    	return true;
     }
 }
