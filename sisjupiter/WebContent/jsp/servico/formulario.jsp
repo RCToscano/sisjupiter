@@ -5,6 +5,7 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
         <title>Deep</title>
+        <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/>
         <link href="./css/menucustomcolor.css" rel="stylesheet"/>
         <link href="./css/footercustom.css" rel="stylesheet"/>
@@ -105,7 +106,7 @@
 							<div class="col-sm-2"> 
 								<div class="form-group">
 									<label for="codServico">C&oacute;digo do Servi&ccedil;o: </label> 
-									<input type="text" class="form-control input-sm" name="codServico" id="codServico" maxlength="11" value="${modelo.codServ}" onKeyPress="numerico(this)" />
+									<input type="text" class="form-control input-sm" name="codServico" id="codServico" maxlength="9" value="${modelo.codServ}" onKeyPress="numerico(this)" />
 								</div>
 							</div>
 							
@@ -257,7 +258,7 @@
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="ocupacao">Tempo de Ocupa&ccedil;&atilde;o</label> 
-									<input type="text" class="form-control input-sm" name="ocupacao" id="ocupacao" maxlength="11" value="${modelo.tempoOcup}" onKeyPress="numerico(this)"/>
+									<input type="text" class="form-control input-sm" name="ocupacao" id="ocupacao" maxlength="9" value="${modelo.tempoOcup}" onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
@@ -535,14 +536,14 @@
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="telefone">Telefone Resid&ecirc;ncial</label> 
-									<input type="text" class="form-control input-sm" name="telefone" id="telefone" maxlength="10" value="${modelo.telRes}"  onKeyPress="numerico(this)"/>
+									<input type="text" class="form-control input-sm" name="telefone" id="telefone" maxlength="11" value="${modelo.telRes}"  onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="celular">Celular</label> 
-									<input type="text" class="form-control input-sm" name="celular" id="celular" maxlength="10" value="${modelo.telCel}"  onKeyPress="numerico(this)"/>
+									<input type="text" class="form-control input-sm" name="celular" id="celular" maxlength="11" value="${modelo.telCel}"  onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
@@ -805,21 +806,21 @@
 							<div class="col-sm-1">
 								<div class="form-group">
 									<label for="carro">Carro</label> 
-									<input type="text" class="form-control input-sm" name="qtdeCarro" id="qtdeCarro" placeholder="Qtde" maxlength="11" value="${modelo.qtdeCarro}" onKeyPress="numerico(this)"/>
+									<input type="text" class="form-control input-sm" name="qtdeCarro" id="qtdeCarro" placeholder="Qtde" maxlength="2" value="${modelo.qtdeCarro}" onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
 							<div class="col-sm-1">
 								<div class="form-group">
 									<label for="moto">Moto</label> 
-									<input type="text" class="form-control input-sm" name="qtdeMoto" id="qtdeMoto" placeholder="Qtde" maxlength="11" value="${modelo.qtdeMoto}" onKeyPress="numerico(this)"/>
+									<input type="text" class="form-control input-sm" name="qtdeMoto" id="qtdeMoto" placeholder="Qtde" maxlength="2" value="${modelo.qtdeMoto}" onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
 							<div class="col-sm-1">
 								<div class="form-group">
 									<label for="bicicleta">Bicicleta</label> 
-									<input type="text" class="form-control input-sm" name="qtdeBicicleta" id="qtdeBicicleta" placeholder="Qtde" maxlength="11" value="${modelo.qtdeBicicleta}" onKeyPress="numerico(this)"/>
+									<input type="text" class="form-control input-sm" name="qtdeBicicleta" id="qtdeBicicleta" placeholder="Qtde" maxlength="2" value="${modelo.qtdeBicicleta}" onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 						</div>
@@ -948,21 +949,21 @@
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="qtdeIdosos">Idosos com idade de 60 anos ou mais</label> 
-									<input type="text" class="form-control input-sm" name="qtdeIdosos" id="qtdeIdosos" placeholder="Digite a quantidade" maxlength="11" value="${modelo.maior59Qtde}" onKeyPress="numerico(this)"/>
+									<input type="text" class="form-control input-sm" name="qtdeIdosos" id="qtdeIdosos" placeholder="Digite a quantidade" maxlength="2" value="${modelo.maior59Qtde}" onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
 							<div class="col-sm-3">
 								<div class="form-group">
 									<label for="qtdeAdolescente">Adolescentes com idade de 18 anos ou menos</label> 
-									<input type="text" class="form-control input-sm" name="qtdeAdolescente" id="qtdeAdolescente" placeholder="Digite a quantidade" maxlength="11" value="${modelo.menor19Qtde}" onKeyPress="numerico(this)"/>
+									<input type="text" class="form-control input-sm" name="qtdeAdolescente" id="qtdeAdolescente" placeholder="Digite a quantidade" maxlength="2" value="${modelo.menor19Qtde}" onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
 							<div class="col-sm-2">
 								<div class="form-group">
 									<label for="qtdeAdolescente">Bebes com menos de 12 meses de idade</label> 
-									<input type="text" class="form-control input-sm" name="qtdeBebes" id="qtdeBebes" placeholder="Digite a quantidade" maxlength="11" value="${modelo.menor1Qtde}" onKeyPress="numerico(this)"/>
+									<input type="text" class="form-control input-sm" name="qtdeBebes" id="qtdeBebes" placeholder="Digite a quantidade" maxlength="2" value="${modelo.menor1Qtde}" onKeyPress="numerico(this)"/>
 								</div>
 							</div>
 							
@@ -974,7 +975,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-2 col-form-label" style="padding-top: 0.5%;">Visual:</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control input-sm" name="defVisual" id="defVisual" placeholder="Digite a quantidade" maxlength="11" value="${modelo.defVisualQtde}" onKeyPress="numerico(this)"/>
+										<input type="text" class="form-control input-sm" name="defVisual" id="defVisual" placeholder="Digite a quantidade" maxlength="2" value="${modelo.defVisualQtde}" onKeyPress="numerico(this)"/>
 									</div>
 								</div>
 							</div>
@@ -983,7 +984,16 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-2 col-form-label" style="padding-top: 0.5%;">Auditivo:</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control input-sm" name="defAuditivo" id="defAuditivo" placeholder="Digite a quantidade" maxlength="11" value="${modelo.defAuditQtde}" onKeyPress="numerico(this)"/>
+										<input type="text" class="form-control input-sm" name="defAuditivo" id="defAuditivo" placeholder="Digite a quantidade" maxlength="2" value="${modelo.defAuditQtde}" onKeyPress="numerico(this)"/>
+									</div>
+								</div>
+							</div>
+							
+							<div class="col-sm-12">
+								<div class="form-group row">
+									<label for="inputPassword" class="col-sm-2 col-form-label" style="padding-top: 0.5%;">F&iacute;sico:</label>
+									<div class="col-sm-2">
+										<input type="text" class="form-control input-sm" name="defFisico" id="defFisico" placeholder="Digite a quantidade" maxlength="2" value="${modelo.defFisQtde}" onKeyPress="numerico(this)"/>
 									</div>
 								</div>
 							</div>
@@ -992,7 +1002,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-2 col-form-label" style="padding-top: 0.5%;">Defici&ecirc;ncia Intelectual:</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control input-sm" name="defIntelectual" id="defIntelectual" placeholder="Digite a quantidade" maxlength="11" value="${modelo.defIntelecQtde}" onKeyPress="numerico(this)"/>
+										<input type="text" class="form-control input-sm" name="defIntelectual" id="defIntelectual" placeholder="Digite a quantidade" maxlength="2" value="${modelo.defIntelecQtde}" onKeyPress="numerico(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1001,7 +1011,7 @@
 								<div class="form-group row">
 									<label for="inputPassword" class="col-sm-2 col-form-label" style="padding-top: 0.5%;">Outros:</label>
 									<div class="col-sm-2">
-										<input type="text" class="form-control input-sm" name="defOutros" id="defOutros" placeholder="Digite a quantidade" maxlength="11" value="${modelo.defOutrosQtde}" onKeyPress="numerico(this)"/>
+										<input type="text" class="form-control input-sm" name="defOutros" id="defOutros" placeholder="Digite a quantidade" maxlength="2" value="${modelo.defOutrosQtde}" onKeyPress="numerico(this)"/>
 									</div>
 								</div>
 							</div>
@@ -1679,7 +1689,6 @@
 										</c:forEach>
 									</c:when>
 									<c:otherwise>
-										<input type="hidden" id="idGrauMembro<%=cont%>" name="idGrauMembro<%=cont%>" value="${listaMembro.idDiagnoEscolParente}" />
 										<div class="form-group">
 											<div class="col-sm-8">
 												<input type="text" class="form-control" id="grauMembro<%=cont%>" name="grauMembro<%=cont%>" placeholder="Nome Membro"></input>
@@ -1691,10 +1700,10 @@
 												<label class="radio-inline">
 													<c:choose>
 														<c:when test="${total.id == listaMembro.idGrauEscol}">
-															<input type="radio" name="radioEnsinoMembro<%=cont%>" id="radioEnsinoMembro<%=cont%>" value="${total.id}" checked >${total.descricao}</input>
+															<input type="radio" name="radioEnsinoMembro<%=cont%>" id="radioEnsino${total.id}Membro<%=cont%>" value="${total.id}" checked >${total.descricao}</input>
 														</c:when>
 														<c:otherwise>
-															<input type="radio" name="radioEnsinoMembro<%=cont%>" id="radioEnsinoMembro<%=cont%>" value="${total.id}" >${total.descricao}</input>
+															<input type="radio" name="radioEnsinoMembro<%=cont%>" id="radioEnsino${total.id}Membro<%=cont%>" value="${total.id}" >${total.descricao}</input>
 														</c:otherwise>
 													</c:choose>
 												</label> 
@@ -1703,6 +1712,12 @@
 									    <%cont++;%>
 									</c:otherwise>
 								</c:choose>
+								<div id="aqui<%=cont%>"></div>
+								<div class="form-group">
+									<div class="col-sm-offset-0">
+							        	<button type="button" class="btn btn-primary" onClick="addCampo()">Adicionar</button>
+							      	</div>
+						      	</div>
 								<input type="hidden" id="cont" name="cont" value="<%=cont%>" />
 						  	</div> 
 						  	

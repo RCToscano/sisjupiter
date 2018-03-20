@@ -143,6 +143,58 @@ function verificaOutraDoenca() {
 	}
 }
 
+function addCampo(){
+	var qtde = new Number (document.getElementById("cont").value);  
+    var conc = "";
+    
+    if(document.getElementById("grauMembro"+(qtde-1)).value == ''
+    	|| document.getElementById("parentescoMembro"+(qtde-1)).value == '') {
+    	return false;
+    }
+    
+    conc =  "<div class='form-group'>" +
+			"	<div class='col-sm-8'>" +
+			"		<input type='text' class='form-control' id='grauMembro"+qtde+"' name='grauMembro"+qtde+"' placeholder='Membro Familia' value=''></input>" +
+			"	</div>" +
+			"	<div class='col-sm-4'>" +
+			"		<input type='text' class='form-control' id='parentescoMembro"+qtde+"' name='parentescoMembro"+qtde+"' placeholder='Parentesco' value=''></input>" +
+			"	</div>" +
+			"	<label class='radio-inline'>" +
+			"		<input type='radio' name='radioEnsinoMembro"+qtde+"' id='radioEnsino1Membro"+qtde+"' value='1' >Ensino Fundamental</input>" +
+			"	</label>" +
+			"	<label class='radio-inline'>" +
+			"		<input type='radio' name='radioEnsinoMembro"+qtde+"' id='radioEnsino2Membro"+qtde+"' value='2' >Ensino M&eacute;dio</input>" +
+			"	</label>" +
+			"	<label class='radio-inline'>" +
+			"		<input type='radio' name='radioEnsinoMembro"+qtde+"' id='radioEnsino3Membro"+qtde+"' value='3' >Especializa&ccedil;&atilde;o (Cursos T&eacute;cnicos)</input>" +
+			"	</label>" +
+			"	<label class='radio-inline'>" +
+			"		<input type='radio' name='radioEnsinoMembro"+qtde+"' id='radioEnsino4Membro"+qtde+"' value='4' >Ensino Superior</input>" +
+			"	</label>" +
+			"	<label class='radio-inline'>" +
+			"		<input type='radio' name='radioEnsinoMembro"+qtde+"' id='radioEnsino5Membro"+qtde+"' value='5' >P&oacute;s Gradua&ccedil;&atilde;o</input>" +
+			"	</label>" +
+			"	<label class='radio-inline'>" +
+			"		<input type='radio' name='radioEnsinoMembro"+qtde+"' id='radioEnsino6Membro"+qtde+"' value='6' >N&atilde;o Alfabetizado</input>" +
+			"	</label>" +
+			"</div>";
+
+    document.getElementById("cont").value = qtde+1;
+    document.getElementById("aqui"+qtde).innerHTML = conc;
+
+    //cria outra div na sequencia
+    var parentGuest = document.getElementById("aqui"+qtde);
+    var div = document.createElement("div");
+    div.id = "aqui"+(qtde+1)+"";
+
+    if (parentGuest.nextSibling) {
+        parentGuest.parentNode.insertBefore(div, parentGuest.nextSibling);
+    }
+    else {
+        parentGuest.parentNode.appendChild(div);
+    }
+}
+
 function moeda(z){ 
 	if ((event.keyCode < 48) || (event.keyCode > 57)) {
         if ((event.keyCode == 13)) {

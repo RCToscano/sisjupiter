@@ -31,7 +31,7 @@ public enum EstadosEnum {
 	SANTA_CATARINA("SC", "Santa Catarina"),
 	SAO_PAULO("SP", "Sao Paulo"),
 	SERGIPE("SE", "Sergipe"),
-	TOCANTINS("SO", "Tocantins");
+	TOCANTINS("TO", "Tocantins");
 
 	private String id;
 	private String descricao;

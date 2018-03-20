@@ -404,14 +404,16 @@ public class ServicoBO extends HttpServlet {
 		            	if(req.getParameter("cont") != null) {
 			            	EscolaridadeParenteDAO parenteDAO = new EscolaridadeParenteDAO(connection);
 			            	List<EscolaridadeParente> listaParente = new ArrayList<>();
-			            	for(int i = 1; i < Integer.parseInt(req.getParameter("cont")); i++) {
-			            		EscolaridadeParente parente = new EscolaridadeParente();
-			            		parente.setIdDiagnostico(diagnostico2.getIdDiagnostico());
-			            		parente.setIdGrauEscol(Auxiliar.converteLong(req.getParameter("radioEnsinoMembro"+i+"")));
-			            		parente.setNome(req.getParameter("grauMembro"+i+""));
-			            		parente.setParentesco(req.getParameter("parentescoMembro"+i+""));
-			            		parenteDAO.inserir(parente);
-			            		listaParente.add(parente);
+			            	for(int i = 1; i <= Integer.parseInt(req.getParameter("cont")); i++) {
+			            		if(req.getParameter("grauMembro"+i+"") != null && !req.getParameter("grauMembro"+i+"").isEmpty()) {
+				            		EscolaridadeParente parente = new EscolaridadeParente();
+				            		parente.setIdDiagnostico(diagnostico2.getIdDiagnostico());
+				            		parente.setIdGrauEscol(Auxiliar.converteLong(req.getParameter("radioEnsinoMembro"+i+"")));
+				            		parente.setNome(req.getParameter("grauMembro"+i+""));
+				            		parente.setParentesco(req.getParameter("parentescoMembro"+i+""));
+				            		parenteDAO.inserir(parente);
+				            		listaParente.add(parente);
+				            	}
 			            	}
 			            	req.setAttribute("listaGrauMembros", listaParente);
 		            	}
@@ -425,15 +427,22 @@ public class ServicoBO extends HttpServlet {
 	            		if(req.getParameter("cont") != null) {
 			            	EscolaridadeParenteDAO parenteDAO = new EscolaridadeParenteDAO(connection);
 			            	List<EscolaridadeParente> listaParente = new ArrayList<>();
-			            	for(int i = 1; i < Integer.parseInt(req.getParameter("cont")); i++) {
-			            		EscolaridadeParente parente = new EscolaridadeParente();
-			            		parente.setIdDiagnostico(Auxiliar.converteLong(req.getParameter("id")));
-			            		parente.setIdGrauEscol(Auxiliar.converteLong(req.getParameter("radioEnsinoMembro"+i+"")));
-			            		parente.setNome(req.getParameter("grauMembro"+i+""));
-			            		parente.setParentesco(req.getParameter("parentescoMembro"+i+""));
-			            		parente.setIdDiagnoEscolParente(Auxiliar.converteLong(req.getParameter("idGrauMembro"+i)));
-			            		parenteDAO.alterar(parente);
-			            		listaParente.add(parente);
+			            	for(int i = 1; i <= Integer.parseInt(req.getParameter("cont")); i++) {
+			            		if(req.getParameter("grauMembro"+i+"") != null && !req.getParameter("grauMembro"+i+"").isEmpty()) {
+				            		EscolaridadeParente parente = new EscolaridadeParente();
+				            		parente.setIdDiagnostico(Auxiliar.converteLong(req.getParameter("id")));
+				            		parente.setIdGrauEscol(Auxiliar.converteLong(req.getParameter("radioEnsinoMembro"+i+"")));
+				            		parente.setNome(req.getParameter("grauMembro"+i+""));
+				            		parente.setParentesco(req.getParameter("parentescoMembro"+i+""));
+				            		if(req.getParameter("idGrauMembro"+i) != null) {
+					            		parente.setIdDiagnoEscolParente(Auxiliar.converteLong(req.getParameter("idGrauMembro"+i)));
+					            		parenteDAO.alterar(parente);
+				            		}
+				            		else {
+				            			parenteDAO.inserir(parente);
+				            		}
+				            		listaParente.add(parente);
+			            		}
 			            	}
 			            	req.setAttribute("listaGrauMembros", listaParente);
 		            	}
