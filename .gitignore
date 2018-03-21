@@ -1,6 +1,6 @@
 /.metadata/
 /.class/
-
+*.settings
 *.class
 
 # Mobile Tools for Java (J2ME)
