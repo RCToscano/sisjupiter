@@ -6,7 +6,8 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>SisPesquisa</title>
+        <title>Deep</title>
+        <link rel="icon" type="image/png" sizes="32x32" href="./images/favicon-32x32.png">
         <script src="./js/jquery-1.11.3.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
         <link rel="stylesheet" href="./css/formValidation.css"/>

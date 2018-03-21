@@ -18,7 +18,7 @@ public class ConnectionFactory {
 //    private static final String driver = "com.mysql.jdbc.Driver";
 //    private static final String usuario = "diagsdee_001";
 //    private static final String senha = "87hfds&dsa123";
-    
+       
     //CONEXAO REMOTA
     private static final String url = "jdbc:mysql://localhost:3306/diagsdee_001";
     private static final String driver = "com.mysql.jdbc.Driver";
