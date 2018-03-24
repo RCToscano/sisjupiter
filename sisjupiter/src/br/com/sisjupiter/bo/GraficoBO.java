@@ -1,12 +1,18 @@
 package br.com.sisjupiter.bo;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import br.com.sisjupiter.connection.ConnectionFactory;
+import br.com.sisjupiter.dao.GraficoDAO;
+import br.com.sisjupiter.modelo.Grafico;
 
 public class GraficoBO extends HttpServlet {
 
@@ -20,6 +26,7 @@ public class GraficoBO extends HttpServlet {
 	@Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String relat = "";
+		Connection connection = null;
         try {
             if (req.getParameter("acao") != null) {
                 relat = req.getParameter("acao");
@@ -29,7 +36,13 @@ public class GraficoBO extends HttpServlet {
                 req.getRequestDispatcher("/jsp/home.jsp").forward(req, res);
             } 
             else if (relat.equals("diario")) {
-            	req.getRequestDispatcher("/jsp/grafico/diario.jsp").forward(req, res);
+            	connection = ConnectionFactory.getConnection();
+            	GraficoDAO graficoDAO = new GraficoDAO(connection);
+            	List<Grafico> lista = graficoDAO.qtdeExecucaoPorComunidade();
+            	
+            	req.setAttribute("count", lista.size());
+            	req.setAttribute("lista", lista);
+            	req.getRequestDispatcher("/jsp/grafico/comunidade.jsp").forward(req, res);
             } 
             else if (relat.equals("logout")) {
                 HttpSession session = req.getSession(true);
