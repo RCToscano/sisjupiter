@@ -2,6 +2,7 @@ package br.com.sisjupiter.bo;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -40,8 +41,20 @@ public class GraficoBO extends HttpServlet {
             	GraficoDAO graficoDAO = new GraficoDAO(connection);
             	List<Grafico> lista = graficoDAO.qtdeExecucaoPorComunidade();
             	
-            	req.setAttribute("count", lista.size());
-            	req.setAttribute("lista", lista);
+            	List<String> listaNome = new ArrayList<>();
+            	for(int i = 0; i < lista.size(); i++) {
+            		listaNome.add("{name: '"+lista.get(i).getNomeComunidade()+"'");
+            		listaNome.add("y: "+String.valueOf(lista.get(i).getQtde())+"}");
+            	}
+            	
+            	req.setAttribute("listaNome", listaNome);
+            	
+            	List<String> listConsumo = new ArrayList<>();
+            	for(int i = 0; i < 28; i++) {
+            		listConsumo.add("" + (i + 3));
+            	}
+            	
+             	req.setAttribute("listConsumo", listConsumo);
             	req.getRequestDispatcher("/jsp/grafico/comunidade.jsp").forward(req, res);
             } 
             else if (relat.equals("logout")) {
