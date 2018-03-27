@@ -37,24 +37,27 @@
 					</div>
 				</div>
 			</div>
-			<div class="col-sm-4 col-md-3">
-				<div class="thumbnail">
-					<div class="caption">
-						<h3>Relat&oacute;rio Di&aacute;rio</h3>
-						<p>Veja o relat&oacute;rio di&aacute;rio de execu&ccedil;&otilde;es dos servi&ccedil;os.</p>
-						<p><a href="#" class="btn btn-primary" role="button" disabled>Acessar</a></p>
+			<c:if test="${sessionScope.user.perfil.idPerfil != 3}">
+				<div class="col-sm-4 col-md-3">
+					<div class="thumbnail">
+						<div class="caption">
+							<h3>Gr&aacute;fico Execu&ccedil;&otilde;es</h3>
+							<p>Veja o total de execu&ccedil;&otilde;es dos servi&ccedil;os por Comunidade e Equipe.</p>
+							<p><a href="GraficoBO?acao=total" class="btn btn-primary" role="button">Acessar</a></p>
+						</div>
 					</div>
 				</div>
-			</div>
-			<div class="col-sm-4 col-md-3">
-				<div class="thumbnail">
-					<div class="caption">
-						<h3>Gr&aacute;fico Di&aacute;rio</h3>
-						<p>Veja o gr&aacute;fico di&aacute;rio de execu&ccedil;&otilde;es dos servi&ccedil;os.</p>
-						<p><a href="#" class="btn btn-primary" role="button" disabled>Acessar</a></p>
-					</div>
-				</div>
-			</div>
+<!-- 				<div class="col-sm-4 col-md-3"> -->
+<!-- 					<div class="thumbnail"> -->
+<!-- 						<div class="caption"> -->
+<!-- 							<h3>Relat&oacute;rio Di&aacute;rio</h3> -->
+<!-- 							<p>Veja o relat&oacute;rio di&aacute;rio de execu&ccedil;&otilde;es dos servi&ccedil;os.</p> -->
+<!-- 							<p><a href="#" class="btn btn-primary" role="button" disabled>Acessar</a></p> -->
+<!-- 						</div> -->
+<!-- 					</div> -->
+<!-- 				</div> -->
+			</c:if>
+			
 		</div>
 		
 		</div>

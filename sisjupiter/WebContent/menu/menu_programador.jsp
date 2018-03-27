@@ -38,11 +38,10 @@
             </ul>
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Grafico <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gr&aacute;fico <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="GraficoBO?acao=diario">Diario</a></li>
+                        <li><a href="GraficoBO?acao=total">Total Execu&ccedil;&otilde;es</a></li>
 <!--                          <li class="divider"></li> -->
-<!--                         <li><a href="ServicoBO?acao=cadastrar">Cadastrar</a></li> -->
                     </ul>
                 </li>
             </ul>

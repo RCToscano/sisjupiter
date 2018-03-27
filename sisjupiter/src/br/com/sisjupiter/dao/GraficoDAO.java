@@ -50,5 +50,40 @@ public class GraficoDAO {
                 rs.close();
         }
     }
+    
+    public List<Grafico> qtdeExecucaoPorEquipe() throws Exception {
+        PreparedStatement stmt = null;
+        ResultSet rs = null;
+        List<Grafico> list = new ArrayList<>();
+        try {
+            
+            stmt = connection.prepareStatement(
+            "SELECT    COUNT(TB_DIAGNOSTICO.ID_EQUIPE) AS QTDE, " +
+            "          TB_DIAGNOSTICO.ID_EQUIPE, " +
+            "          TB_EQUIPE.EQUIPE " +
+            "FROM      TB_DIAGNOSTICO " +
+            "LEFT JOIN TB_EQUIPE " +
+            "       ON TB_DIAGNOSTICO.ID_EQUIPE = TB_EQUIPE.ID_EQUIPE " +
+            " GROUP BY TB_DIAGNOSTICO.ID_EQUIPE "
+            );
+            
+            rs = stmt.executeQuery();
+
+            while(rs.next()) {
+            	Grafico grafico = new Grafico();
+            	grafico.setIdComunidade(rs.getLong("ID_EQUIPE"));
+            	grafico.setNomeComunidade(rs.getString("EQUIPE"));
+            	grafico.setQtde(rs.getLong("QTDE"));
+                list.add(grafico);
+            }
+            return list;
+        }
+        finally {
+            if(stmt != null)
+                stmt.close();
+            if(rs != null)
+                rs.close();
+        }
+    }
 
 }

@@ -2,6 +2,7 @@ package br.com.sisjupiter.bo;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
@@ -262,7 +263,7 @@ public class ServicoBO extends HttpServlet {
 	            	diagnostico.setAbastAguaIrreg(Auxiliar.converteInteger(req.getParameter("radioAguaIrregular")));
 	            	diagnostico.setHidrometro(req.getParameter("hidrometro"));
 	            	diagnostico.setIdDestEsgoto(Auxiliar.converteInteger(req.getParameter("radioEsgoto")));
-	            	diagnostico.setNome(req.getParameter("nomeCliente"));
+	            	diagnostico.setNome(req.getParameter("nomeCliente").toUpperCase());
 	            	diagnostico.setCpf(req.getParameter("cpfCliente"));
 	            	diagnostico.setRg(req.getParameter("rgCliente"));
 	            	diagnostico.setMunNasc(req.getParameter("municipioNascimento"));
@@ -305,7 +306,7 @@ public class ServicoBO extends HttpServlet {
 	            	diagnostico.setBenefNISNum(req.getParameter("nis"));
 	            	diagnostico.setPossuiTarSocial(Auxiliar.converteInteger(req.getParameter("radioTarifaAgua")));
 	            	diagnostico.setPossuiBolsaFamil(Auxiliar.converteInteger(req.getParameter("radioBolsaFamilia")));
-	            	diagnostico.setBenefNome(req.getParameter("nomeNTitular"));
+	            	diagnostico.setBenefNome(req.getParameter("nomeNTitular").toUpperCase());
 	            	diagnostico.setBenefCpf(req.getParameter("cpfNTitular"));
 	            	diagnostico.setBenefRg(req.getParameter("rgNTitular"));
 	            	if(req.getParameter("dtNascimentoNTitular") != null && !req.getParameter("dtNascimentoNTitular").trim().isEmpty())
@@ -523,6 +524,11 @@ public class ServicoBO extends HttpServlet {
         catch (Exception e) {
             req.setAttribute("erro", e.toString());
             req.getRequestDispatcher("/jsp/erro.jsp").forward(req, res);
+        }
+        finally {
+            if(connection != null) {
+                try {connection.close();} catch (SQLException ex) {}
+            }
         }
     }
 }

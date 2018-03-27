@@ -2,6 +2,7 @@ package br.com.sisjupiter.bo;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,26 +37,33 @@ public class GraficoBO extends HttpServlet {
             if (relat.equals("home")) {
                 req.getRequestDispatcher("/jsp/home.jsp").forward(req, res);
             } 
-            else if (relat.equals("diario")) {
+            else if (relat.equals("total")) {
             	connection = ConnectionFactory.getConnection();
             	GraficoDAO graficoDAO = new GraficoDAO(connection);
-            	List<Grafico> lista = graficoDAO.qtdeExecucaoPorComunidade();
+            	List<Grafico> listaComunidade = graficoDAO.qtdeExecucaoPorComunidade();
             	
-            	List<String> listaNome = new ArrayList<>();
-            	for(int i = 0; i < lista.size(); i++) {
-            		listaNome.add("{name: '"+lista.get(i).getNomeComunidade()+"'");
-            		listaNome.add("y: "+String.valueOf(lista.get(i).getQtde())+"}");
+            	List<String> listaComunidadeFinal = new ArrayList<>();
+            	for(int i = 0; i < listaComunidade.size(); i++) {
+            		listaComunidadeFinal.add("{name: '"+listaComunidade.get(i).getNomeComunidade()+"'");
+            		listaComunidadeFinal.add("y: "+String.valueOf(listaComunidade.get(i).getQtde())+"}");
             	}
             	
-            	req.setAttribute("listaNome", listaNome);
-            	
-            	List<String> listConsumo = new ArrayList<>();
-            	for(int i = 0; i < 28; i++) {
-            		listConsumo.add("" + (i + 3));
+            	List<Grafico> listaEquipe = graficoDAO.qtdeExecucaoPorEquipe();
+            	List<String> listaEquipeFinal = new ArrayList<>();
+            	for(int i = 0; i < listaEquipe.size(); i++) {
+            		listaEquipeFinal.add("{name: '"+listaEquipe.get(i).getNomeComunidade()+"'");
+            		listaEquipeFinal.add("y: "+String.valueOf(listaEquipe.get(i).getQtde())+"}");
+            	}
+            	if(listaEquipe.isEmpty() && listaComunidade.isEmpty()) {
+            		req.setAttribute("aviso", "Nenhuma execução encontrada");
+            	}
+            	else {
+            		req.setAttribute("aviso", "");
+            		req.setAttribute("listaComunidadeFinal", listaComunidadeFinal);
+            		req.setAttribute("listaEquipeFinal", listaEquipeFinal);
             	}
             	
-             	req.setAttribute("listConsumo", listConsumo);
-            	req.getRequestDispatcher("/jsp/grafico/comunidade.jsp").forward(req, res);
+            	req.getRequestDispatcher("/jsp/grafico/totalExecucoes.jsp").forward(req, res);
             } 
             else if (relat.equals("logout")) {
                 HttpSession session = req.getSession(true);
@@ -67,6 +75,11 @@ public class GraficoBO extends HttpServlet {
         catch (Exception e) {
             req.setAttribute("erro", e.toString());
             req.getRequestDispatcher("/jsp/erro.jsp").forward(req, res);
+        }
+        finally {
+            if(connection != null) {
+                try {connection.close();} catch (SQLException ex) {}
+            }
         }
     }
 }
