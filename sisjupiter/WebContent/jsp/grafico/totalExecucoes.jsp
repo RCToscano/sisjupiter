@@ -37,7 +37,6 @@
 			</c:if>
 		
 			<c:if test="${aviso == ''}">
-				<h2>Total de execu&ccedil;&otilde;es por Comunidade e Equipe</h2>
 				<div id="comunidade" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 				<div id="equipe" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
 				
@@ -87,7 +86,7 @@
 					        }
 					    },
 					    series: [{
-					        name: 'Share',
+					        name: ' ',
 					        data: [
 					        	${fn:replace(fn:replace(listaComunidadeFinal, '[', ''), ']', '')}
 					        ]

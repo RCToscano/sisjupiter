@@ -37,16 +37,15 @@
 					</div>
 				</div>
 			</div>
-			<c:if test="${sessionScope.user.perfil.idPerfil != 3}">
-				<div class="col-sm-4 col-md-3">
-					<div class="thumbnail">
-						<div class="caption">
-							<h3>Gr&aacute;fico Execu&ccedil;&otilde;es</h3>
-							<p>Veja o total de execu&ccedil;&otilde;es dos servi&ccedil;os por Comunidade e Equipe.</p>
-							<p><a href="GraficoBO?acao=total" class="btn btn-primary" role="button">Acessar</a></p>
-						</div>
+			<div class="col-sm-4 col-md-3">
+				<div class="thumbnail">
+					<div class="caption">
+						<h3>Gr&aacute;fico Execu&ccedil;&otilde;es</h3>
+						<p>Veja o total de execu&ccedil;&otilde;es dos servi&ccedil;os por Comunidade e Equipe.</p>
+						<p><a href="GraficoBO?acao=total" class="btn btn-primary" role="button">Acessar</a></p>
 					</div>
 				</div>
+			</div>
 <!-- 				<div class="col-sm-4 col-md-3"> -->
 <!-- 					<div class="thumbnail"> -->
 <!-- 						<div class="caption"> -->
@@ -56,7 +55,6 @@
 <!-- 						</div> -->
 <!-- 					</div> -->
 <!-- 				</div> -->
-			</c:if>
 			
 		</div>
 		
