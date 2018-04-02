@@ -1,5 +1,6 @@
 package br.com.sisjupiter.dao;
 
+import br.com.sisjupiter.modelo.Diagnostico;
 import br.com.sisjupiter.modelo.Pass;
 import br.com.sisjupiter.modelo.Perfil;
 import br.com.sisjupiter.modelo.User;
@@ -7,6 +8,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,22 +21,21 @@ public class UserDAO {
         this.connection = connection;
     }
 
-    public User login(String email, String senha) throws SQLException {
-
+    public User login(String email, String senha) throws Exception {
         PreparedStatement stmt = null;
         ResultSet rs = null;
-
         User user = null;
-
+        SimpleDateFormat formatoBanco = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.m");
+        SimpleDateFormat formatoBanco2 = new SimpleDateFormat("yyyy-MM-dd");
+    	SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
         try {
-            
             stmt = connection.prepareStatement(
             "SELECT    TB_USER.ID_USER, " +
             "          TB_USER.NOME, " +
             "          TB_USER.EMAIL, " +
             "          TB_USER.SEXO, " +
-            "          CHAR(TB_USER.DTNASC,'DD/MM/YYYY') AS DTNASC, " +        
-            "          CHAR(TB_USER.DTINSERT,'DD/MM/YYYY') AS DTINSERT, " +
+            "          TB_USER.DTNASC, " +        
+            "          TB_USER.DTINSERT, " +
             "          TB_USER.SITUACAO, " +
             "          TB_PERFIL.ID_PERFIL, " +
             "          TB_PERFIL.PERFIL, " +
@@ -56,7 +57,6 @@ public class UserDAO {
             rs = stmt.executeQuery();
 
             if (rs.next()) {
-                
                 Perfil perfil = new Perfil();
                 perfil.setIdPerfil(rs.getLong("ID_PERFIL"));
                 perfil.setPerfil(rs.getString("PERFIL"));
@@ -74,45 +74,39 @@ public class UserDAO {
                 user.setNome(rs.getString("NOME"));
                 user.setEmail(rs.getString("EMAIL"));
                 user.setSexo(rs.getString("SEXO"));
-                user.setDtNasc(rs.getString("DTNASC"));
+                user.setDtNasc(formatoData.format(formatoBanco2.parse(rs.getString("DTNASC"))));
                 user.setDtInsert(rs.getString("DTINSERT"));
                 user.setSituacao(rs.getString("SITUACAO"));
                 user.setListPermissao(new PermissaoDAO(connection).listar(rs.getLong("ID_USER")));
             }
-
             return user;
         } 
         catch (Exception e) {
-            
             throw e;
         } 
         finally {
-          
-            if (stmt != null) {
+            if(stmt != null)
                 stmt.close();
-            }
-            if (rs != null) {
+            if(rs != null)
                 rs.close();
-            }
         }
     }    
     
-    public User buscarPorId(String idUser) throws SQLException {
-
+    public User buscarPorId(String idUser) throws Exception {
         PreparedStatement stmt = null;
         ResultSet rs = null;
-
         User user = null;
-
+        SimpleDateFormat formatoBanco = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.m");
+        SimpleDateFormat formatoBanco2 = new SimpleDateFormat("yyyy-MM-dd");
+    	SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
         try {
-            
             stmt = connection.prepareStatement(
             "SELECT    TB_USER.ID_USER, " +
             "          TB_USER.NOME, " +
             "          TB_USER.EMAIL, " +
             "          TB_USER.SEXO, " +
-            "          CHAR(TB_USER.DTNASC,'DD/MM/YYYY') AS DTNASC, " +        
-            "          CHAR(TB_USER.DTINSERT,'DD/MM/YYYY') AS DTINSERT, " +
+            "          TB_USER.DTNASC, " +        
+            "          TB_USER.DTINSERT, " +
             "          TB_USER.SITUACAO, " +
             "          TB_PERFIL.ID_PERFIL, " +
             "          TB_PERFIL.PERFIL, " +
@@ -150,37 +144,28 @@ public class UserDAO {
                 user.setNome(rs.getString("NOME"));
                 user.setEmail(rs.getString("EMAIL"));
                 user.setSexo(rs.getString("SEXO"));
-                user.setDtNasc(rs.getString("DTNASC"));
+                user.setDtNasc(formatoData.format(formatoBanco2.parse(rs.getString("DTNASC"))));
                 user.setDtInsert(rs.getString("DTINSERT"));
                 user.setSituacao(rs.getString("SITUACAO"));
             }
-
             return user;
         } 
         catch (Exception e) {
-            
             throw e;
         } 
         finally {
-          
-            if (stmt != null) {
+            if(stmt != null)
                 stmt.close();
-            }
-            if (rs != null) {
+            if(rs != null)
                 rs.close();
-            }
         }
     }    
     
     public List<User> listarNome(String q) throws SQLException {
-
         PreparedStatement stmt = null;
         ResultSet rs = null;
-
         List<User> list = new ArrayList<User>();
-
         try {
-
             stmt = connection.prepareStatement(
                     "  SELECT TB_USER.ID_USER, TB_USER.NOME "
                     + "    FROM TB_USER "
@@ -190,7 +175,6 @@ public class UserDAO {
             rs = stmt.executeQuery();
 
             while (rs.next()) {
-                
                 User user = new User();
 
                 user.setIdUser(rs.getLong("ID_USER"));
@@ -211,6 +195,55 @@ public class UserDAO {
         }
         return list;
     }
+
+    public void alterarUser(User user) throws Exception {
+    	PreparedStatement stmt = null;
+        ResultSet rs = null;
+        try {
+            stmt = connection.prepareStatement(
+            				" UPDATE TB_USER SET " +
+    						"NOME = ?," + 
+    	            		"EMAIL = ?," + 
+    	            		"DTNASC = ?" + 
+    	            		"WHERE ID_USER = ? "
+            				);
+    						
+			stmt.setObject(1, user.getNome());
+			stmt.setObject(2, user.getEmail());
+			stmt.setObject(3, user.getDtNasc());
+			stmt.setObject(4, user.getIdUser());
+			stmt.executeUpdate();
+	    }
+	    finally {
+	        if(stmt != null)
+	            stmt.close();
+	        if(rs != null)
+	            rs.close();
+	    }
+    }
+    
+    public void alterarSenha(Long idUser, String senha) throws Exception {
+    	PreparedStatement stmt = null;
+    	ResultSet rs = null;
+    	try {
+    		stmt = connection.prepareStatement(
+    						" UPDATE TB_PASS SET " +
+    						"PASS = ?" + 
+    						"WHERE ID_USER = ? "
+    				);
+    		
+    		stmt.setObject(1, senha);
+    		stmt.setObject(2, idUser);
+    		stmt.executeUpdate();
+    	}
+    	finally {
+    		if(stmt != null)
+    			stmt.close();
+    		if(rs != null)
+    			rs.close();
+    	}
+    }
+        
 
 //    public static void main(String[] args) throws SQLException {
 // 

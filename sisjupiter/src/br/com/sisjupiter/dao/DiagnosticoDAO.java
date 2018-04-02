@@ -67,7 +67,8 @@ public class DiagnosticoDAO {
     public Diagnostico buscarPorId(Long idDiagnostico) throws Exception {
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        SimpleDateFormat formatoBanco = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat formatoBanco = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.m");
+        SimpleDateFormat formatoBanco2 = new SimpleDateFormat("yyyy-MM-dd");
     	SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
         try {
             stmt = connection.prepareStatement(
@@ -119,7 +120,7 @@ public class DiagnosticoDAO {
             	diagnostico.setUfNasc(rs.getString("UFNASC"));
             	diagnostico.setMunNasc(rs.getString("MUNNASC"));
             	if(rs.getString("DTNASC") != null && ! rs.getString("DTNASC").isEmpty())
-            		diagnostico.setDtNasc(formatoData.format(formatoBanco.parse(rs.getString("DTNASC"))));
+            		diagnostico.setDtNasc(formatoData.format(formatoBanco2.parse(rs.getString("DTNASC"))));
             	diagnostico.setSexo(rs.getString("SEXO"));
             	diagnostico.setTelRes(Auxiliar.converteLong(rs.getString("TELRES")));
             	diagnostico.setTelCel(Auxiliar.converteLong(rs.getString("TELCEL")));
@@ -161,7 +162,7 @@ public class DiagnosticoDAO {
             	diagnostico.setBenefRg(rs.getString("BENEFRG"));
             	diagnostico.setBenefSexo(rs.getString("BENEFSEXO"));
             	if(rs.getString("BENEFDTNASC") != null && ! rs.getString("BENEFDTNASC").isEmpty())
-            		diagnostico.setBenefDtNasc(formatoData.format(formatoBanco.parse(rs.getString("BENEFDTNASC"))));
+            		diagnostico.setBenefDtNasc(formatoData.format(formatoBanco2.parse(rs.getString("BENEFDTNASC"))));
             	diagnostico.setBenefObs(rs.getString("BENEFOBS"));
             	diagnostico.setMaior59Qtde(Auxiliar.converteInteger(rs.getString("MAIOR59QTDE")));
             	diagnostico.setMenor19Qtde(Auxiliar.converteInteger(rs.getString("MENOR19QTDE")));

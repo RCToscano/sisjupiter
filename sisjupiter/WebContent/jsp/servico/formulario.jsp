@@ -1904,7 +1904,7 @@
 					
 				</div>
 				<div class="form-group">
-			    	<div class="col-sm-offset-6">
+			    	<div class="text-center">
 			        	<button type="submit" class="btn btn-primary">${botao}</button>
 			      	</div>
 			    </div>

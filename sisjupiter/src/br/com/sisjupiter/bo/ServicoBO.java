@@ -457,7 +457,7 @@ public class ServicoBO extends HttpServlet {
         		} 
         		catch (Exception e) {
         			System.out.println(e);
-            		req.setAttribute("aviso", "Nao foi possível realizar a operação, contate o suporte!");
+            		req.setAttribute("aviso", "Não foi possível realizar a operação, contate o suporte!");
             		req.setAttribute("display", "block");
             		req.setAttribute("sucesso", "");
             		req.setAttribute("botao", "Alterar");
