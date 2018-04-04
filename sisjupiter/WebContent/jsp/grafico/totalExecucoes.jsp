@@ -37,9 +37,111 @@
 			</c:if>
 		
 			<c:if test="${aviso == ''}">
-				<div id="comunidade" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
-				<div id="equipe" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+				<div class="col-sm-12">
+					<h3 class="text-center">Total de Execuções por Comunidade</h3>
+			
+					<div class="col-sm-6">
+						<table class="table table-hover">
+						    <thead>
+						        <tr>
+						            <th>Nº</th>
+						            <th>Comunidade</th>
+						            <th>Quantidade</th>
+						        </tr>
+						    </thead>
+						    <tbody>
+						    	<% int cont = 1;%>
+						    	<c:forEach items="${listaComunidade}" var="total">
+							        <tr>
+							            <td><%=cont%></td>
+							            <td>${total.nomeComunidade}</td>
+							            <td>${total.qtde}</td>
+							        </tr>
+							       	<%cont++;%>
+						        </c:forEach>
+						        <tr class="active">
+						            <td colspan="2"><strong>Total</strong></td>
+						            <td><strong>${totalComunidade}</strong></td>
+						        </tr>
+						    </tbody>
+						</table>
+					</div>
 				
+					<div class="col-sm-6">
+						<div id="comunidade" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+					</div>
+				</div>
+				
+				<div class="col-sm-12">
+					<h3 class="text-center">Total de Execuções por Equipe</h3>
+					
+					<div class="col-sm-6">
+						<table class="table table-hover">
+						    <thead>
+						        <tr>
+						            <th>Nº</th>
+						            <th>Equipe</th>
+						            <th>Quantidade</th>
+						        </tr>
+						    </thead>
+						    <tbody>
+						    	<% int cont1 = 1;%>
+						    	<c:forEach items="${listaEquipe}" var="total">
+							        <tr>
+							            <td><%=cont1%></td>
+							            <td>${total.nomeEquipe}</td>
+							            <td>${total.qtde}</td>
+							        </tr>
+							       	<%cont1++;%>
+						        </c:forEach>
+						        <tr class="active">
+						            <td colspan="2"><strong>Total</strong></td>
+						            <td><strong>${totalEquipe}</strong></td>
+						        </tr>
+						    </tbody>
+						</table>
+					</div>
+					
+					<div class="col-sm-6">
+						<div id="equipe" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div>
+					</div>
+				
+				</div>
+				
+<!-- 				<div class="col-sm-12"> -->
+<!-- 					<div id="comunidadeBarra" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div> -->
+<!-- 				</div> -->
+
+<!-- 			<div class="col-sm-12"> -->
+<!-- 				<div id="carousel-example-generic" class="carousel slide" data-ride="carousel" data-interval=""> -->
+<!-- 					Indicators -->
+<!-- 					<ol class="carousel-indicators"> -->
+<!-- 						<li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li> -->
+<!-- 						<li data-target="#carousel-example-generic" data-slide-to="1"></li> -->
+<!-- 						<li data-target="#carousel-example-generic" data-slide-to="2"></li> -->
+<!-- 					</ol> -->
+
+<!-- 					Wrapper for slides -->
+<!-- 					<div class="carousel-inner"> -->
+<!-- 						<div class="item active"> -->
+<!-- 							<div id="equipe" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div> -->
+<!-- 						</div> -->
+<!-- 						<div class="item"> -->
+<!-- 							<div id="comunidadeBarra" style="min-width: 310px; height: 400px; max-width: 600px; margin: 0 auto"></div> -->
+<!-- 						</div> -->
+						
+<!-- 					</div> -->
+
+<!-- 					Controls -->
+<!-- 					<a class="left carousel-control" href="#carousel-example-generic" data-slide="prev"> -->
+<!-- 						<span class="glyphicon glyphicon-chevron-left"></span> -->
+<!-- 					</a>  -->
+<!-- 					<a class="right carousel-control" href="#carousel-example-generic" data-slide="next"> -->
+<!-- 						<span class="glyphicon glyphicon-chevron-right"></span> -->
+<!-- 					</a> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
+
 				<script>
 					Highcharts.setOptions({
 					    colors: Highcharts.map(Highcharts.getOptions().colors, function (color) {
@@ -66,7 +168,7 @@
 					        type: 'pie'
 					    },
 					    title: {
-					        text: 'Total de Execuções por Comunidade'
+					        text: ''
 					    },
 					    tooltip: {
 					        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -104,7 +206,7 @@
 					        type: 'pie'
 					    },
 					    title: {
-					        text: 'Total de Execuções por Equipe'
+					        text: ''
 					    },
 					    tooltip: {
 					        pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -124,9 +226,52 @@
 					        }
 					    },
 					    series: [{
-					        name: 'Share',
+					        name: ' ',
 					        data: [
 					        	${fn:replace(fn:replace(listaEquipeFinal, '[', ''), ']', '')}
+					        ]
+					    }]
+					});
+				</script>
+					
+				<script>
+					Highcharts.chart('comunidadeBarra', {
+					    chart: {
+					        type: 'column'
+					    },
+					    title: {
+					        text: 'Browser market shares. January, 2015 to May, 2015'
+					    },
+					    xAxis: {
+					        type: 'category'
+					    },
+					    yAxis: {
+					        title: {
+					            text: 'Quantidade'
+					        }
+					    },
+					    legend: {
+					        enabled: false
+					    },
+					    plotOptions: {
+					        series: {
+					            borderWidth: 0,
+					            dataLabels: {
+					                enabled: true,
+					                format: '{point.y:.0f}'
+					            }
+					        }
+					    },
+					    tooltip: {
+					        headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+					        pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.0f}</b> do total de ${totalComunidade}<br/>'
+					    },
+	
+					    series: [{
+					        name: ' ',
+					        colorByPoint: true,
+					        data: [
+					        	${fn:replace(fn:replace(listaComunidadeFinal, '[', ''), ']', '')}
 					        ]
 					    }]
 					});

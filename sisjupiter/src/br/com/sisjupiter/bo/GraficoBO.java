@@ -43,12 +43,15 @@ public class GraficoBO extends HttpServlet {
             	GraficoDAO graficoDAO = new GraficoDAO(connection);
             	List<Grafico> listaComunidade = graficoDAO.qtdeExecucaoPorComunidade();
             	
+            	int totalComunidade = 0;
             	List<String> listaComunidadeFinal = new ArrayList<>();
             	for(int i = 0; i < listaComunidade.size(); i++) {
             		listaComunidadeFinal.add("{name: '"+listaComunidade.get(i).getNomeComunidade()+"'");
             		listaComunidadeFinal.add("y: "+String.valueOf(listaComunidade.get(i).getQtde())+"}");
+            		totalComunidade += listaComunidade.get(i).getQtde();
             	}
             	
+            	int totalEquipe = 0;
             	List<Grafico> listaEquipe = graficoDAO.qtdeExecucaoPorEquipe();
             	List<String> listaEquipeFinal = new ArrayList<>();
             	for(int i = 0; i < listaEquipe.size(); i++) {
@@ -56,6 +59,7 @@ public class GraficoBO extends HttpServlet {
             		String nome = listaEquipe.get(i).getLoginEquipe()+" - "+splited[0];
             		listaEquipeFinal.add("{name: '"+nome+"'");
             		listaEquipeFinal.add("y: "+String.valueOf(listaEquipe.get(i).getQtde())+"}");
+            		totalEquipe += listaEquipe.get(i).getQtde();
             	}
             	if(listaEquipe.isEmpty() && listaComunidade.isEmpty()) {
             		req.setAttribute("aviso", "Nenhuma execução encontrada");
@@ -63,8 +67,12 @@ public class GraficoBO extends HttpServlet {
             	}
             	else {
             		req.setAttribute("aviso", "");
+            		req.setAttribute("listaComunidade", listaComunidade);
+            		req.setAttribute("listaEquipe", listaEquipe);
             		req.setAttribute("listaComunidadeFinal", listaComunidadeFinal);
             		req.setAttribute("listaEquipeFinal", listaEquipeFinal);
+            		req.setAttribute("totalComunidade", totalComunidade);
+            		req.setAttribute("totalEquipe", totalEquipe);
             	}
             	
             	req.getRequestDispatcher("/jsp/grafico/totalExecucoes.jsp").forward(req, res);

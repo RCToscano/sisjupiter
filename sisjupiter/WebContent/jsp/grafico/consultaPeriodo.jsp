@@ -71,8 +71,8 @@
         
         <script type="text/javascript">
             $(function () {
-                $('#dtInicio').datetimepicker();
-                $('#dtFim').datetimepicker();
+                $('#dtInicio').datetimepicker({locale: 'pt-br'});
+                $('#dtFim').datetimepicker({locale: 'pt-br'});
             });
         </script>
     </body>
