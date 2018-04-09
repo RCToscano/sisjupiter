@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.sisjupiter.auxiliar.Auxiliar;
+import br.com.sisjupiter.modelo.ConsultaServico;
 import br.com.sisjupiter.modelo.Diagnostico;
 
 public class DiagnosticoDAO {
@@ -18,43 +19,49 @@ public class DiagnosticoDAO {
         this.connection = connection;
     }
     
-    public List<Diagnostico> listarPorPeriodo(String dtInicio, String dtFim) throws Exception {
+    
+	public Long listarServicosTotal(String dtInicio, String dtFim, String cpf, String rg, String comunidade,
+			String endereco, int inicio, int fim) throws Exception {
         PreparedStatement stmt = null;
         ResultSet rs = null;
-        List<Diagnostico> list = new ArrayList<>();
-        SimpleDateFormat formatoBanco = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss.m");
+        SimpleDateFormat formatoBanco = new SimpleDateFormat("yyyy-MM-dd");
     	SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
         try {
-            
+        	String sql = "";
+        	
+        	if(dtInicio != null && !dtInicio.trim().isEmpty()) {
+        		dtInicio = formatoBanco.format(formatoData.parse(dtInicio));
+        		dtFim = formatoBanco.format(formatoData.parse(dtFim));
+        		sql += " TB_DIAGNOSTICO.DATA >= '"+dtInicio+"'";
+        		sql += " and TB_DIAGNOSTICO.DATA <= '"+dtFim +"' and";
+        	}
+        	if(cpf != null && !cpf.trim().isEmpty()) {
+        		sql += " TB_DIAGNOSTICO.CPF = '"+cpf+"' and";
+        	}
+        	if(rg != null && !rg.trim().isEmpty()) {
+        		sql += " TB_DIAGNOSTICO.RG = '"+rg+"' and";
+        	}
+        	if(comunidade != null && !comunidade.trim().isEmpty()) {
+        		sql += " TB_DIAGNOSTICO.ID_COMUNIDADE = "+comunidade+" and";
+        	}
+        	if(endereco != null && !endereco.trim().isEmpty()) {
+        		sql += " TB_DIAGNOSTICO.ENDERECO like '%"+endereco+"%' and";
+        	}
+        	sql = sql.substring(0, sql.length()-3);
+        	
+        	
             stmt = connection.prepareStatement(
-            "SELECT    TB_DIAGNOSTICO.* " +
+            "   SELECT count(TB_DIAGNOSTICO.ID_DIAGNOSTICO) as TOTAL " +
             "FROM      TB_DIAGNOSTICO " +
-            "WHERE     TB_DIAGNOSTICO.DATA >= ? " +
-            "AND       TB_DIAGNOSTICO.DATA <= ? " +
-            "ORDER BY  TB_DIAGNOSTICO.DATA DESC, " +
-            "          TB_DIAGNOSTICO.ID_DIAGNOSTICO DESC "
+            "WHERE " +
+            sql 
             );
-            
-            stmt.setString(1, dtInicio);
-            stmt.setString(2, dtFim);
-
             rs = stmt.executeQuery();
 
-            while(rs.next()) {
-            	Diagnostico diagnostico = new Diagnostico();
-            	diagnostico.setIdDiagnostico(rs.getLong("ID_DIAGNOSTICO"));
-            	diagnostico.setDtInsert(formatoData.format(formatoBanco.parse(rs.getString("DTINSERT"))));
-            	diagnostico.setData(formatoData.format(formatoBanco.parse(rs.getString("DATA"))));
-            	diagnostico.setIdSitImovel(rs.getInt("ID_SITIMOVEL"));
-            	diagnostico.setNome(rs.getString("NOME"));
-            	diagnostico.setCpf(rs.getString("CPF"));
-            	diagnostico.setEndereco(rs.getString("ENDERECO"));
-            	diagnostico.setNumAtual(Auxiliar.converteInteger(rs.getString("NUMATUAL")));
-            	diagnostico.setAbastAguaIrreg(rs.getInt("ABASTAGUAIRREG"));
-            	diagnostico.setIdDestEsgoto(rs.getInt("ID_DESTESGOTO"));
-                list.add(diagnostico);
-            }
-            return list;
+            if(rs.next())
+            	return rs.getLong("TOTAL");
+            
+            return 0l;
         }
         finally {
             if(stmt != null)
@@ -63,6 +70,87 @@ public class DiagnosticoDAO {
                 rs.close();
         }
     }
+	
+	public List<ConsultaServico> listarServicos(String dtInicio, String dtFim, String cpf, String rg, String comunidade,
+			String endereco, int inicio, int fim) throws Exception {
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		List<ConsultaServico> list = new ArrayList<>();
+		SimpleDateFormat formatoBanco = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
+		try {
+			String sql = "";
+			
+			if(dtInicio != null && !dtInicio.trim().isEmpty()) {
+				dtInicio = formatoBanco.format(formatoData.parse(dtInicio));
+				dtFim = formatoBanco.format(formatoData.parse(dtFim));
+				sql += " T.DATA >= '"+dtInicio+"'";
+				sql += " and T.DATA <= '"+dtFim +"' and";
+			}
+			if(cpf != null && !cpf.trim().isEmpty()) {
+				sql += " T.CPF = '"+cpf+"' and";
+			}
+			if(rg != null && !rg.trim().isEmpty()) {
+				sql += " T.RG = '"+rg+"' and";
+			}
+			if(comunidade != null && !comunidade.trim().isEmpty()) {
+				sql += " T.ID_COMUNIDADE = "+comunidade+" and";
+			}
+			if(endereco != null && !endereco.trim().isEmpty()) {
+				sql += " T.ENDERECO like '%"+endereco+"%' and";
+			}
+			sql = sql.substring(0, sql.length()-3);
+			
+			
+			stmt = connection.prepareStatement(
+			"SELECT a.* from ( " +
+			"   SELECT @rownum := @rownum + 1 AS rownum, "+
+			"          T.ID_DIAGNOSTICO, " +
+			"          T.DTINSERT, " +
+			"          T.DATA, " +
+			"          T.NOME, " +
+			"          T.CPF, " +
+			"          T.RG, " +
+			"          T.ENDERECO, " +
+			"          T.NUMATUAL, " +
+			"          C.ID_COMUNIDADE, " +
+			"          C.NOME as NOME_COMUNIDADE " +
+			"FROM      TB_DIAGNOSTICO T " +
+			"LEFT JOIN TB_COMUNIDADE C " +
+			"ON        T.ID_COMUNIDADE = C.ID_COMUNIDADE, " +
+			"(SELECT @rownum := 0) R " +
+			"WHERE " +
+			sql +
+			"ORDER BY  T.DATA DESC, " +
+			"          T.ID_DIAGNOSTICO DESC " +
+			") a " +
+			"WHERE a.rownum >= "+inicio+
+			"  and a.rownum <= "+fim
+			);
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				ConsultaServico servico = new ConsultaServico();
+				servico.setIdDiagnostico(rs.getLong("ID_DIAGNOSTICO"));
+				servico.setDtInsert(formatoData.format(formatoBanco.parse(rs.getString("DTINSERT"))));
+				servico.setDataExecucao(formatoData.format(formatoBanco.parse(rs.getString("DATA"))));
+				servico.setNomeCliente(rs.getString("NOME"));
+				servico.setCpf(rs.getString("CPF"));
+				servico.setRg(rs.getString("RG"));
+				servico.setEndereco(rs.getString("ENDERECO")+" "+Auxiliar.isNull(rs.getString("NUMATUAL")));
+				servico.setIdComunidade(rs.getLong("ID_COMUNIDADE"));
+				servico.setNomeComunidade(rs.getString("NOME_COMUNIDADE"));
+				list.add(servico);
+			}
+			return list;
+		}
+		finally {
+			if(stmt != null)
+				stmt.close();
+			if(rs != null)
+				rs.close();
+		}
+	}
     
     public Diagnostico buscarPorId(Long idDiagnostico) throws Exception {
         PreparedStatement stmt = null;

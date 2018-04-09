@@ -32,7 +32,7 @@
 				<div class="thumbnail">
 					<div class="caption">
 						<h3>Consulta de Servi&ccedil;os</h3>
-						<p>Pesquise por per&iacute;odo de execu&ccedil;&atilde;o.</p>
+						<p>Pesquise os servi&ccedil;os executados em campo.</p>
 						<p><a href="ServicoBO?acao=consultar" class="btn btn-primary" role="button">Acessar</a></p>
 					</div>
 				</div>

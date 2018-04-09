@@ -1,6 +1,7 @@
 package br.com.sisjupiter.bo;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -12,6 +13,8 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.google.gson.Gson;
 
 import br.com.sisjupiter.auxiliar.Auxiliar;
 import br.com.sisjupiter.connection.ConnectionFactory;
@@ -33,6 +36,7 @@ import br.com.sisjupiter.enuns.TipoConstrucaoEnum;
 import br.com.sisjupiter.enuns.TipoInstalacaoEnum;
 import br.com.sisjupiter.enuns.TipoUsoImovelEnum;
 import br.com.sisjupiter.modelo.Comunidade;
+import br.com.sisjupiter.modelo.ConsultaServico;
 import br.com.sisjupiter.modelo.Diagnostico;
 import br.com.sisjupiter.modelo.Equipe;
 import br.com.sisjupiter.modelo.EscolaridadeParente;
@@ -57,50 +61,127 @@ public class ServicoBO extends HttpServlet {
             }
 
             if (relat.equals("consultar")) {
+        		connection = ConnectionFactory.getConnection();
+        		ComunidadeDAO comunidadeDAO = new ComunidadeDAO(connection);
+            	List<Comunidade> listaComunidades = comunidadeDAO.listarTodos();
+
+            	req.setAttribute("display", "none");
             	req.setAttribute("aviso", "");
-                req.getRequestDispatcher("/jsp/servico/consulta.jsp").forward(req, res);
+            	req.setAttribute("informacao", "");
+            	req.setAttribute("listaComunidades", listaComunidades);
+            	req.getRequestDispatcher("/jsp/servico/consulta.jsp").forward(req, res);
             } 
             else if (relat.equals("pesquisar")) {
-            	SimpleDateFormat formatoBanco = new SimpleDateFormat("yyyy-MM-dd");
-            	SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
             	try {
-	            	String dtInicio = formatoBanco.format(formatoData.parse(req.getParameter("dtInicio")));
-	            	String dtFim = formatoBanco.format(formatoData.parse(req.getParameter("dtFim")));
+            		String dtInicio = req.getParameter("dtInicio");
+	            	String dtFim = req.getParameter("dtFim");
+	            	String cpf = req.getParameter("cpf");
+	            	String rg = req.getParameter("rg");
+	            	String comunidade = req.getParameter("comunidade");
+	            	String endereco = req.getParameter("endereco");
+	            	int inicio = 1;
+	            	int fim = 50;
 	            	
 	            	connection = ConnectionFactory.getConnection();
 	            	DiagnosticoDAO diagnosticoDAO = new DiagnosticoDAO(connection);
-	            	List<Diagnostico> listaServicos = diagnosticoDAO.listarPorPeriodo(dtInicio, dtFim);
+	            	List<ConsultaServico> listaServicos = diagnosticoDAO.listarServicos(dtInicio, dtFim, cpf, rg,
+							comunidade, endereco, inicio, fim);
 	            	
 	            	if(!listaServicos.isEmpty()) {
-	            		List<SituacaoImovelEnum> listaSituacaoImovel = SituacaoImovelEnum.listCodigos();
-	            		List<FormaAbastecimentoEnum> listaAbastecimentoAgua = FormaAbastecimentoEnum.listCodigos();
-		            	List<DestinoEsgotoEnum> listaDestinoEsgoto = DestinoEsgotoEnum.listCodigos();
-		            	
-		            	req.setAttribute("aviso", "");
-		            	req.setAttribute("listaSituacaoImovel", listaSituacaoImovel);
-		            	req.setAttribute("listaAbastecimentoAgua", listaAbastecimentoAgua);
-		            	req.setAttribute("listaDestinoEsgoto", listaDestinoEsgoto);
+						Long total = diagnosticoDAO.listarServicosTotal(dtInicio, dtFim, cpf, rg, comunidade, endereco,
+								inicio, fim);
+						BigDecimal paginas = new BigDecimal(total).divide(new BigDecimal(50));
+						String split[] = String.valueOf(paginas).replace(".", ";").split(";");
+						int qtde = Integer.parseInt(split[0]);
+						if(split[1] != null && !split[1].isEmpty())
+							qtde++;
+						
+						List<String> qtdePaginas = new ArrayList<>();
+						for(int i = 1; i<=qtde; i++) {
+							qtdePaginas.add(String.valueOf(i));
+						}
+						
 	            		req.setAttribute("lista", listaServicos);
-	            		req.setAttribute("dtInicio", req.getParameter("dtInicio"));
-	            		req.setAttribute("dtFim", req.getParameter("dtFim"));
+	            		req.setAttribute("paginas", qtdePaginas);
+	            		req.setAttribute("qtdePaginas", qtdePaginas.size());
+	            		req.setAttribute("dtInicio", dtInicio);
+	            		req.setAttribute("dtFim", dtFim);
+	            		req.setAttribute("cpf", cpf);
+	            		req.setAttribute("rg", rg);
+	            		req.setAttribute("comunidade", comunidade);
+	            		req.setAttribute("endereco", endereco);
+	            		req.setAttribute("inicio", inicio);
+	            		req.setAttribute("fim", fim);
+	            		req.setAttribute("aviso", "");
 	            		req.getRequestDispatcher("/jsp/servico/lista.jsp").forward(req, res);
 	            	}
 	            	else {
-	            		req.setAttribute("aviso", "Nenhum resultado encontrado para o periodo solicitado!");
+	            		ComunidadeDAO comunidadeDAO = new ComunidadeDAO(connection);
+	                	List<Comunidade> listaComunidades = comunidadeDAO.listarTodos();
+	            		
+	            		req.setAttribute("dtInicio", dtInicio);
+	            		req.setAttribute("dtFim", dtFim);
+	            		req.setAttribute("cpf", cpf);
+	            		req.setAttribute("rg", rg);
+	            		req.setAttribute("comunidade", comunidade);
+	            		req.setAttribute("endereco", endereco);
+	            		req.setAttribute("listaComunidades", listaComunidades);
+	            		
+	            		req.setAttribute("aviso", "");
+	            		req.setAttribute("display", "none");
+	            		req.setAttribute("informacao", "Nenhum resultado encontrado!");
 	            		req.getRequestDispatcher("/jsp/servico/consulta.jsp").forward(req, res);
 	            	}
             	} 
             	catch (Exception e) {
             		System.out.println(e);
             		req.setAttribute("aviso", "Nao foi possivel realizar a consulta, contate o suporte!");
+            		req.setAttribute("display", "block");
+            		req.setAttribute("informacao", "");
             		req.getRequestDispatcher("/jsp/servico/consulta.jsp").forward(req, res);
 				}
             } 
-            else if (relat.equals("detalhe")) {
-            	SimpleDateFormat formatoBanco = new SimpleDateFormat("yyyy-MM-dd");
-            	SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
-            	connection = ConnectionFactory.getConnection();
+            else if (relat.equals("paginacao")) {
+            	String dtInicio = req.getParameter("dtInicio");
+            	String dtFim = req.getParameter("dtFim");
+            	String cpf = req.getParameter("cpf");
+            	String rg = req.getParameter("rg");
+            	String comunidade = req.getParameter("comunidade");
+            	String endereco = req.getParameter("endereco");
+            	int inicio = Integer.parseInt(req.getParameter("inicio"));
+            	int fim = Integer.parseInt(req.getParameter("fim"));
+            	
+            	Gson gson = new Gson();
+                String json = "";
             	try {
+	            	connection = ConnectionFactory.getConnection();
+	            	DiagnosticoDAO diagnosticoDAO = new DiagnosticoDAO(connection);
+	            	List<ConsultaServico> listaServicos = diagnosticoDAO.listarServicos(dtInicio, dtFim, cpf, rg,
+							comunidade, endereco, inicio, fim);
+	            	
+	                json = gson.toJson(listaServicos);
+	
+	                res.setContentType("application/json");
+	                res.setCharacterEncoding("UTF-8");
+	                res.getWriter().write(json); 
+	            } 
+	            catch (Exception e) {
+	                json = gson.toJson("Falha ao buscar " + e.toString());
+	                res.setContentType("application/json");
+	                res.setCharacterEncoding("UTF-8");
+	                res.getWriter().write(json); 
+	            }
+            }
+            else if (relat.equals("detalhe")) {
+            	connection = ConnectionFactory.getConnection();
+            	String dtInicio = req.getParameter("dtInicio");
+            	String dtFim = req.getParameter("dtFim");
+            	String cpf = req.getParameter("cpf");
+            	String rg = req.getParameter("rg");
+            	String comunidade = req.getParameter("comunidade");
+            	String endereco = req.getParameter("endereco");
+            	try {
+            		
 	            	Long id = Long.parseLong(req.getParameter("id"));
 	            	DiagnosticoDAO diagnosticoDAO = new DiagnosticoDAO(connection);
 	            	Diagnostico diagnostico = diagnosticoDAO.buscarPorId(id);
@@ -152,27 +233,49 @@ public class ServicoBO extends HttpServlet {
 	            	req.setAttribute("sucesso", "");
 	            	req.setAttribute("dtInicio", req.getParameter("dtInicio"));
             		req.setAttribute("dtFim", req.getParameter("dtFim"));
+            		req.setAttribute("cpf", cpf);
+            		req.setAttribute("rg", rg);
+            		req.setAttribute("comunidade", comunidade);
+            		req.setAttribute("endereco", endereco);
+            		req.setAttribute("inicio", "1");
+            		req.setAttribute("fim", "50");
 	            	req.getRequestDispatcher("/jsp/servico/formulario.jsp").forward(req, res);
             	} 
             	catch (Exception e) {
             		System.out.println(e);
-            		
-            		String dtInicio = formatoBanco.format(formatoData.parse(req.getParameter("dtInicio")));
-	            	String dtFim = formatoBanco.format(formatoData.parse(req.getParameter("dtFim")));
-            		
+	            	int inicio = 1;
+	            	int fim = 50;
+	            	
+	            	connection = ConnectionFactory.getConnection();
 	            	DiagnosticoDAO diagnosticoDAO = new DiagnosticoDAO(connection);
-	            	List<Diagnostico> listaServicos = diagnosticoDAO.listarPorPeriodo(dtInicio, dtFim);
+	            	List<ConsultaServico> listaServicos = diagnosticoDAO.listarServicos(dtInicio, dtFim, cpf, rg,
+							comunidade, endereco, inicio, fim);
 	            	
-            		List<SituacaoImovelEnum> listaSituacaoImovel = SituacaoImovelEnum.listCodigos();
-            		List<FormaAbastecimentoEnum> listaAbastecimentoAgua = FormaAbastecimentoEnum.listCodigos();
-	            	List<DestinoEsgotoEnum> listaDestinoEsgoto = DestinoEsgotoEnum.listCodigos();
-	            	
-	            	req.setAttribute("listaSituacaoImovel", listaSituacaoImovel);
-	            	req.setAttribute("listaAbastecimentoAgua", listaAbastecimentoAgua);
-	            	req.setAttribute("listaDestinoEsgoto", listaDestinoEsgoto);
+					Long total = diagnosticoDAO.listarServicosTotal(dtInicio, dtFim, cpf, rg, comunidade, endereco,
+							inicio, fim);
+					BigDecimal paginas = new BigDecimal(total).divide(new BigDecimal(50));
+					String split[] = String.valueOf(paginas).replace(".", ";").split(";");
+					int qtde = Integer.parseInt(split[0]);
+					if(split[1] != null && !split[1].isEmpty())
+						qtde++;
+					
+					List<String> qtdePaginas = new ArrayList<>();
+					for(int i = 1; i<=qtde; i++) {
+						qtdePaginas.add(String.valueOf(i));
+					}
+					
             		req.setAttribute("lista", listaServicos);
-            		
-            		req.setAttribute("aviso", "Nao foi possivel mostrar o formulario, contate o suporte!");
+            		req.setAttribute("paginas", qtdePaginas);
+            		req.setAttribute("qtdePaginas", qtdePaginas.size());
+            		req.setAttribute("dtInicio", dtInicio);
+            		req.setAttribute("dtFim", dtFim);
+            		req.setAttribute("cpf", cpf);
+            		req.setAttribute("rg", rg);
+            		req.setAttribute("comunidade", comunidade);
+            		req.setAttribute("endereco", endereco);
+            		req.setAttribute("inicio", inicio);
+            		req.setAttribute("fim", fim);
+            		req.setAttribute("aviso", "Não foi possível mostrar o formulário, contate o suporte!");
             		req.getRequestDispatcher("/jsp/servico/lista.jsp").forward(req, res);
 				}
             } 

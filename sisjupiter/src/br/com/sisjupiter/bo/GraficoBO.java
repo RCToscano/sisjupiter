@@ -11,7 +11,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import br.com.sisjupiter.connection.ConnectionFactory;
 import br.com.sisjupiter.dao.GraficoDAO;
@@ -35,10 +34,7 @@ public class GraficoBO extends HttpServlet {
                 relat = req.getParameter("acao");
             }
 
-            if (relat.equals("home")) {
-                req.getRequestDispatcher("/jsp/home.jsp").forward(req, res);
-            } 
-            else if (relat.equals("total")) {
+            if (relat.equals("total")) {
             	connection = ConnectionFactory.getConnection();
             	GraficoDAO graficoDAO = new GraficoDAO(connection);
             	List<Grafico> listaComunidade = graficoDAO.qtdeExecucaoPorComunidade();
@@ -116,14 +112,7 @@ public class GraficoBO extends HttpServlet {
             		req.setAttribute("aviso", "Nao foi possivel realizar a consulta, contate o suporte!");
             		req.getRequestDispatcher("/jsp/grafico/consultaPeriodo.jsp").forward(req, res);
 				}
-            	
             }
-            else if (relat.equals("logout")) {
-                HttpSession session = req.getSession(true);
-                session.putValue("user", null);
-                req.getSession().invalidate();
-                req.getRequestDispatcher("/index.jsp").forward(req, res);
-            } 
         }
         catch (Exception e) {
             req.setAttribute("erro", e.toString());
