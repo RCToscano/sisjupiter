@@ -19,8 +19,13 @@ public class HomeBO extends HttpServlet {
 
 	@Override
     public void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		
 		String relat = "";
-        try {
+        
+		try {
+        	
+			
+			
             if (req.getParameter("acao") != null) {
                 relat = req.getParameter("acao");
             }
