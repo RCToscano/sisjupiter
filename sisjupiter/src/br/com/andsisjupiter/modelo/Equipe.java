@@ -93,5 +93,29 @@ public class Equipe {
     public void setDtInsert(String dtInsert) {
         this.dtInsert = dtInsert;
     }
+    
+    public static void main(String[] args) {
+		
+    	try {
+		
+    		try {
+    			
+    			Long a = Long.parseLong("W");
+			}
+    		catch (Exception e) {
+    			System.out.println("caiu primeiro catch");
+    		}
+    		finally {
+    			System.out.println("caiu primeiro finally");
+			}
+		} 
+    	catch (Exception e) {
 
+    		System.out.println("caiu segundo catch");
+		}
+    	finally {
+    		
+    		System.out.println("caiu segundo finally");
+		}
+	}
 }
