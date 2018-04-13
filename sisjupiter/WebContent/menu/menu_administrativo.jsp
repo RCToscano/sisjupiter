@@ -36,9 +36,19 @@
                     </ul>
                 </li>
             </ul>
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gr&aacute;fico <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="GraficoBO?acao=total">Total Execu&ccedil;&otilde;es</a></li>
+                        <li class="divider"></li>
+                        <li><a href="GraficoBO?acao=consultaPeriodo">Per&iacute;odo Execu&ccedil;&atilde;o</a></li>
+                    </ul>
+                </li>
+            </ul>
             <ul class="nav navbar-nav navbar-right">
 	        	<span class="navbar-text">Ol&aacute; ${sessionScope.user.nome}, seja bem-vindo!</span>
-<!-- 		    	<li><a href="#"><span class="glyphicon glyphicon-user"></span> Perfil</a></li> -->
+		    	<li><a href="UsuarioBO?acao=perfil"><span class="glyphicon glyphicon-user"></span> Perfil</a></li>
 		    	<li><a href="Login?r=logout"><span class="glyphicon glyphicon-log-in"></span> Sair</a></li>
 <!-- 		    	<li><a data-toggle="modal" data-target="#myModal" href="Login?r=logout"><span class="glyphicon glyphicon-log-in"></span> Sair</a></li> -->
 		    </ul>

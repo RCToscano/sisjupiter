@@ -36,17 +36,17 @@
 					    <li><a href="HomeBO?acao=home">Home</a></li>
 					    <li><a href="ServicoBO?acao=consultar">Servi&ccedil;o</a></li>
 					    <li><a href="ServicoBO?acao=consultar">Consulta</a></li>
-					    <li><a href="ServicoBO?acao=pesquisar&dtInicio=${dtInicio}&dtFim=${dtFim}">Lista</a></li>
+<%-- 					    <li><a href="ServicoBO?acao=pesquisar&id=${modelo.idDiagnostico}&dtInicio=${dtInicio}&dtFim=${dtFim}&cpf=${cpf}&rg=${rg}&endereco=${endereco}&comunidade=${comunidade}&inicio=${inicio}&fim=${fim}"> --%>
+<!-- 					    Lista</a></li> -->
+					    <li class="active">Lista</li>
 					    <li class="active">Formul&aacute;rio</li>
 					</ul>
 	        	</c:otherwise>
         	</c:choose>
 			
-<%-- 			<c:if test="${aviso != ''}"> --%>
-				<div id="divAviso" name="divAviso" class="alert alert-danger" style="display:${display};">
-					<strong><label id='aviso' name='aviso'>${aviso}</strong>
-				</div>
-<%-- 			</c:if> --%>
+			<div id="divAviso" name="divAviso" class="alert alert-danger" style="display:${display};">
+				<strong><label id='aviso' name='aviso'/>${aviso}</strong>
+			</div>
 			
 			<c:if test="${sucesso != ''}">
 				<div class="alert alert-success">
@@ -127,7 +127,6 @@
 	                                        </c:choose>
 	                                    </c:forEach>
 	                                </select>
-									</select>
 								</div>
 							</div>
 							
@@ -1904,7 +1903,7 @@
 					
 				</div>
 				<div class="form-group">
-			    	<div class="col-sm-offset-6">
+			    	<div class="text-center">
 			        	<button type="submit" class="btn btn-primary">${botao}</button>
 			      	</div>
 			    </div>

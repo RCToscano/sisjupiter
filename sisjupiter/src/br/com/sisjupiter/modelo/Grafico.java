@@ -8,6 +8,8 @@ public class Grafico {
 	private long qtde;
 	private String nomeComunidade;
 	private String nomeEquipe;
+	private String loginEquipe;
+	private String data;
 	
 	
 	
@@ -47,7 +49,18 @@ public class Grafico {
 	public void setNomeEquipe(String nomeEquipe) {
 		this.nomeEquipe = nomeEquipe;
 	}
-	
+	public String getData() {
+		return data;
+	}
+	public void setData(String data) {
+		this.data = data;
+	}
+	public String getLoginEquipe() {
+		return loginEquipe;
+	}
+	public void setLoginEquipe(String loginEquipe) {
+		this.loginEquipe = loginEquipe;
+	}
 	
 
 }

@@ -6,7 +6,6 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 public class HomeBO extends HttpServlet {
 
@@ -35,12 +34,6 @@ public class HomeBO extends HttpServlet {
             } 
             else if (relat.equals("censo")) {
             	req.getRequestDispatcher("/jsp/servico/consulta.jsp").forward(req, res);
-            } 
-            else if (relat.equals("logout")) {
-                HttpSession session = req.getSession(true);
-                session.putValue("user", null);
-                req.getSession().invalidate();
-                req.getRequestDispatcher("/index.jsp").forward(req, res);
             } 
         }
         catch (Exception e) {
