@@ -109,15 +109,37 @@ public class Auxiliar {
         return entrada;
     }    
     
-    public static String isZeroNull(String entrada) {
+//    public static String isZeroNull(String entrada) {
+//        
+//        if(entrada != null && entrada.trim().equals("")) {
+//            
+//            entrada = "0";
+//        }
+//        
+//        return entrada;
+//    }    
+    
+    public static Long isZeroNull(Long entrada) {
         
-        if(entrada != null && entrada.trim().equals("")) {
+        if(entrada != null && entrada.longValue() == 0) {
             
-            entrada = "0";
+            entrada = null;
         }
         
         return entrada;
-    }    
+    }
+    
+    public static Double isZeroNull(Double entrada) {
+        
+        if(entrada != null 
+                && ( entrada.longValue() == 0
+                        || entrada.longValue() == 0.0)) {
+            
+            entrada = null;
+        }
+        
+        return entrada;
+    }
     
     public static String isZero(Long entrada) {
         
