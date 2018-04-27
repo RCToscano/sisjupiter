@@ -58,6 +58,7 @@
 				<input type="hidden" id="dtInicio" name="dtInicio" value="${dtInicio}" />
 				<input type="hidden" id="dtFim" name="dtFim" value="${dtFim}" />
 				<input type="hidden" id="id" name="id" value="${modelo.idDiagnostico}" />
+				<input type="hidden" id="idContato" name="idContato" value="${contato.idDiagnosticoContato}" />
 				
 				
 				<h2>Formul&aacute;rio de Diagn&oacute;stico</h2>
@@ -1824,7 +1825,7 @@
 					</div>
 						
 					<div class="panel panel-primary">
-						<div class="panel-heading"><label>Demais Informa&ccedil;&otilde;es</label></div>
+						<div class="panel-heading"><label>Informa&ccedil;&otilde;es sobre a Obra</label></div>
 						<div class="panel-body">
 							
 							<div class="col-sm-10">
@@ -1897,6 +1898,208 @@
 								</div>
 							</div>
 					
+						</div>
+					</div>
+					
+					
+					<div class="panel panel-primary">
+						<div class="panel-heading"><label>Demais Informa&ccedil;&otilde;es</label></div>
+						<div class="panel-body">
+						
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label>Nome de Todas as Pessoas que Moram na Casa</label> 
+									<input type="text" class="form-control input-sm" name="moradores" id="moradores" maxlength="300" value="${contato.moradoresResid}" />
+								</div>
+							</div>
+						
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label>Nome do Primeiro Responsável pela Casa</label> 
+									<input type="text" class="form-control input-sm" name="respCasa1" id="respCasa1" maxlength="100" value="${contato.contatoRespCasaNome1}"/>
+								</div>
+							</div>
+								
+							<div class="col-sm-3">
+								<div class="form-group">
+									<label>Telefone do Primeiro Responsável</label> 
+									<input type="text" class="form-control input-sm" name="respTelefone1" id="respTelefone1" maxlength="20" value="${contato.contatoRespCasaTel1}"  />
+								</div>
+							</div>
+						
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label>Nome do Segundo Responsável pela Casa</label> 
+									<input type="text" class="form-control input-sm" name="respCasa2" id="respCasa2" maxlength="100" value="${contato.contatoRespCasaNome2}"/>
+								</div>
+							</div>
+								
+							<div class="col-sm-3">
+								<div class="form-group">
+									<label>Telefone do Segundo Responsável</label> 
+									<input type="text" class="form-control input-sm" name="respTelefone2" id="respTelefone2" maxlength="20" value="${contato.contatoRespCasaTel2}"  />
+								</div>
+							</div>
+						
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label>Nome do Primeiro Vizinho</label> 
+									<input type="text" class="form-control input-sm" name="vizinho1" id="vizinho1" maxlength="100" value="${contato.contatoVizinhoNome1}"/>
+								</div>
+							</div>
+								
+							<div class="col-sm-3">
+								<div class="form-group">
+									<label>Telefone do Primeiro Vizinho</label> 
+									<input type="text" class="form-control input-sm" name="vizinhoTelefone1" id="vizinhoTelefone1" maxlength="20" value="${contato.contatoVizinhoTel1}"  />
+								</div>
+							</div>
+						
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label>Nome do Segundo Vizinho</label> 
+									<input type="text" class="form-control input-sm" name="vizinho2" id="vizinho2" maxlength="100" value="${contato.contatoVizinhoNome2}"/>
+								</div>
+							</div>
+								
+							<div class="col-sm-3">
+								<div class="form-group">
+									<label>Telefone do Segundo Vizinho</label> 
+									<input type="text" class="form-control input-sm" name="vizinhoTelefone2" id="vizinhoTelefone2" maxlength="20" value="${contato.contatoVizinhoTel2}"  />
+								</div>
+							</div>
+						
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label>Nome do Primeiro Contato Alternativo</label> 
+									<input type="text" class="form-control input-sm" name="alternativo1" id="alternativo1" maxlength="100" value="${contato.contatoAlternNome1}"/>
+								</div>
+							</div>
+								
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label>Telefone do Primeiro Contato Alternativo</label> 
+									<input type="text" class="form-control input-sm" name="alternativoTelefone1" id="alternativoTelefone1" maxlength="20" value="${contato.contatoAlternTel1}"  />
+								</div>
+							</div>
+						
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label>Nome do Segundo Contato Alternativo</label> 
+									<input type="text" class="form-control input-sm" name="alternativo2" id="alternativo2" maxlength="100" value="${contato.contatoAlternNome2}"/>
+								</div>
+							</div>
+								
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label>Telefone do Segundo Contato Alternativo</label> 
+									<input type="text" class="form-control input-sm" name="alternativoTelefone2" id="alternativoTelefone2" maxlength="20" value="${contato.contatoAlternTel2}"  />
+								</div>
+							</div>
+							
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label>Nome do Primeiro Contato Profissional</label> 
+									<input type="text" class="form-control input-sm" name="profissional1" id="profissional1" maxlength="100" value="${contato.contatoProfissNome1}"/>
+								</div>
+							</div>
+								
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label>Telefone do Primeiro Contato Profissional</label> 
+									<input type="text" class="form-control input-sm" name="profissionalTelefone1" id="profissionalTelefone1" maxlength="20" value="${contato.contatoProfissTel1}"  />
+								</div>
+							</div>
+							
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label>Nome do Segundo Contato Profissional</label> 
+									<input type="text" class="form-control input-sm" name="profissional2" id="profissional2" maxlength="100" value="${contato.contatoProfissNome2}"/>
+								</div>
+							</div>
+								
+							<div class="col-sm-4">
+								<div class="form-group">
+									<label>Telefone do Segundo Contato Profissional</label> 
+									<input type="text" class="form-control input-sm" name="profissionalTelefone2" id="profissionalTelefone2" maxlength="20" value="${contato.contatoProfissTel2}"  />
+								</div>
+							</div>
+								
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label>Equipamento Público</label> 
+									<input type="text" class="form-control input-sm" name="equipamento" id="equipamento" maxlength="200" value="${contato.equipaPublico}"  />
+								</div>
+							</div>
+								
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label>Mantém relações recorrentes com seus vizinhos: </label>
+									<c:forEach items="${listaSimNao}" var="total">
+										<label class="radio-inline">
+											<c:choose>
+												<c:when test="${total.id == contato.relacaoViz}">
+													<input type="radio" name="radioRelacaoVizinho" id="relacaoVizinho${total.id}" value="${total.id}" checked >${total.descricao} </input>
+												</c:when>
+												<c:otherwise>
+													<input type="radio" name="radioRelacaoVizinho" id="relacaoVizinho${total.id}" value="${total.id}" >${total.descricao} </input>
+												</c:otherwise>
+											</c:choose>
+										</label> 
+									</c:forEach> 
+								</div>
+							</div>
+							
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label>Qual a frequência de relação com os seus vizinhos: </label> 
+									<c:forEach items="${listaRelacaoVizinho}" var="total">
+										<label class="radio-inline">
+											<c:choose>
+												<c:when test="${total.id == contato.relacaoVizFreq}">
+													<input type="radio" name="radioRelacaoFreq" id="relacaoFreq${total.id}" value="${total.id}" checked >${total.descricao} </input>
+												</c:when>
+												<c:otherwise>
+													<input type="radio" name="radioRelacaoFreq" id="relacaoFreq${total.id}" value="${total.id}" >${total.descricao} </input>
+												</c:otherwise>
+											</c:choose>
+										</label> 
+									</c:forEach>
+								</div>
+							</div>
+							
+							<div class="col-sm-12">
+								<div class="form-group">
+									<label>Você considera que as famílias que moram ao seu redor: </label> 
+									<c:forEach items="${listaFamiliasVizinhanca}" var="total">
+										<label class="radio-inline">
+											<c:choose>
+												<c:when test="${total.id == contato.consFamiliaViz}">
+													<input type="radio" name="radioFamilias" id="familias${total.id}" value="${total.id}" checked >${total.descricao} </input>
+												</c:when>
+												<c:otherwise>
+													<input type="radio" name="radioFamilias" id="familias${total.id}" value="${total.id}" >${total.descricao} </input>
+												</c:otherwise>
+											</c:choose>
+										</label> 
+									</c:forEach>
+								</div>
+							</div>
+							
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label>Nome do Hospital</label> 
+									<input type="text" class="form-control input-sm" name="nomeHospital" id="nomeHospital" maxlength="100" value="${contato.hospitalNome}"  />
+								</div>
+							</div>
+							
+							<div class="col-sm-6">
+								<div class="form-group">
+									<label>Contato de Referência</label> 
+									<input type="text" class="form-control input-sm" name="nomeReferencia" id="nomeReferencia" maxlength="100" value="${contato.contatoReferNome}"  />
+								</div>
+							</div>
+							
 						</div>
 					</div>
 					

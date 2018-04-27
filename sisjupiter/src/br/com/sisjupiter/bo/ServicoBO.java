@@ -19,15 +19,18 @@ import com.google.gson.Gson;
 import br.com.sisjupiter.auxiliar.Auxiliar;
 import br.com.sisjupiter.connection.ConnectionFactory;
 import br.com.sisjupiter.dao.ComunidadeDAO;
+import br.com.sisjupiter.dao.DiagnosticoContatoDAO;
 import br.com.sisjupiter.dao.DiagnosticoDAO;
 import br.com.sisjupiter.dao.EquipeDAO;
 import br.com.sisjupiter.dao.EscolaridadeParenteDAO;
 import br.com.sisjupiter.enuns.DestinoEsgotoEnum;
 import br.com.sisjupiter.enuns.EstadoCivilEnum;
 import br.com.sisjupiter.enuns.EstadosEnum;
+import br.com.sisjupiter.enuns.FamiliasRedorEnum;
 import br.com.sisjupiter.enuns.FormaAbastecimentoEnum;
 import br.com.sisjupiter.enuns.GrauEnsinoEnum;
 import br.com.sisjupiter.enuns.NacionalidadeEnum;
+import br.com.sisjupiter.enuns.RelacaoVizinhoEnum;
 import br.com.sisjupiter.enuns.SexoEnum;
 import br.com.sisjupiter.enuns.SimNaoEnum;
 import br.com.sisjupiter.enuns.SituacaoEnsinoEnum;
@@ -38,6 +41,7 @@ import br.com.sisjupiter.enuns.TipoUsoImovelEnum;
 import br.com.sisjupiter.modelo.Comunidade;
 import br.com.sisjupiter.modelo.ConsultaServico;
 import br.com.sisjupiter.modelo.Diagnostico;
+import br.com.sisjupiter.modelo.DiagnosticoContato;
 import br.com.sisjupiter.modelo.Equipe;
 import br.com.sisjupiter.modelo.EscolaridadeParente;
 import br.com.sisjupiter.modelo.User;
@@ -186,6 +190,9 @@ public class ServicoBO extends HttpServlet {
 	            	DiagnosticoDAO diagnosticoDAO = new DiagnosticoDAO(connection);
 	            	Diagnostico diagnostico = diagnosticoDAO.buscarPorId(id);
 	            	
+	            	DiagnosticoContatoDAO diagnosticoContatoDAO = new DiagnosticoContatoDAO(connection);
+	            	DiagnosticoContato diagnosticoContato = diagnosticoContatoDAO.buscarPorId(id);
+	            	
 	            	EquipeDAO equipeDAO = new EquipeDAO(connection);
 	            	List<Equipe> listaEquipe = equipeDAO.listarTodos();
 	            	
@@ -208,6 +215,8 @@ public class ServicoBO extends HttpServlet {
 	            	List<EstadoCivilEnum> listaEstadoCivil = EstadoCivilEnum.listCodigos();
 	            	List<GrauEnsinoEnum> listaGrauEnsino = GrauEnsinoEnum.listCodigos();
 	            	List<SituacaoEnsinoEnum> listaSituacaoEnsino = SituacaoEnsinoEnum.listCodigos();
+	            	List<FamiliasRedorEnum> listaFamiliasVizinhanca = FamiliasRedorEnum.listCodigos();
+	            	List<RelacaoVizinhoEnum> listaRelacaoVizinho = RelacaoVizinhoEnum.listCodigos();
 	            	
 	            	req.setAttribute("listaTpContrucao", listaTpContrucao);
 	            	req.setAttribute("listaTpInstalacao", listaTpInstalacao);
@@ -225,8 +234,11 @@ public class ServicoBO extends HttpServlet {
 	            	req.setAttribute("listaEquipe", listaEquipe);
 	            	req.setAttribute("listaComunidades", listaComunidades);
 	            	req.setAttribute("listaGrauMembros", listaParente);
+	            	req.setAttribute("listaFamiliasVizinhanca", listaFamiliasVizinhanca);
+	            	req.setAttribute("listaRelacaoVizinho", listaRelacaoVizinho);
 
 	            	req.setAttribute("modelo", diagnostico);
+	            	req.setAttribute("contato", diagnosticoContato);
 	            	req.setAttribute("botao", "Alterar");
 	            	req.setAttribute("aviso", "");
 	            	req.setAttribute("display", "none");
@@ -301,6 +313,8 @@ public class ServicoBO extends HttpServlet {
 	            	List<EstadoCivilEnum> listaEstadoCivil = EstadoCivilEnum.listCodigos();
 	            	List<GrauEnsinoEnum> listaGrauEnsino = GrauEnsinoEnum.listCodigos();
 	            	List<SituacaoEnsinoEnum> listaSituacaoEnsino = SituacaoEnsinoEnum.listCodigos();
+	            	List<FamiliasRedorEnum> listaFamiliasVizinhanca = FamiliasRedorEnum.listCodigos();
+	            	List<RelacaoVizinhoEnum> listaRelacaoVizinho = RelacaoVizinhoEnum.listCodigos();
 	            	
 	            	req.setAttribute("listaTpContrucao", listaTpContrucao);
 	            	req.setAttribute("listaTpInstalacao", listaTpInstalacao);
@@ -317,6 +331,8 @@ public class ServicoBO extends HttpServlet {
 	            	req.setAttribute("listaSituacaoEnsino", listaSituacaoEnsino);
 	            	req.setAttribute("listaEquipe", listaEquipe);
 	            	req.setAttribute("listaComunidades", listaComunidades);
+	            	req.setAttribute("listaFamiliasVizinhanca", listaFamiliasVizinhanca);
+	            	req.setAttribute("listaRelacaoVizinho", listaRelacaoVizinho);
 	            	
 	            	req.setAttribute("aviso", "");
 	            	req.setAttribute("display", "none");
@@ -335,6 +351,7 @@ public class ServicoBO extends HttpServlet {
         		SimpleDateFormat formatoBanco = new SimpleDateFormat("yyyy-MM-dd");
         		SimpleDateFormat formatoData = new SimpleDateFormat("dd/MM/yyyy");
         		Diagnostico diagnostico = new Diagnostico();
+        		DiagnosticoContato diagnosticoContato = new DiagnosticoContato();
         		connection = ConnectionFactory.getConnection();
         		try {
 
@@ -497,13 +514,50 @@ public class ServicoBO extends HttpServlet {
 	            	diagnostico.setBenefObraSanTuri(Auxiliar.converteCheckBox(req.getParameter("checkBeneficioValorizacaoTurismo")));
 	            	diagnostico.setObsGerais(req.getParameter("observacoesInformacoes"));
 	            	
+	            	
+	            	/**
+	            	 * Bloco de Contato
+	            	 */
+		        	diagnosticoContato.setIdEquipe(Auxiliar.converteLong(req.getParameter("cadastrante")));
+		        	diagnosticoContato.setIdComunidade(Auxiliar.converteLong(req.getParameter("comunidade")));
+		        	diagnosticoContato.setMoradoresResid(req.getParameter("moradores"));
+		        	diagnosticoContato.setContatoRespCasaNome1(req.getParameter("respCasa1"));
+		        	diagnosticoContato.setContatoRespCasaTel1(Auxiliar.converteLong(req.getParameter("respTelefone1")));
+		        	diagnosticoContato.setContatoRespCasaNome2(req.getParameter("respCasa2"));
+		        	diagnosticoContato.setContatoRespCasaTel2(Auxiliar.converteLong(req.getParameter("respTelefone2")));
+		        	diagnosticoContato.setContatoVizinhoNome1(req.getParameter("vizinho1"));
+		        	diagnosticoContato.setContatoVizinhoTel1(Auxiliar.converteLong(req.getParameter("vizinhoTelefone1")));
+		        	diagnosticoContato.setContatoVizinhoNome2(req.getParameter("vizinho2"));
+		        	diagnosticoContato.setContatoVizinhoTel2(Auxiliar.converteLong(req.getParameter("vizinhoTelefone2")));
+		        	diagnosticoContato.setContatoAlternNome1(req.getParameter("alternativo1"));
+		        	diagnosticoContato.setContatoAlternTel1(Auxiliar.converteLong(req.getParameter("alternativoTelefone1")));
+		        	diagnosticoContato.setContatoAlternNome2(req.getParameter("alternativo2"));
+		        	diagnosticoContato.setContatoAlternTel2(Auxiliar.converteLong(req.getParameter("alternativoTelefone2")));
+		        	diagnosticoContato.setContatoProfissNome1(req.getParameter("profissional1"));
+		        	diagnosticoContato.setContatoProfissTel1(Auxiliar.converteLong(req.getParameter("profissionalTelefone1")));
+		        	diagnosticoContato.setContatoProfissNome2(req.getParameter("profissional2"));
+		        	diagnosticoContato.setContatoProfissTel2(Auxiliar.converteLong(req.getParameter("profissionalTelefone2")));
+		        	diagnosticoContato.setEquipaPublico(req.getParameter("equipamento"));
+		        	diagnosticoContato.setRelacaoViz(Auxiliar.converteLong(req.getParameter("radioRelacaoVizinho")));
+		        	diagnosticoContato.setRelacaoVizFreq(Auxiliar.converteLong(req.getParameter("radioRelacaoFreq")));
+		        	diagnosticoContato.setConsFamiliaViz(Auxiliar.converteLong(req.getParameter("radioFamilias")));
+		        	diagnosticoContato.setHospitalNome(req.getParameter("nomeHospital"));
+		        	diagnosticoContato.setContatoReferNome(req.getParameter("nomeReferencia"));
+	            	
+	            	
+	            	
             	
 	            	DiagnosticoDAO diagnosticoDAO = new DiagnosticoDAO(connection);
+	            	DiagnosticoContatoDAO diagnosticoContatoDAO = new DiagnosticoContatoDAO(connection);
 	            	if(req.getParameter("id") == null || (req.getParameter("id") != null && req.getParameter("id").isEmpty())) {
 		            	diagnosticoDAO.inserir(diagnostico);
 		            	Diagnostico diagnostico2 = new Diagnostico();
 		            	diagnostico2 = diagnosticoDAO.buscarUltimoIdUser(user.getIdUser());
 		            	diagnostico.setIdDiagnostico(diagnostico2.getIdDiagnostico());
+		            	
+		            	diagnosticoContato.setIdDiagnostico(diagnostico2.getIdDiagnostico());
+		            	diagnosticoContatoDAO.inserir(diagnosticoContato);
+		            	
 		            	
 		            	if(req.getParameter("cont") != null) {
 			            	EscolaridadeParenteDAO parenteDAO = new EscolaridadeParenteDAO(connection);
@@ -527,6 +581,11 @@ public class ServicoBO extends HttpServlet {
 	            	else {
 	            		diagnostico.setIdDiagnostico(Auxiliar.converteLong(req.getParameter("id")));
 	            		diagnosticoDAO.alterar(diagnostico);
+	            		
+	            		diagnosticoContato.setIdDiagnostico(Auxiliar.converteLong(req.getParameter("id")));
+	            		diagnosticoContato.setIdDiagnosticoContato(Auxiliar.converteLong(req.getParameter("idContato")));
+	            		diagnosticoContatoDAO.alterar(diagnosticoContato);
+	            		
 	            		
 	            		if(req.getParameter("cont") != null) {
 			            	EscolaridadeParenteDAO parenteDAO = new EscolaridadeParenteDAO(connection);
@@ -587,6 +646,9 @@ public class ServicoBO extends HttpServlet {
 	            	List<EstadoCivilEnum> listaEstadoCivil = EstadoCivilEnum.listCodigos();
 	            	List<GrauEnsinoEnum> listaGrauEnsino = GrauEnsinoEnum.listCodigos();
 	            	List<SituacaoEnsinoEnum> listaSituacaoEnsino = SituacaoEnsinoEnum.listCodigos();
+	            	List<FamiliasRedorEnum> listaFamiliasVizinhanca = FamiliasRedorEnum.listCodigos();
+	            	List<RelacaoVizinhoEnum> listaRelacaoVizinho = RelacaoVizinhoEnum.listCodigos();
+	            	
 	            	req.setAttribute("listaTpContrucao", listaTpContrucao);
 	            	req.setAttribute("listaTpInstalacao", listaTpInstalacao);
 	            	req.setAttribute("listaSituacaoImovel", listaSituacaoImovel);
@@ -602,6 +664,8 @@ public class ServicoBO extends HttpServlet {
 	            	req.setAttribute("listaSituacaoEnsino", listaSituacaoEnsino);
 	            	req.setAttribute("listaEquipe", listaEquipe);
 	            	req.setAttribute("listaComunidades", listaComunidades);
+	            	req.setAttribute("listaFamiliasVizinhanca", listaFamiliasVizinhanca);
+	            	req.setAttribute("listaRelacaoVizinho", listaRelacaoVizinho);
         			
 	            	diagnostico.setData(req.getParameter("dtExecucao"));
         			if(req.getParameter("dtNascimentoNTitular") != null && !req.getParameter("dtNascimentoNTitular").trim().isEmpty())
@@ -611,6 +675,7 @@ public class ServicoBO extends HttpServlet {
 	            		diagnostico.setDtNasc(req.getParameter("dtNascimento"));
 	            	
 	            	req.setAttribute("modelo", diagnostico);
+	            	req.setAttribute("contato", diagnosticoContato);
 	            	req.setAttribute("dtInicio", req.getParameter("dtInicio"));
             		req.setAttribute("dtFim", req.getParameter("dtFim"));
 	            	req.getRequestDispatcher("/jsp/servico/formulario.jsp").forward(req, res);
