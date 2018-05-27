@@ -46,7 +46,7 @@ import br.com.sisjupiter.modelo.Equipe;
 import br.com.sisjupiter.modelo.EscolaridadeParente;
 import br.com.sisjupiter.modelo.User;
 
-public class ServicoBO extends HttpServlet {
+public class DiagnosticoBO extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -73,7 +73,7 @@ public class ServicoBO extends HttpServlet {
             	req.setAttribute("aviso", "");
             	req.setAttribute("informacao", "");
             	req.setAttribute("listaComunidades", listaComunidades);
-            	req.getRequestDispatcher("/jsp/servico/consulta.jsp").forward(req, res);
+            	req.getRequestDispatcher("/jsp/diagnostico/consulta.jsp").forward(req, res);
             } 
             else if (relat.equals("pesquisar")) {
             	try {
@@ -117,7 +117,7 @@ public class ServicoBO extends HttpServlet {
 	            		req.setAttribute("inicio", inicio);
 	            		req.setAttribute("fim", fim);
 	            		req.setAttribute("aviso", "");
-	            		req.getRequestDispatcher("/jsp/servico/lista.jsp").forward(req, res);
+	            		req.getRequestDispatcher("/jsp/diagnostico/lista.jsp").forward(req, res);
 	            	}
 	            	else {
 	            		ComunidadeDAO comunidadeDAO = new ComunidadeDAO(connection);
@@ -134,7 +134,7 @@ public class ServicoBO extends HttpServlet {
 	            		req.setAttribute("aviso", "");
 	            		req.setAttribute("display", "none");
 	            		req.setAttribute("informacao", "Nenhum resultado encontrado!");
-	            		req.getRequestDispatcher("/jsp/servico/consulta.jsp").forward(req, res);
+	            		req.getRequestDispatcher("/jsp/diagnostico/consulta.jsp").forward(req, res);
 	            	}
             	} 
             	catch (Exception e) {
@@ -142,7 +142,7 @@ public class ServicoBO extends HttpServlet {
             		req.setAttribute("aviso", "Nao foi possivel realizar a consulta, contate o suporte!");
             		req.setAttribute("display", "block");
             		req.setAttribute("informacao", "");
-            		req.getRequestDispatcher("/jsp/servico/consulta.jsp").forward(req, res);
+            		req.getRequestDispatcher("/jsp/diagnostico/consulta.jsp").forward(req, res);
 				}
             } 
             else if (relat.equals("paginacao")) {
@@ -251,7 +251,7 @@ public class ServicoBO extends HttpServlet {
             		req.setAttribute("endereco", endereco);
             		req.setAttribute("inicio", "1");
             		req.setAttribute("fim", "50");
-	            	req.getRequestDispatcher("/jsp/servico/formulario.jsp").forward(req, res);
+	            	req.getRequestDispatcher("/jsp/diagnostico/formulario.jsp").forward(req, res);
             	} 
             	catch (Exception e) {
             		System.out.println(e);
@@ -288,7 +288,7 @@ public class ServicoBO extends HttpServlet {
             		req.setAttribute("inicio", inicio);
             		req.setAttribute("fim", fim);
             		req.setAttribute("aviso", "Não foi possível mostrar o formulário, contate o suporte!");
-            		req.getRequestDispatcher("/jsp/servico/lista.jsp").forward(req, res);
+            		req.getRequestDispatcher("/jsp/diagnostico/lista.jsp").forward(req, res);
 				}
             } 
             else if (relat.equals("cadastrar")) {
@@ -338,7 +338,7 @@ public class ServicoBO extends HttpServlet {
 	            	req.setAttribute("display", "none");
 	            	req.setAttribute("sucesso", "");
 	            	req.setAttribute("botao", "Cadastrar");
-	                req.getRequestDispatcher("/jsp/servico/formulario.jsp").forward(req, res);
+	                req.getRequestDispatcher("/jsp/diagnostico/formulario.jsp").forward(req, res);
             	}
                 catch (Exception e) {
             		System.out.println(e);
@@ -678,7 +678,7 @@ public class ServicoBO extends HttpServlet {
 	            	req.setAttribute("contato", diagnosticoContato);
 	            	req.setAttribute("dtInicio", req.getParameter("dtInicio"));
             		req.setAttribute("dtFim", req.getParameter("dtFim"));
-	            	req.getRequestDispatcher("/jsp/servico/formulario.jsp").forward(req, res);
+	            	req.getRequestDispatcher("/jsp/diagnostico/formulario.jsp").forward(req, res);
         		}
             	
             }

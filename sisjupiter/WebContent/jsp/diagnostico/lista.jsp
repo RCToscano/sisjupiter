@@ -23,8 +23,8 @@
     	<div class="container">
 	    	<ul class="breadcrumb">
 			    <li><a href="HomeBO?acao=home">Home</a></li>
-			    <li><a href="ServicoBO?acao=consultar">Servi&ccedil;o</a></li>
-			    <li><a href="ServicoBO?acao=consultar">Consulta</a></li>
+			    <li><a href="DiagnosticoBO?acao=consultar">Diagnóstico</a></li>
+			    <li><a href="DiagnosticoBO?acao=consultar">Consulta</a></li>
 			    <li class="active">Lista</li>
 			</ul>
 			
@@ -67,7 +67,7 @@
 						<tbody id="myTable">
 							<% int cont = 1;%>
 							<c:forEach items="${lista}" var="total">
-								<c:url value="ServicoBO" var="link">
+								<c:url value="DiagnosticoBO" var="link">
 		                            <c:param name="acao" value="detalhe"/>
 		                            <c:param name="id" value="${total.idDiagnostico}"/>
 		                            <c:param name="dtInicio" value="${dtInicio}" />

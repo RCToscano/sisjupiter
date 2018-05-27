@@ -26,7 +26,7 @@
 	        	<c:when test="${botao == 'Cadastrar'}">
 	        		<ul class="breadcrumb">
 					    <li><a href="HomeBO?acao=home">Home</a></li>
-					    <li class="active">Servi&ccedil;o</li>
+					    <li class="active">Diagnóstico</li>
 					    <li class="active">Cadastro</li>
 					    <li class="active">Formul&aacute;rio</li>
 					</ul>
@@ -34,10 +34,8 @@
 	        	<c:otherwise>
 	        		<ul class="breadcrumb">
 					    <li><a href="HomeBO?acao=home">Home</a></li>
-					    <li><a href="ServicoBO?acao=consultar">Servi&ccedil;o</a></li>
-					    <li><a href="ServicoBO?acao=consultar">Consulta</a></li>
-<%-- 					    <li><a href="ServicoBO?acao=pesquisar&id=${modelo.idDiagnostico}&dtInicio=${dtInicio}&dtFim=${dtFim}&cpf=${cpf}&rg=${rg}&endereco=${endereco}&comunidade=${comunidade}&inicio=${inicio}&fim=${fim}"> --%>
-<!-- 					    Lista</a></li> -->
+					    <li><a href="DiagnosticoBO?acao=consultar">Diagnóstico</a></li>
+					    <li><a href="DiagnosticoBO?acao=consultar">Consulta</a></li>
 					    <li class="active">Lista</li>
 					    <li class="active">Formul&aacute;rio</li>
 					</ul>
@@ -54,7 +52,7 @@
 				</div>
 			</c:if>
 		
-			<form action="ServicoBO?acao=inserir" method="post" accept-charset="iso-8859-1,utf-8" onSubmit="return validaForm()">
+			<form action="DiagnosticoBO?acao=inserir" method="post" accept-charset="iso-8859-1,utf-8" onSubmit="return validaForm()">
 				<input type="hidden" id="dtInicio" name="dtInicio" value="${dtInicio}" />
 				<input type="hidden" id="dtFim" name="dtFim" value="${dtFim}" />
 				<input type="hidden" id="id" name="id" value="${modelo.idDiagnostico}" />

@@ -25,7 +25,7 @@
     	<div class="container">
 	    	<ul class="breadcrumb">
 			    <li><a href="HomeBO?acao=home">Home</a></li>
-			    <li class="active">Servi&ccedil;o</a></li>
+			    <li class="active">Diagnóstico</li>
 			    <li class="active">Consulta</li>
 			</ul>
 			
@@ -40,7 +40,7 @@
 			</c:if>
 		
 			
-			<h2>Consulta de Servi&ccedil;o</h2>
+			<h2>Consulta de Diagnóstico</h2>
 			
 			<div class="alert alert-info">
 				<strong>Informação!</strong> 
@@ -48,7 +48,7 @@
 			</div>
 			
 			
-			<form action="ServicoBO?acao=pesquisar" method="post" accept-charset="iso-8859-1,utf-8" onSubmit="return validaForm()">
+			<form action="DiagnosticoBO?acao=pesquisar" method="post" accept-charset="iso-8859-1,utf-8" onSubmit="return validaForm()">
 				<div class="form-inline col-sm-12" style="padding-bottom: 1%;">
 					<label for="email">Período de</label> 
 					<input type="text" class="form-control input-sm" data-date-format="DD/MM/YYYY" name="dtInicio" id="dtInicio" placeholder="dd/mm/aaaa" maxlength="10" value="${dtInicio}"/>

@@ -16,7 +16,9 @@ import br.com.sisjupiter.modelo.User;
 
 public class Login extends HttpServlet {
 
-    private static String relat = "";
+	private static final long serialVersionUID = 1L;
+
+	private static String relat = "";
 
     public void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 
@@ -62,8 +64,10 @@ public class Login extends HttpServlet {
                     req.getRequestDispatcher("/index.jsp").forward(req, res);
                 } 
                 else {
-
-                    //vai para home page
+                	//vai para home page
+                	String usuarioQuebrado[] = user.getNome().split("\\s+");
+        			String nome = usuarioQuebrado[0].trim();
+        			user.setNome(nome);
                     req.getSession().setAttribute("user", user);
                     req.getRequestDispatcher("/jsp/home.jsp").forward(req, res);
                 }                

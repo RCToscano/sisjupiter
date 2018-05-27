@@ -33,7 +33,7 @@ public class HomeBO extends HttpServlet {
                 req.getRequestDispatcher("/jsp/home.jsp").forward(req, res);
             } 
             else if (relat.equals("censo")) {
-            	req.getRequestDispatcher("/jsp/servico/consulta.jsp").forward(req, res);
+            	req.getRequestDispatcher("/jsp/diagnostico/consulta.jsp").forward(req, res);
             } 
         }
         catch (Exception e) {

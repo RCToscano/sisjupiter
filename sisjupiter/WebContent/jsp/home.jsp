@@ -22,40 +22,30 @@
 			<div class="col-sm-4 col-md-3">
 				<div class="thumbnail">
 					<div class="caption">
-						<h3>Cadastro de Servi&ccedil;os</h3>
-						<p>Cadastre os servi&ccedil;os executados em campo.</p>
-						<p><a href="ServicoBO?acao=cadastrar" class="btn btn-primary" role="button">Acessar</a></p>
+						<h3>Cadastro de Diagnósticos</h3>
+						<p>Cadastre os diagnósticos executados em campo.</p>
+						<p><a href="DiagnosticoBO?acao=cadastrar" class="btn btn-primary" role="button">Acessar</a></p>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-4 col-md-3">
 				<div class="thumbnail">
 					<div class="caption">
-						<h3>Consulta de Servi&ccedil;os</h3>
-						<p>Pesquise os servi&ccedil;os executados em campo.</p>
-						<p><a href="ServicoBO?acao=consultar" class="btn btn-primary" role="button">Acessar</a></p>
+						<h3>Consulta de Diagnósticos</h3>
+						<p>Pesquise os diagnósticos executados em campo.</p>
+						<p><a href="DiagnosticoBO?acao=consultar" class="btn btn-primary" role="button">Acessar</a></p>
 					</div>
 				</div>
 			</div>
 			<div class="col-sm-4 col-md-3">
 				<div class="thumbnail">
 					<div class="caption">
-						<h3>Gr&aacute;fico Execu&ccedil;&otilde;es</h3>
-						<p>Veja o total de execu&ccedil;&otilde;es dos servi&ccedil;os por Comunidade e Equipe.</p>
+						<h3>Diagnósticos por Comunidade</h3>
+						<p>Veja o total de execu&ccedil;&otilde;es de diagnósticos por Comunidade.</p>
 						<p><a href="GraficoBO?acao=total" class="btn btn-primary" role="button">Acessar</a></p>
 					</div>
 				</div>
 			</div>
-<!-- 				<div class="col-sm-4 col-md-3"> -->
-<!-- 					<div class="thumbnail"> -->
-<!-- 						<div class="caption"> -->
-<!-- 							<h3>Relat&oacute;rio Di&aacute;rio</h3> -->
-<!-- 							<p>Veja o relat&oacute;rio di&aacute;rio de execu&ccedil;&otilde;es dos servi&ccedil;os.</p> -->
-<!-- 							<p><a href="#" class="btn btn-primary" role="button" disabled>Acessar</a></p> -->
-<!-- 						</div> -->
-<!-- 					</div> -->
-<!-- 				</div> -->
-			
 		</div>
 		
 		</div>
