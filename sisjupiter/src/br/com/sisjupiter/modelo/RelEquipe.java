@@ -1,12 +1,11 @@
 package br.com.sisjupiter.modelo;
 
-public class Grafico {
+public class RelEquipe {
 	
 	private long idComunidade;
 	private long idEquipe;
 	private long idDiagnostico;
 	private long qtde;
-	private String nomeComunidade;
 	private String nomeEquipe;
 	private String loginEquipe;
 	private String data;
@@ -36,12 +35,6 @@ public class Grafico {
 	}
 	public void setQtde(long qtde) {
 		this.qtde = qtde;
-	}
-	public String getNomeComunidade() {
-		return nomeComunidade;
-	}
-	public void setNomeComunidade(String nomeComunidade) {
-		this.nomeComunidade = nomeComunidade;
 	}
 	public String getNomeEquipe() {
 		return nomeEquipe;
