@@ -50,6 +50,14 @@
                     </ul>
                 </li>
             </ul>
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Mapas <span class="caret"></span></a>
+                    <ul class="dropdown-menu" role="menu">
+                        <li><a href="MapaBO?acao=1" target="_blank">Diagnóstico / Comunidade</a></li>
+                    </ul>
+                </li>
+            </ul>
             <ul class="nav navbar-nav navbar-right">
 	        	<span class="navbar-text">Ol&aacute; ${sessionScope.user.nome}, seja bem-vindo!</span>
 		    	<li><a href="UsuarioBO?acao=perfil"><span class="glyphicon glyphicon-user"></span> Perfil</a></li>

@@ -18,8 +18,7 @@ public class DiagnosticoDAO {
     public DiagnosticoDAO(Connection connection) {
         this.connection = connection;
     }
-    
-    
+
 	public Long listarServicosTotal(String dtInicio, String dtFim, String cpf, String rg, String comunidade,
 			String endereco, int inicio, int fim) throws Exception {
         PreparedStatement stmt = null;

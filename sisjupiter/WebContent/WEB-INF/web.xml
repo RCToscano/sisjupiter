@@ -49,6 +49,10 @@
     <servlet-class>br.com.sisjupiter.bo.RelComunidadeBO</servlet-class>
   </servlet>
   <servlet>
+    <servlet-name>MapaBO</servlet-name>
+    <servlet-class>br.com.sisjupiter.bo.MapaBO</servlet-class>
+  </servlet>
+  <servlet>
     <servlet-name>RelEquipeBO</servlet-name>
     <servlet-class>br.com.sisjupiter.bo.RelEquipeBO</servlet-class>
   </servlet>
@@ -103,6 +107,10 @@
   <servlet-mapping>
     <servlet-name>RelComunidadeBO</servlet-name>
     <url-pattern>/RelComunidadeBO</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>MapaBO</servlet-name>
+    <url-pattern>/MapaBO</url-pattern>
   </servlet-mapping>
   <servlet-mapping>
     <servlet-name>RelEquipeBO</servlet-name>

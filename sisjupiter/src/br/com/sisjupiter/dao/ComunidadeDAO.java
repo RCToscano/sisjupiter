@@ -29,6 +29,7 @@ public class ComunidadeDAO {
             "         SITUACAO, " +
             "         DTINSERT " +
             "FROM     TB_COMUNIDADE " +
+            "WHERE    SITUACAO = 'A' " +
             "ORDER BY NOME ") ;
 
             rs = stmt.executeQuery();
