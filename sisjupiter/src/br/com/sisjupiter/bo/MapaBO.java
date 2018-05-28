@@ -18,6 +18,8 @@ import br.com.sisjupiter.connection.ConnectionFactory;
 import br.com.sisjupiter.dao.ComunidadeDAO;
 import br.com.sisjupiter.modelo.Comunidade;
 import br.com.sisjupiter.modelo.User;
+import br.com.sisjupiter.reldao.RelMapaDiagnosticoDAO;
+import br.com.sisjupiter.relmodelo.RelMapaDiagnostico;
 
 public class MapaBO extends HttpServlet {
 
@@ -66,12 +68,12 @@ public class MapaBO extends HttpServlet {
 			try {
 			
 				connection = ConnectionFactory.getConnection();
-//				
-//				CondominioDAO condominioDAO = new CondominioDAO(connection);
-//				List<Condominio> listCondominio = new ArrayList<Condominio>();		
-//				listCondominio = condominioDAO.listarPorUsuario(user.getIdUser(), Long.parseLong(req.getParameter("idEmpresa")));
-//				
-//				json = new Gson().toJson(listCondominio);
+				
+				sql = "AND  	   TB_DIAGNOSTICO.ID_COMUNIDADE = " + req.getParameter("idComunidade") + " ";
+				RelMapaDiagnosticoDAO relMapaDiagnosticoDAO = new RelMapaDiagnosticoDAO(connection);
+				List<RelMapaDiagnostico> listRelMapaDiagnostico = relMapaDiagnosticoDAO.listar(sql);		
+				
+				json = new Gson().toJson(listRelMapaDiagnostico);
 				
 				res.setContentType("application/json");
 				res.setCharacterEncoding("UTF-8");
