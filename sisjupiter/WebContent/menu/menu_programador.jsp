@@ -38,11 +38,15 @@
             </ul>
             <ul class="nav navbar-nav">
                 <li>
-                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Gr&aacute;fico <span class="caret"></span></a>
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Relatórios <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
-                        <li><a href="GraficoBO?acao=total">Total Execu&ccedil;&otilde;es</a></li>
+                        <li><a href="RelComunidadeBO?acao=total">Total Executado por Comunidade</a></li>
                         <li class="divider"></li>
-                        <li><a href="GraficoBO?acao=consultaPeriodo">Per&iacute;odo Execu&ccedil;&atilde;o</a></li>
+                        <li><a href="RelEquipeBO?acao=total">Total Executado por Equipe</a></li>
+                        <li class="divider"></li>
+                        <li><a href="RelComunidadeBO?acao=consultaPeriodo">Período Execução por Comunidade</a></li>
+                        <li class="divider"></li>
+                        <li><a href="RelEquipeBO?acao=consultaPeriodo">Período Execução por Equipe</a></li>
                     </ul>
                 </li>
             </ul>

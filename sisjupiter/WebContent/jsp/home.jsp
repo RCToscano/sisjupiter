@@ -42,7 +42,16 @@
 					<div class="caption">
 						<h3>Diagnósticos por Comunidade</h3>
 						<p>Veja o total de execu&ccedil;&otilde;es de diagnósticos por Comunidade.</p>
-						<p><a href="GraficoBO?acao=total" class="btn btn-primary" role="button">Acessar</a></p>
+						<p><a href="RelComunidadeBO?acao=total" class="btn btn-primary" role="button">Acessar</a></p>
+					</div>
+				</div>
+			</div>
+			<div class="col-sm-4 col-md-3">
+				<div class="thumbnail">
+					<div class="caption">
+						<h3>Diagnósticos por Equipe</h3>
+						<p>Veja o total de execu&ccedil;&otilde;es de diagnósticos por Equipe.</p>
+						<p><a href="RelEquipeBO?acao=total" class="btn btn-primary" role="button">Acessar</a></p>
 					</div>
 				</div>
 			</div>

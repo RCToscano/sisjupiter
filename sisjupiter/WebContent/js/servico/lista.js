@@ -24,7 +24,7 @@ function paginarProximo() {
     
     $.blockUI({message: '<h1> Aguarde...</h1>'});
     $.ajax({
-        url: 'ServicoBO?acao=paginacao' +
+        url: 'DiagnosticoBO?acao=paginacao' +
              '&dtInicio=' + dtInicio.value +
              '&dtFim=' + dtFim.value +
              '&cpf=' + cpf.value +
@@ -67,7 +67,7 @@ function paginarProximo() {
 				"			<td><small>"+item.endereco+"</small></td>" +
 				"			<td><small>"+item.dataExecucao+"</small></td>" +
 				"           <td>" +
-				"				<a href='ServicoBO?acao=detalhe&id="+item.idDiagnostico+"&dtInicio="+dtInicio.value+"&dtFim="+dtFim.value+"&cpf="+cpf.value+"&rg="+rg.value+"&endereco="+endereco.value+"&comunidade="+comunidade.value+"&inicio="+inicio.value+"&fim="+fim.value+"'>" +
+				"				<a href='DiagnosticoBO?acao=detalhe&id="+item.idDiagnostico+"&dtInicio="+dtInicio.value+"&dtFim="+dtFim.value+"&cpf="+cpf.value+"&rg="+rg.value+"&endereco="+endereco.value+"&comunidade="+comunidade.value+"&inicio="+inicio.value+"&fim="+fim.value+"'>" +
 				"					<button type='button' class='btn btn-info btn-sm' title='Clique para visualizar o detalhe do serviço'>" +
 				"						<span class='glyphicon glyphicon-search'></span>" +
 				"					</button>" +
@@ -150,7 +150,7 @@ function paginarAnterior() {
     
     $.blockUI({message: '<h1> Aguarde...</h1>'});
     $.ajax({
-        url: 'ServicoBO?acao=paginacao' +
+        url: 'DiagnosticoBO?acao=paginacao' +
              '&dtInicio=' + dtInicio.value +
              '&dtFim=' + dtFim.value +
              '&cpf=' + cpf.value +
@@ -193,7 +193,7 @@ function paginarAnterior() {
 				"			<td><small>"+item.endereco+"</small></td>" +
 				"			<td><small>"+item.dataExecucao+"</small></td>" +
 				"           <td>" +
-				"				<a href='ServicoBO?acao=detalhe&id="+item.idDiagnostico+"&dtInicio="+dtInicio+"&dtFim="+dtFim+"&cpf="+cpf+"&rg="+rg+"&endereco="+endereco+"&comunidade="+comunidade+"&inicio="+inicio+"&fim="+fim+"'>" +
+				"				<a href='DiagnosticoBO?acao=detalhe&id="+item.idDiagnostico+"&dtInicio="+dtInicio+"&dtFim="+dtFim+"&cpf="+cpf+"&rg="+rg+"&endereco="+endereco+"&comunidade="+comunidade+"&inicio="+inicio+"&fim="+fim+"'>" +
 				"					<button type='button' class='btn btn-info btn-sm' title='Clique para visualizar o detalhe do serviço'>" +
 				"						<span class='glyphicon glyphicon-search'></span>" +
 				"					</button>" +
@@ -271,7 +271,7 @@ function paginar(valor) {
     
     $.blockUI({message: '<h1> Aguarde...</h1>'});
     $.ajax({
-        url: 'ServicoBO?acao=paginacao' +
+        url: 'DiagnosticoBO?acao=paginacao' +
              '&dtInicio=' + dtInicio.value +
              '&dtFim=' + dtFim.value +
              '&cpf=' + cpf.value +
@@ -314,7 +314,7 @@ function paginar(valor) {
 				"			<td><small>"+item.endereco+"</small></td>" +
 				"			<td><small>"+item.dataExecucao+"</small></td>" +
 				"           <td>" +
-				"				<a href='ServicoBO?acao=detalhe&id="+item.idDiagnostico+"&dtInicio="+dtInicio+"&dtFim="+dtFim+"&cpf="+cpf+"&rg="+rg+"&endereco="+endereco+"&comunidade="+comunidade+"&inicio="+inicio+"&fim="+fim+"'>" +
+				"				<a href='DiagnosticoBO?acao=detalhe&id="+item.idDiagnostico+"&dtInicio="+dtInicio+"&dtFim="+dtFim+"&cpf="+cpf+"&rg="+rg+"&endereco="+endereco+"&comunidade="+comunidade+"&inicio="+inicio+"&fim="+fim+"'>" +
 				"					<button type='button' class='btn btn-info btn-sm' title='Clique para visualizar o detalhe do serviço'>" +
 				"						<span class='glyphicon glyphicon-search'></span>" +
 				"					</button>" +
