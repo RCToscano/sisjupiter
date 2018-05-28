@@ -61,6 +61,11 @@
 				<c:param name="idEquipe" value="${modelo.idEquipe}"/>
 				<c:param name="dtExecucao" value="${modelo.data}"/>
 			</c:url>
+
+			<c:url value="DiagnosticoBO" var="link2">
+				<c:param name="acao" value="excel"/>
+				<c:param name="id" value="${modelo.idDiagnostico}"/>
+			</c:url>
 			
 			<form action="DiagnosticoBO?acao=inserir" method="post" accept-charset="iso-8859-1,utf-8" onSubmit="return validaForm()">
 				<input type="hidden" id="dtInicio" name="dtInicio" value="${dtInicio}" />
@@ -81,11 +86,21 @@
 								</div>
 							</div>
 							
-							<div class="col-sm-10" style="padding-top: 2%">
+							<div class="col-sm-2" style="padding-top: 2%">
 								<div class="form-group">
 									<a href="${link}" target="_blank">
 										<button type="button" class="btn btn-warning"> 
 											<i class="fa fa-bar-chart"></i> Visualizar Fotos 
+										</button>
+									</a>
+								</div>
+							</div>
+							
+							<div class="col-sm-4" style="padding-top: 2%">
+								<div class="form-group">
+									<a href="${link2}" target="_blank">
+										<button type="button" class="btn btn-warning"> 
+											<i class="fa fa-bar-chart"></i> Gerar Excel
 										</button>
 									</a>
 								</div>
@@ -2120,13 +2135,22 @@
 					</div>
 					
 					<div class="panel panel-primary">
-						<div class="panel-heading"><label>Fotos</label></div>
+						<div class="panel-heading"><label>Outros</label></div>
 						<div class="panel-body">
-							<div class="col-sm-12 text-center">
+							<div class="col-sm-6 text-center">
 								<div class="form-group">
 									<a href="${link}" target="_blank">
 										<button type="button" class="btn btn-warning"> 
 											<i class="fa fa-bar-chart"></i> Clique Aqui para Visualizar as Fotos 
+										</button>
+									</a>
+								</div>
+							</div>
+							<div class="col-sm-6 text-center">
+								<div class="form-group">
+									<a href="${link2}" target="_blank">
+										<button type="button" class="btn btn-warning"> 
+											<i class="fa fa-bar-chart"></i> Clique Aqui para Gerar um Excel 
 										</button>
 									</a>
 								</div>

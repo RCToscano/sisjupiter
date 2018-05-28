@@ -16,10 +16,13 @@ import javax.servlet.http.HttpServletResponse;
 import com.google.gson.Gson;
 
 import br.com.sisjupiter.auxiliar.Auxiliar;
+import br.com.sisjupiter.auxiliar.ColunasExcel;
+import br.com.sisjupiter.auxiliar.GeradorExcel;
 import br.com.sisjupiter.connection.ConnectionFactory;
 import br.com.sisjupiter.dao.ComunidadeDAO;
 import br.com.sisjupiter.dao.DiagnosticoContatoDAO;
 import br.com.sisjupiter.dao.DiagnosticoDAO;
+import br.com.sisjupiter.dao.DiagnosticoViewDAO;
 import br.com.sisjupiter.dao.EquipeDAO;
 import br.com.sisjupiter.dao.EscolaridadeParenteDAO;
 import br.com.sisjupiter.dao.FotosDiagnosticoDAO;
@@ -683,6 +686,8 @@ public class DiagnosticoBO extends HttpServlet {
         		}
             	
             }
+            
+            //Fotos
             else if (relat.equals("fotos")) {
                 try {
                 	connection = ConnectionFactory.getConnection();
@@ -709,6 +714,25 @@ public class DiagnosticoBO extends HttpServlet {
                 }
             } 
 
+            //Gerar Excel
+            else if (relat.equals("excel")) {
+            	try {
+            		connection = ConnectionFactory.getConnection();
+            		DiagnosticoViewDAO viewDAO = new DiagnosticoViewDAO(connection);
+            		List<List<String>> view = viewDAO.buscarPorId(req.getParameter("id"));
+            		
+            		String nomeArquivo = "Diagnostico_"+req.getParameter("id")+"_"+Auxiliar.dataAtual()+".xlsx";
+            		
+					GeradorExcel.gerarExcel(res, nomeArquivo, "Diagnostico",
+							new ColunasExcel().getColunasDiagnostico(), view);
+				} 
+            	catch (Exception e) {
+            		System.out.println(e);
+                	req.setAttribute("display", "block");
+            		req.setAttribute("aviso", "Não foi possível realizar a operação, contate o suporte!");
+				}
+            }
+            
         
         }
         catch (Exception e) {
