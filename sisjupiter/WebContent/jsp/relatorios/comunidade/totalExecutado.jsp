@@ -28,23 +28,24 @@
 			    <li class="active">Total Executado Comunidade</li>
 			</ul>
 			
-			<div id="divAviso" name="divAviso" class="alert alert-danger" style="display:${display};">
-				<strong><label id='aviso' name='aviso'/>${aviso}</strong>
-			</div>
-			
-			<c:if test="${not empty sucesso}">
-				<div class="alert alert-success">
-					<strong><c:out value="${sucesso}"/></strong>
-				</div>
-			</c:if>
-			
-			<c:if test="${not empty informacao}">
-				<div class="alert alert-warning">
-					<strong><c:out value="${informacao}"/></strong>
-				</div>
-			</c:if>
-		
 			<div class="col-md-8 col-md-offset-2">
+
+				<div id="divAviso" name="divAviso" class="alert alert-danger" style="display:${display};">
+					<strong><label id='aviso' name='aviso'/>${aviso}</strong>
+				</div>
+				
+				<c:if test="${not empty sucesso}">
+					<div class="alert alert-success">
+						<strong><c:out value="${sucesso}"/></strong>
+					</div>
+				</c:if>
+				
+				<c:if test="${not empty informacao}">
+					<div class="alert alert-warning">
+						<strong><c:out value="${informacao}"/></strong>
+					</div>
+				</c:if>
+		
 				<legend class="text-left">Total de Execuções por Comunidade</legend>
 				<div class="table-responsive" id="divTable">
 					<table class="table table-hover">
@@ -70,13 +71,27 @@
 					            <td><strong>${totalComunidade}</strong></td>
 					        </tr>
 							<tr> 
-								<td colspan="3" style="text-align: center"> 
+								<td colspan="2" style="text-align: center"> 
 									<form action="RelComunidadeBO?acao=graficoTotal" method="post" target="_blank"> 
 										<button type="submit" class="btn btn-warning"> 
-											<i class="fa fa-bar-chart"></i> Gráfico 
+											<i class="fa fa-bar-chart"></i> Visualizar Gráfico 
 										</button> 
 									</form> 
 								</td> 
+								<td style="text-align: center"> 
+									<form action="RelComunidadeBO?acao=excelTotal" method="post"> 
+										<button type="submit" class="btn btn-warning"> 
+											<i class="fa fa-bar-chart"></i> Gerar Excel 
+										</button> 
+									</form> 
+								</td> 
+<!-- 								<td style="text-align: center; width:0.1%">  -->
+<!-- 									<form action="RelComunidadeBO?acao=excelTotalDiag" method="post">  -->
+<!-- 										<button type="submit" class="btn btn-warning">  -->
+<!-- 											<i class="fa fa-bar-chart"></i> Gerar Excel Com Diagnosticos -->
+<!-- 										</button>  -->
+<!-- 									</form>  -->
+<!-- 								</td>  -->
 							</tr> 
 					    </tbody>
 					</table>
