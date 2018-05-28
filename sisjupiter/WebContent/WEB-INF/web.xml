@@ -48,6 +48,10 @@
     <servlet-name>AndDiagnosticoContatoBO</servlet-name>
     <servlet-class>br.com.andsisjupiter.bo.AndDiagnosticoContatoBO</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>MapaBO</servlet-name>
+    <servlet-class>br.com.sisjupiter.bo.MapaBO</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
     <url-pattern>/Login</url-pattern>
@@ -95,6 +99,10 @@
   <servlet-mapping>
     <servlet-name>AndDiagnosticoContatoBO</servlet-name>
     <url-pattern>/anddiagnosticocontatobo</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>MapaBO</servlet-name>
+    <url-pattern>/MapaBO</url-pattern>
   </servlet-mapping>
   <session-config>
     <session-timeout>30</session-timeout>
