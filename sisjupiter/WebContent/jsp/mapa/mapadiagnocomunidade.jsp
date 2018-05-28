@@ -204,20 +204,20 @@
                             '  <div id="bodyContent">' +
                             '    <p><b>' + relMapaDiagnostico.nome + '</b></p>' +
                             '    <p>' + relMapaDiagnostico.endereco + ' ' + relMapaDiagnostico.numAtual + ' ' + relMapaDiagnostico.compl + '</p>' +
-                            '    <p>Tel: ' ;      
-             	   	if(relMapaDiagnostico.telRes != null && relMapaDiagnostico.telRes != 0) {
+                            '    <p>Tel: ' ;                                  
+             	   	if(relMapaDiagnostico.telRes != undefined && relMapaDiagnostico.telRes != null && relMapaDiagnostico.telRes != 0) {
                 		
                  		contentString1 += '  ' + relMapaDiagnostico.telRes ;
                    	}
-	             	if(relMapaDiagnostico.telCel != null && relMapaDiagnostico.telCel != 0) {
+	             	if(relMapaDiagnostico.telCel != undefined && relMapaDiagnostico.telCel != null && relMapaDiagnostico.telCel != 0) {
 	              		
                	   		contentString1 += '  ' + relMapaDiagnostico.telCel ;
                   	}
-                   	if(relMapaDiagnostico.contatoRespCasaTel1 != null && relMapaDiagnostico.contatoRespCasaTel1 != 0) {
+                   	if(relMapaDiagnostico.contatoRespCasaTel1 != undefined && relMapaDiagnostico.contatoRespCasaTel1 != null && relMapaDiagnostico.contatoRespCasaTel1 != 0) {
                 		
                 		contentString1 += '  ' + relMapaDiagnostico.contatoRespCasaTel1 ;
                    	}
-                   	if(relMapaDiagnostico.contatoRespCasaTel2 != null && relMapaDiagnostico.contatoRespCasaTel2 != 0) {
+                   	if(relMapaDiagnostico.contatoRespCasaTe2 != undefined && relMapaDiagnostico.contatoRespCasaTel2 != null && relMapaDiagnostico.contatoRespCasaTel2 != 0) {
                		
 						contentString1 += '  ' + relMapaDiagnostico.contatoRespCasaTe2 ;
                    	}
