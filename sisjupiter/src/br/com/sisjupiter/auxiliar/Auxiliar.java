@@ -198,8 +198,9 @@ public class Auxiliar {
         if (minutos.length() < 2) { minutos = "0" + minutos; } //segundos
         if (segundos.length() < 2) { segundos = "0" + segundos; } //
         
-        //return dia + "/" + mes + "/" + ano + " " + horas + ":" + minutos + ":" + segundos;
-        return ano + mes + dia ;
+//        return dia + "/" + mes + "/" + ano + " " + horas + ":" + minutos + ":" + segundos;
+//        return ano + mes + dia ;
+        return ano + mes + dia + horas + minutos + segundos;
     }
 
     public static String horaAtual() {
@@ -416,8 +417,8 @@ public class Auxiliar {
     
     public static String getPathTemp(){
         
-        //return "C:\\Temp\\teste\\";
-        return "/home/rbcuid/rbcuid_001_tmp/";
+        return "C:\\temp\\";
+//        return "/home/diagsdeep/diagsdeep_tmp/";
     }
 
     public static String formatarMinutoParaHora(Long minutos) {

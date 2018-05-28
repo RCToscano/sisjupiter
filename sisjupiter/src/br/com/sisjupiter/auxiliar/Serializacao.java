@@ -8,7 +8,9 @@ import javax.servlet.http.HttpServletResponse;
 
 public class Serializacao extends HttpServlet {
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
+	private static final long serialVersionUID = 1L;
+
+	public void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         
         String imagem = null;
@@ -19,7 +21,8 @@ public class Serializacao extends HttpServlet {
         
         try {
             
-            path = request.getParameter("path");
+//            path = "C:\\temp\\teste\\";
+            path = "/home/diagsdeep/images_diagnostico/";
             imagem = request.getParameter("imagem");
             
             fis = new FileInputStream(new File(path + imagem));
