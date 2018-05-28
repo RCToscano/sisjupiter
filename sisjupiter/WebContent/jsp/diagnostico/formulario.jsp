@@ -51,15 +51,23 @@
 					<strong><c:out value="${sucesso}"/></strong>
 				</div>
 			</c:if>
+			
+			<legend class="text-left">Formul&aacute;rio de Diagn&oacute;stico</legend>
+			
 		
+			<c:url value="DiagnosticoBO" var="link">
+				<c:param name="acao" value="fotos"/>
+				<c:param name="id" value="${modelo.idDiagnostico}"/>
+				<c:param name="idEquipe" value="${modelo.idEquipe}"/>
+				<c:param name="dtExecucao" value="${modelo.data}"/>
+			</c:url>
+			
 			<form action="DiagnosticoBO?acao=inserir" method="post" accept-charset="iso-8859-1,utf-8" onSubmit="return validaForm()">
 				<input type="hidden" id="dtInicio" name="dtInicio" value="${dtInicio}" />
 				<input type="hidden" id="dtFim" name="dtFim" value="${dtFim}" />
 				<input type="hidden" id="id" name="id" value="${modelo.idDiagnostico}" />
 				<input type="hidden" id="idContato" name="idContato" value="${contato.idDiagnosticoContato}" />
 				
-				
-				<h2>Formul&aacute;rio de Diagn&oacute;stico</h2>
 				<div class="panel-group">
 				
 					<div class="panel panel-primary">
@@ -70,6 +78,16 @@
 								<div class="form-group">
 									<label for="id">ID: </label> 
 									<input type="text" class="form-control input-sm" name="id" id="id" value="${modelo.idDiagnostico}" disabled />
+								</div>
+							</div>
+							
+							<div class="col-sm-10" style="padding-top: 2%">
+								<div class="form-group">
+									<a href="${link}" target="_blank">
+										<button type="button" class="btn btn-warning"> 
+											<i class="fa fa-bar-chart"></i> Visualizar Fotos 
+										</button>
+									</a>
 								</div>
 							</div>
 						
@@ -2098,6 +2116,21 @@
 								</div>
 							</div>
 							
+						</div>
+					</div>
+					
+					<div class="panel panel-primary">
+						<div class="panel-heading"><label>Fotos</label></div>
+						<div class="panel-body">
+							<div class="col-sm-12 text-center">
+								<div class="form-group">
+									<a href="${link}" target="_blank">
+										<button type="button" class="btn btn-warning"> 
+											<i class="fa fa-bar-chart"></i> Clique Aqui para Visualizar as Fotos 
+										</button>
+									</a>
+								</div>
+							</div>
 						</div>
 					</div>
 					

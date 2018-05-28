@@ -52,6 +52,10 @@
     <servlet-name>RelEquipeBO</servlet-name>
     <servlet-class>br.com.sisjupiter.bo.RelEquipeBO</servlet-class>
   </servlet>
+  <servlet>
+    <servlet-name>Serializacao</servlet-name>
+    <servlet-class>br.com.sisjupiter.auxiliar.Serializacao</servlet-class>
+  </servlet>
   <servlet-mapping>
     <servlet-name>Login</servlet-name>
     <url-pattern>/Login</url-pattern>
@@ -103,6 +107,10 @@
   <servlet-mapping>
     <servlet-name>RelEquipeBO</servlet-name>
     <url-pattern>/RelEquipeBO</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Serializacao</servlet-name>
+    <url-pattern>/Serializacao</url-pattern>
   </servlet-mapping>
   <session-config>
     <session-timeout>30</session-timeout>
