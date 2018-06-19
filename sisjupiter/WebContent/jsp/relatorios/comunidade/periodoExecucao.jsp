@@ -70,37 +70,83 @@
 							            <th>Nº</th>
 							            <th>Comunidade</th>
 							            <th>Quantidade</th>
+							            <th>Excel</th>
 							        </tr>
 							    </thead>
 							    <tbody>
 							    	<% int cont = 1;%>
 							    	<c:forEach items="${lista}" var="total">
+							    		<c:url value="RelComunidadeBO" var="link">
+				                            <c:param name="acao" value="excelComunidadePeriodo"/>
+											<c:param name="comunidade" value="${total.idComunidade}" />
+											<c:param name="dtInicio" value="${dtInicio}" />
+											<c:param name="dtFim" value="${dtFim}" />
+				                        </c:url>
 								        <tr>
 								            <td><%=cont%></td>
 								            <td>${total.nomeComunidade}</td>
 								            <td>${total.qtde}</td>
+								            <td>
+												<a href="${link}">
+													<button type="button" class="btn btn-info btn-sm" title="Clique para baixar em excel">
+														<span class="glyphicon glyphicon-floppy-save"></span>
+													</button>
+												</a>
+											</td>
 								        </tr>
 								       	<%cont++;%>
 							        </c:forEach>
 							        <tr class="active">
 							            <td colspan="2"><strong>Total</strong></td>
-							            <td><strong>${totalComunidade}</strong></td>
+							            <td colspan="2"><strong>${totalComunidade}</strong></td>
 							        </tr>
-									<tr> 
-										<td colspan="3" style="text-align: center"> 
-											<form action="RelComunidadeBO?acao=graficoPeriodo" method="post" target="_blank"> 
-												<input type="hidden" id="dtInicio" name="dtInicio" value="${dtInicio}"/>
-												<input type="hidden" id="dtFim" name="dtFim" value="${dtFim}"/>
-												<button type="submit" class="btn btn-warning"> 
-													<i class="fa fa-bar-chart"></i> Gráfico 
-												</button> 
-											</form> 
-										</td> 
-									</tr> 
 							    </tbody>
 							</table>
 						</div>
 					</div>
+					
+					<div class="col-sm-4">
+						<div class="form-group">
+					    	<div class="text-center">
+					        	<form action="RelComunidadeBO?acao=excelPeriodoDiag" method="post">
+					        		<input type="hidden" id="dtInicio" name="dtInicio" value="${dtInicio}"/>
+									<input type="hidden" id="dtFim" name="dtFim" value="${dtFim}"/>
+									<button type="submit" class="btn btn-warning"> 
+										<i class="fa fa-bar-chart"></i> Gerar Excel com Diagnosticos
+									</button> 
+								</form>
+					      	</div>
+					    </div>
+					</div>
+					
+					<div class="col-sm-4">
+						<div class="form-group">
+					    	<div class="text-center">
+					        	<form action="RelComunidadeBO?acao=excelPeriodo" method="post">
+					        		<input type="hidden" id="dtInicio" name="dtInicio" value="${dtInicio}"/>
+									<input type="hidden" id="dtFim" name="dtFim" value="${dtFim}"/>
+									<button type="submit" class="btn btn-warning"> 
+										<i class="fa fa-bar-chart"></i> Gerar Excel com Totais
+									</button> 
+								</form> 
+					      	</div>
+					    </div>
+					</div>
+					
+					<div class="col-sm-4">
+						<div class="form-group">
+					    	<div class="text-center">
+					        	<form action="RelComunidadeBO?acao=graficoPeriodo" method="post" target="_blank"> 
+									<input type="hidden" id="dtInicio" name="dtInicio" value="${dtInicio}"/>
+									<input type="hidden" id="dtFim" name="dtFim" value="${dtFim}"/>
+									<button type="submit" class="btn btn-warning"> 
+										<i class="fa fa-bar-chart"></i> Visualizar Gráfico 
+									</button> 
+								</form> 
+					      	</div>
+					    </div>
+					</div>
+					
 				</div>
 			</c:if>
 		</div>

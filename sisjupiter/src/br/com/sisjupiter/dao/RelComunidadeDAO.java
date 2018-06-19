@@ -51,6 +51,41 @@ public class RelComunidadeDAO {
         }
     }
     
+    public List<RelComunidade> qtdeExecucaoPorComunidade(String idComunidade) throws Exception {
+    	PreparedStatement stmt = null;
+    	ResultSet rs = null;
+    	List<RelComunidade> list = new ArrayList<>();
+    	try {
+    		
+    		stmt = connection.prepareStatement(
+    				"SELECT    COUNT(TB_DIAGNOSTICO.ID_COMUNIDADE) AS QTDE, " +
+					"          TB_DIAGNOSTICO.ID_COMUNIDADE, " +
+					"          TB_COMUNIDADE.NOME " +
+					"FROM      TB_DIAGNOSTICO " +
+					"LEFT JOIN TB_COMUNIDADE " +
+					"       ON TB_DIAGNOSTICO.ID_COMUNIDADE = TB_COMUNIDADE.ID_COMUNIDADE " +
+					"    WHERE TB_DIAGNOSTICO.ID_COMUNIDADE = ? "
+			);
+    		stmt.setObject(1, idComunidade);
+    		rs = stmt.executeQuery();
+    		
+    		while(rs.next()) {
+    			RelComunidade relComunidade = new RelComunidade();
+    			relComunidade.setIdComunidade(rs.getLong("ID_COMUNIDADE"));
+    			relComunidade.setNomeComunidade(rs.getString("NOME"));
+    			relComunidade.setQtde(rs.getLong("QTDE"));
+    			list.add(relComunidade);
+    		}
+    		return list;
+    	}
+    	finally {
+    		if(stmt != null)
+    			stmt.close();
+    		if(rs != null)
+    			rs.close();
+    	}
+    }
+    
     public List<RelComunidade> qtdeExecucaoPeriodo(String dtInicio, String dtFim) throws Exception {
         PreparedStatement stmt = null;
         ResultSet rs = null;
@@ -89,6 +124,48 @@ public class RelComunidadeDAO {
             if(rs != null)
                 rs.close();
         }
+    }
+    
+	public List<RelComunidade> qtdeExecucaoPeriodoComunidade(String dtInicio, String dtFim, String idComunidade)
+			throws Exception {
+    	PreparedStatement stmt = null;
+    	ResultSet rs = null;
+    	List<RelComunidade> list = new ArrayList<>();
+    	try {
+    		
+    		stmt = connection.prepareStatement(
+    				"   SELECT COUNT(TB_DIAGNOSTICO.ID_COMUNIDADE) AS QTDE, " +
+					"          TB_DIAGNOSTICO.ID_COMUNIDADE, " +
+					"          TB_COMUNIDADE.NOME " +
+					"     FROM TB_DIAGNOSTICO " +
+					"LEFT JOIN TB_COMUNIDADE " +
+					"       ON TB_DIAGNOSTICO.ID_COMUNIDADE = TB_COMUNIDADE.ID_COMUNIDADE " +
+					"    WHERE TB_DIAGNOSTICO.DATA >= ? " +
+					"      AND TB_DIAGNOSTICO.DATA <= ? " +
+					"      AND TB_DIAGNOSTICO.ID_COMUNIDADE = ? " 
+			);
+    		
+    		stmt.setString(1, dtInicio);
+    		stmt.setString(2, dtFim);
+    		stmt.setString(3, idComunidade);
+    		
+    		rs = stmt.executeQuery();
+    		
+    		while(rs.next()) {
+    			RelComunidade relComunidade = new RelComunidade();
+    			relComunidade.setIdComunidade(rs.getLong("ID_COMUNIDADE"));
+    			relComunidade.setNomeComunidade(rs.getString("NOME"));
+    			relComunidade.setQtde(rs.getLong("QTDE"));
+    			list.add(relComunidade);
+    		}
+    		return list;
+    	}
+    	finally {
+    		if(stmt != null)
+    			stmt.close();
+    		if(rs != null)
+    			rs.close();
+    	}
     }
 
 }

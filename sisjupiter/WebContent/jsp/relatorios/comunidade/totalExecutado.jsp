@@ -18,6 +18,11 @@
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
 		<script src="https://code.highcharts.com/highcharts.js"></script>
 		<script src="https://code.highcharts.com/modules/exporting.js"></script>
+		
+		<script src="http://malsup.github.io/jquery.blockUI.js"></script>
+        <script src="http://malsup.github.io/jquery.form.js"></script>
+		
+		<script src='./js/relatorios/comunidade.js'></script>
     </head>
     <body>
     	<jsp:include page="../../../menu/${sessionScope.user.perfil.menu}" ></jsp:include>
@@ -54,48 +59,74 @@
 					            <th>Nº</th>
 					            <th>Comunidade</th>
 					            <th>Quantidade</th>
+					            <th>Excel</th>
 					        </tr>
 					    </thead>
 					    <tbody>
 					    	<% int cont = 1;%>
 					    	<c:forEach items="${listaComunidade}" var="total">
+					    		<c:url value="RelComunidadeBO" var="link">
+		                            <c:param name="acao" value="excelComunidade"/>
+									<c:param name="comunidade" value="${total.idComunidade}" />
+		                        </c:url>
 						        <tr>
 						            <td><%=cont%></td>
 						            <td>${total.nomeComunidade}</td>
 						            <td>${total.qtde}</td>
+						            <td>
+										<a href="${link}">
+											<button type="button" class="btn btn-info btn-sm" title="Clique para baixar em excel">
+												<span class="glyphicon glyphicon-floppy-save"></span>
+											</button>
+										</a>
+									</td>
 						        </tr>
 						       	<%cont++;%>
 					        </c:forEach>
 					        <tr class="active">
 					            <td colspan="2"><strong>Total</strong></td>
-					            <td><strong>${totalComunidade}</strong></td>
+					            <td colspan="2"><strong>${totalComunidade}</strong></td>
 					        </tr>
-							<tr> 
-								<td colspan="2" style="text-align: center"> 
-									<form action="RelComunidadeBO?acao=graficoTotal" method="post" target="_blank"> 
-										<button type="submit" class="btn btn-warning"> 
-											<i class="fa fa-bar-chart"></i> Visualizar Gráfico 
-										</button> 
-									</form> 
-								</td> 
-								<td style="text-align: center"> 
-									<form action="RelComunidadeBO?acao=excelTotal" method="post"> 
-										<button type="submit" class="btn btn-warning"> 
-											<i class="fa fa-bar-chart"></i> Gerar Excel 
-										</button> 
-									</form> 
-								</td> 
-<!-- 								<td style="text-align: center; width:0.1%">  -->
-<!-- 									<form action="RelComunidadeBO?acao=excelTotalDiag" method="post">  -->
-<!-- 										<button type="submit" class="btn btn-warning">  -->
-<!-- 											<i class="fa fa-bar-chart"></i> Gerar Excel Com Diagnosticos -->
-<!-- 										</button>  -->
-<!-- 									</form>  -->
-<!-- 								</td>  -->
-							</tr> 
 					    </tbody>
 					</table>
 				</div>
+				
+				<div class="col-sm-4">
+					<div class="form-group">
+				    	<div class="text-center">
+				        	<form action="RelComunidadeBO?acao=excelTotalDiag" method="post">
+								<button type="submit" class="btn btn-warning"> 
+									<i class="fa fa-bar-chart"></i> Gerar Excel com Diagnosticos
+								</button> 
+							</form>
+				      	</div>
+				    </div>
+				</div>
+				
+				<div class="col-sm-4">
+					<div class="form-group">
+				    	<div class="text-center">
+				        	<form action="RelComunidadeBO?acao=excelTotal" method="post"> 
+								<button type="submit" class="btn btn-warning"> 
+									<i class="fa fa-bar-chart"></i> Gerar Excel com Totais
+								</button> 
+							</form>  
+				      	</div>
+				    </div>
+				</div>
+				
+				<div class="col-sm-4">
+					<div class="form-group">
+				    	<div class="text-center">
+				        	<form action="RelComunidadeBO?acao=graficoTotal" method="post" target="_blank"> 
+								<button type="submit" class="btn btn-warning"> 
+									<i class="fa fa-bar-chart"></i> Visualizar Gráfico 
+								</button> 
+							</form> 
+				      	</div>
+				    </div>
+				</div>
+				
 			</div>
 		</div>
 		<footer class="footer">

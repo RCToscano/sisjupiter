@@ -1,6 +1,5 @@
 package br.com.sisjupiter.auxiliar;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -122,7 +121,6 @@ public class GeradorExcel {
 			Row headerRow = sheet.createRow(0);
 			
 			for(int j = 0; j < colunas.get(i).size(); j++) {
-				System.out.println("Coluna: "+colunas.get(i).get(j));
 				Cell cell = headerRow.createCell(j);
 				cell.setCellValue(colunas.get(i).get(j));
 				cell.setCellStyle(headerCellStyle);
@@ -132,11 +130,9 @@ public class GeradorExcel {
 			// Create Other rows and cells with employees data
 			int rowNum = 1;
 			for(int j = 0; j < valores.get(i).size(); j++) {
-				System.out.println("Linha: "+rowNum);
 				Row row = sheet.createRow(rowNum++);
 				
 				for (int j2 = 0; j2 < valores.get(i).get(j).size(); j2++) {
-					System.out.println("Valor: "+valores.get(i).get(j).get(j2));
 					row.createCell(j2).setCellValue(valores.get(i).get(j).get(j2));
 				}
 			}
@@ -145,8 +141,6 @@ public class GeradorExcel {
 			for (int j = 0; j < colunas.get(i).size(); j++) {
 				sheet.autoSizeColumn(j);
 			}
-		
-		
 		}
 		
 		//Gera o download do arquivo
