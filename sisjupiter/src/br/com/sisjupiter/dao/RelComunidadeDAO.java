@@ -29,6 +29,7 @@ public class RelComunidadeDAO {
             "FROM      TB_DIAGNOSTICO " +
             "LEFT JOIN TB_COMUNIDADE " +
             "       ON TB_DIAGNOSTICO.ID_COMUNIDADE = TB_COMUNIDADE.ID_COMUNIDADE " +
+            "    WHERE TB_COMUNIDADE.SITUACAO = 'A' " +
             " GROUP BY TB_DIAGNOSTICO.ID_COMUNIDADE "
             );
             
@@ -64,7 +65,8 @@ public class RelComunidadeDAO {
 					"FROM      TB_DIAGNOSTICO " +
 					"LEFT JOIN TB_COMUNIDADE " +
 					"       ON TB_DIAGNOSTICO.ID_COMUNIDADE = TB_COMUNIDADE.ID_COMUNIDADE " +
-					"    WHERE TB_DIAGNOSTICO.ID_COMUNIDADE = ? "
+					"    WHERE TB_DIAGNOSTICO.ID_COMUNIDADE = ? " +
+					"      AND TB_COMUNIDADE.SITUACAO = 'A' "
 			);
     		stmt.setObject(1, idComunidade);
     		rs = stmt.executeQuery();
@@ -101,6 +103,7 @@ public class RelComunidadeDAO {
             "       ON TB_DIAGNOSTICO.ID_COMUNIDADE = TB_COMUNIDADE.ID_COMUNIDADE " +
             "    WHERE TB_DIAGNOSTICO.DATA >= ? " +
             "      AND TB_DIAGNOSTICO.DATA <= ? " +
+            "      AND TB_COMUNIDADE.SITUACAO = 'A' " +
             " GROUP BY TB_DIAGNOSTICO.ID_COMUNIDADE "
             );
             
