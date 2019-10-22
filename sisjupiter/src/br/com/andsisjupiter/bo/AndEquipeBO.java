@@ -45,7 +45,7 @@ public class AndEquipeBO extends HttpServlet {
                 String cel = request.getParameter("cel");
                 String app = request.getParameter("app");
                 String bateria = request.getParameter("bateria");
-		String gps = request.getParameter("gps");
+                String gps = request.getParameter("gps");
                 String dataAparelho = request.getParameter("dataAparelho");
 
                 EquipeDAO equipeDAO = new EquipeDAO(connection);
@@ -55,10 +55,10 @@ public class AndEquipeBO extends HttpServlet {
 
                     write(response, "1");
                 }
-                else if (!Auxiliar.dataAtual().equals(dataAparelho)) {//DATA APARELHO ERRADA
-
-                    write(response, "2");
-                }
+//                else if (!Auxiliar.dataAtual().equals(dataAparelho)) {//DATA APARELHO ERRADA
+//
+//                    write(response, "2");
+//                }
                 else if (equipe.getIdEquipeSit().longValue() != 1) {//USUARIO INATIVO
 
                     write(response, "3");
